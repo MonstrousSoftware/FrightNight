@@ -14,7 +14,7 @@ import de.golfgl.gdx.controllers.ControllerMenuStage;
 // abstract menu screen to derive from
 
 
-public class MenuScreen extends ScreenAdapter {
+public class MenuScreen extends StdScreenAdapter {
 
     protected Main game;
     protected Viewport viewport;
@@ -56,6 +56,7 @@ public class MenuScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        super.render(delta);
         background.render();
 
         stage.act(Gdx.graphics.getDeltaTime());
@@ -66,6 +67,7 @@ public class MenuScreen extends ScreenAdapter {
     public void resize(int width, int height) {
         // Resize your screen here. The parameters represent the new window size.
 
+        Gdx.app.log("MenuScreen","resize "+width+" x "+height);
         viewport.update(width, height, true);
         stage.getViewport().update(width, height, true);
         rebuild();

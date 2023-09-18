@@ -73,10 +73,10 @@ public class MainMenuScreen extends MenuScreen {
            public void clicked(InputEvent event, float x, float y) {
                super.clicked(event, x, y);
                playSelectNoise();
-               //if(!Settings.skipTitleScreen)
+               if(!Settings.skipTitleScreen)
                     game.setScreen(new ExitScreen( game ));
-               //else
-               //     Gdx.app.exit();
+               else
+                    Gdx.app.exit();
            }
        });
 
