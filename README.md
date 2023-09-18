@@ -5,13 +5,7 @@ A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://git
 This project was generated with a template including simple application launchers and a main class extending `Game` that sets the first screen.
 
 
-// needed? gdx-teavm in version 1.0.0-SNAPSHOT
 
-- It seems gdx-teavm doesn't support controllers as they require reflection.
-- since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
-- need a 'press any key to start' screen to allow sound in the title screen on web.
-- on web the sound keeps playing after exitscreen completes, despite the sound.stop();
-- F11 in any menu screen toggles fullscreen/window
 
 ## Platforms
 

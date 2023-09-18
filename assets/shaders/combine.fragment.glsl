@@ -1,4 +1,5 @@
 // combine filter
+// plus vignette
 
 
 uniform sampler2D u_texture;
@@ -12,5 +13,18 @@ void main()
 	vec4 color = texture2D(u_texture, v_texCoord0);
     vec4 color2 = texture2D(u_highlightTexture, v_texCoord0);
 
-    gl_FragColor = color + color2 *2.0;     // change the constant for effect
+    color = color + color2 *2.0;     // change the constant for effect
+
+    // vignette effect
+    vec2 dist = v_texCoord0 * (1.0 - v_texCoord0.yx);
+    float vigExtent = 45;
+    float vig = dist.x*dist.y * vigExtent; // multiply with sth for intensity
+    float vigPower = 0.45;
+    vig = pow(vig, vigPower); // change pow for modifying the extent of the  vignette
+    color.rgb = mix(color.rgb, color.rgb*vig, 0.9);
+
+    // increase contrast
+    color.rgb = (color.rgb - 0.5) * 1.2 + 0.5;
+
+    gl_FragColor = color;
 }

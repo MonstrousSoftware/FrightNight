@@ -32,7 +32,8 @@ public class Main extends Game {
 
         selectSound = Gdx.audio.newSound(Gdx.files.internal("sound/click_002.ogg"));
 
-        setScreen(new StartScreen(this));
+        onLoadingComplete();
+        //setScreen(new StartScreen(this));
     }
 
     public void onLoadingComplete() {

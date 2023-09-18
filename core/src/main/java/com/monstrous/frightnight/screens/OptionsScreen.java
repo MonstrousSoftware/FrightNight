@@ -18,6 +18,9 @@ import com.monstrous.frightnight.Settings;
 import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 
+// todo handle F11 key presses on web by reflecting the correct state of the fullscreen checkbox
+
+
 public class OptionsScreen extends MenuScreen {
     private GameScreen gameScreen;    // to keep track where we were called from
     private Controller controller;

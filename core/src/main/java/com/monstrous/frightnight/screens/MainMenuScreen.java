@@ -64,7 +64,7 @@ public class MainMenuScreen extends MenuScreen {
            public void clicked(InputEvent event, float x, float y) {
                super.clicked(event, x, y);
                playSelectNoise();
-               //game.setScreen(new GameScreen( game ));
+               game.setScreen(new GameScreen( game ));
            }
        });
 

@@ -1,0 +1,27 @@
+Notes 18/9/2023
+
+// needed? gdx-teavm in version 1.0.0-SNAPSHOT
+
+- It seems gdx-teavm doesn't support controllers as they require reflection.
+- since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
+- need a 'press any key to start' screen to allow sound in the title screen on web.
+- on web the sound keeps playing after exitscreen completes, despite the sound.stop();
+- F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
+- ESC doesn't work while BACK does in menu's
+- sound volume control (music?)
+- credits screen
+
+
+Credits:
+- libgdx
+- gdx-gltf
+- gdx-teavm
+- gdx-controllers & gdx-controller-utils
+
+
+
+
+
+Credits:
+
+sky box: https://www.cleanpng.com/png-cube-mapping-night-sky-star-counter-strike-1-6-sky-5778000/download-png.html
