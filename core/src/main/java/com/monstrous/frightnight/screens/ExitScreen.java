@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -31,7 +32,7 @@ public class ExitScreen extends ScreenAdapter {
     private Viewport viewport;
     private TitlePostFilter filter;
     private FrameBuffer fbo;
-    private Sound staticNoise;
+    private Music staticNoise;
     private float logoAlpha;
     private float bgColor;
     private boolean fadeOut;
@@ -39,7 +40,6 @@ public class ExitScreen extends ScreenAdapter {
     private float blackScreenTimer;
     private float pictureWidth, pictureHeight;
     private float timer;
-    private long soundId;
 
     public ExitScreen(Main game) {
         this.game = game;
@@ -48,13 +48,13 @@ public class ExitScreen extends ScreenAdapter {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        titleTexture = new Texture( Gdx.files.internal("images/ferocious-dinosaur2.png"));
+        titleTexture = game.assets.get("images/ferocious-dinosaur2.png");
         titleWidth = titleTexture.getWidth();
         titleHeight = titleTexture.getHeight();
         viewport = new ScreenViewport();
         filter = new TitlePostFilter();
-        staticNoise = Gdx.audio.newSound(Gdx.files.internal("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"));
-        soundId = staticNoise.play();
+        staticNoise = game.assets.get("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3");
+        staticNoise.play();
         logoAlpha = 1f;
         bgColor = 0.5f;
         fadeOut = false;
@@ -75,7 +75,7 @@ public class ExitScreen extends ScreenAdapter {
                 pictureHeight -= 0.5f * delta * height / 2;
                 pictureWidth -= 0.5f * delta * width / 2;
                 if(pictureHeight <= 0) {
-                    staticNoise.stop(soundId);
+                    staticNoise.stop();
                     blackScreenTimer = 2f;
                 }
             }
@@ -84,8 +84,7 @@ public class ExitScreen extends ScreenAdapter {
                 blackScreenTimer -= delta;      // allow a silence black screen for a few seconds
                 if (blackScreenTimer <= 0) {
                     Gdx.app.log("ExitScreen", "done");
-                    staticNoise.setVolume(soundId, 0);
-                    staticNoise.stop(soundId);
+                    staticNoise.stop();
                     if(Gdx.app.getType() == Application.ApplicationType.WebGL)
                         game.setScreen( new StartScreen(game));
                     else
@@ -100,14 +99,8 @@ public class ExitScreen extends ScreenAdapter {
             ScreenUtils.clear(bgColor, bgColor, bgColor, 1f);
             batch.begin();
             batch.setProjectionMatrix( viewport.getCamera().combined );
-
-            float x = ((width - titleWidth)/2f);     // centred horizontally
-            float y = ((height-titleHeight)/2f);        // align bottom of title to mid-height of screen
-
             batch.setColor(1, 1, 1, logoAlpha);
-            //batch.draw(titleTexture,x,y);
             batch.draw(titleTexture, 0, 0, width, height);
-
             batch.end();
         fbo.end();
         ScreenUtils.clear(Color.BLACK);
@@ -141,9 +134,7 @@ public class ExitScreen extends ScreenAdapter {
     public void dispose() {
         // Destroy screen's assets here.
         batch.dispose();
-        titleTexture.dispose();
         filter.dispose();
-        staticNoise.stop(soundId);
-        staticNoise.dispose();
+        staticNoise.stop();
     }
 }

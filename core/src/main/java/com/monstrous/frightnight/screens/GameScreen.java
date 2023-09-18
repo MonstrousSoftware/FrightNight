@@ -73,7 +73,7 @@ public class GameScreen extends StdScreenAdapter {
             camera.lookAt(0,Settings.eyeHeight,0);
             sceneManager.setCamera(camera);
 
-            world = new World( sceneManager );
+            world = new World( game.assets, sceneManager );
         }
 
         @Override
@@ -144,7 +144,7 @@ public class GameScreen extends StdScreenAdapter {
 
             batch = new SpriteBatch();
             lightning = new BranchedLightning();
-            thunder = Gdx.audio.newSound(Gdx.files.internal("sound/thunder-25689.mp3"));
+            thunder = game.assets.get("sound/thunder-25689.mp3"); // Gdx.audio.newSound(Gdx.files.internal("sound/thunder-25689.mp3"));
             thunderTimer = 3f;
             bgColor = new Color();
 

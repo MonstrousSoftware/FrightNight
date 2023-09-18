@@ -1,7 +1,6 @@
 package com.monstrous.frightnight.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -31,7 +30,7 @@ public class MenuScreen extends StdScreenAdapter {
     public void show() {
         viewport = new ScreenViewport();
 
-        skin = new Skin(Gdx.files.internal("skin/fright/fright.json"));
+        skin = game.assets.get("skin/fright/fright.json"); //new Skin(Gdx.files.internal("skin/fright/fright.json"));
         if(Settings.supportControllers)
             stage = new ControllerMenuStage(new ScreenViewport());
         else
@@ -85,7 +84,6 @@ public class MenuScreen extends StdScreenAdapter {
     public void dispose() {
         // Destroy screen's assets here.
         stage.dispose();
-        skin.dispose();
         background.dispose();
     }
 }

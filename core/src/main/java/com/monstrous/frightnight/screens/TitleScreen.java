@@ -3,6 +3,7 @@ package com.monstrous.frightnight.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +31,7 @@ public class TitleScreen extends ScreenAdapter {
     private Viewport viewport;
     private TitlePostFilter filter;
     private FrameBuffer fbo;
-    private Sound staticNoise;
+    private Music staticNoise;      // as it is so long, load as music instead of sound so that it can be buffered
     private float readyAlpha;
     private float logoAlpha;
     private float bgColor;
@@ -46,14 +47,14 @@ public class TitleScreen extends ScreenAdapter {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        titleTexture = new Texture( Gdx.files.internal("images/title.png"));
-        logoTexture = new Texture( Gdx.files.internal("images/libgdx-faded.png"));  // desaturated version to stay on theme
-        readyTexture = new Texture( Gdx.files.internal("images/areyouready.png"));
+        titleTexture = game.assets.get("images/title.png"); //new Texture( Gdx.files.internal("images/title.png"));
+        logoTexture = game.assets.get("images/libgdx-faded.png"); //new Texture( Gdx.files.internal("images/libgdx-faded.png"));  // desaturated version to stay on theme
+        readyTexture = game.assets.get("images/areyouready.png"); //new Texture( Gdx.files.internal("images/areyouready.png"));
         titleWidth = titleTexture.getWidth();
         titleHeight = titleTexture.getHeight();
         viewport = new ScreenViewport();
         filter = new TitlePostFilter();
-        staticNoise = Gdx.audio.newSound(Gdx.files.internal("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"));
+        staticNoise = game.assets.get("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"); //Gdx.audio.newSound(Gdx.files.internal("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"));
         staticNoise.play();
         readyAlpha = 0;
         logoAlpha = 1f;
@@ -153,9 +154,9 @@ public class TitleScreen extends ScreenAdapter {
     public void dispose() {
         // Destroy screen's assets here.
         batch.dispose();
-        titleTexture.dispose();
+        //titleTexture.dispose();
         filter.dispose();
         staticNoise.stop();
-        staticNoise.dispose();
+        //staticNoise.dispose();
     }
 }

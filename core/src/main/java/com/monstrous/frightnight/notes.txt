@@ -5,7 +5,7 @@ Notes 18/9/2023
 - It seems gdx-teavm doesn't support controllers as they require reflection.
 - since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
 - need a 'press any key to start' screen to allow sound in the title screen on web.
-- on web the sound keeps playing after exitscreen completes, despite the sound.stop();
+FIXED - on web the sound keeps playing after exitscreen completes, despite the sound.stop();
 - F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
 - ESC doesn't work while BACK does in menu's
 - sound volume control (music?)

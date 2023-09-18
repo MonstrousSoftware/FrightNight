@@ -17,22 +17,20 @@ import de.golfgl.gdx.controllers.ControllerMenuStage;
 public class MainMenuScreen extends MenuScreen {
 
 
-
-
     public MainMenuScreen(Main game) {
         super(game);
     }
 
 
     @Override
-   protected void rebuild() {
+    protected void rebuild() {
        stage.clear();
 
 
        Table screenTable = new Table();
        screenTable.setFillParent(true);
 
-       Image title = new Image(new Texture( Gdx.files.internal("images/title.png")));
+       Image title = new Image( (Texture)game.assets.get("images/title.png")); //new Texture( Gdx.files.internal("images/title.png")));
 
        TextButton play = new TextButton("Play Game", skin);
        TextButton options = new TextButton("Options", skin);

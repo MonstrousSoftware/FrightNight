@@ -1,5 +1,15 @@
 // Gaussian blur
 // ThinMatrix OpenGL 3D Game Tutorial 44: Gaussian Blur
+#ifdef GL_ES
+#define LOWP lowp
+#define MED mediump
+#define HIGH highp
+precision mediump float;
+#else
+#define MED
+#define LOWP
+#define HIGH
+#endif
 
 uniform vec2 u_resolution;
 uniform sampler2D u_texture;

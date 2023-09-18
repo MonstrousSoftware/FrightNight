@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.controllers.Controllers;
+import com.monstrous.frightnight.Assets;
 import com.monstrous.frightnight.Settings;
 import com.monstrous.frightnight.input.MyControllerMappings;
 import de.golfgl.gdx.controllers.mapping.ControllerToInputAdapter;
@@ -13,6 +14,7 @@ import de.golfgl.gdx.controllers.mapping.ControllerToInputAdapter;
 public class Main extends Game {
     public static final boolean RELEASE = true;
 
+    public Assets assets;
     public ControllerToInputAdapter controllerToInputAdapter;
     private Sound selectSound;
 
@@ -22,6 +24,11 @@ public class Main extends Game {
         Gdx.app.log("Gdx version", com.badlogic.gdx.Version.VERSION);
         Gdx.app.log("OpenGL version", Gdx.gl.glGetString(Gdx.gl.GL_VERSION));
 
+        // load assets
+        assets = new Assets();
+        assets.finishLoading();         // todo asynch
+
+
         if (Settings.supportControllers) {
             controllerToInputAdapter = new ControllerToInputAdapter(new MyControllerMappings());
             // bind controller events to keyboard keys
@@ -30,7 +37,8 @@ public class Main extends Game {
             Controllers.addListener(controllerToInputAdapter);
         }
 
-        selectSound = Gdx.audio.newSound(Gdx.files.internal("sound/click_002.ogg"));
+        selectSound = assets.get("sound/click_002.ogg");
+
 
         onLoadingComplete();
         //setScreen(new StartScreen(this));
@@ -51,6 +59,6 @@ public class Main extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        selectSound.dispose();
+        assets.dispose();
     }
 }

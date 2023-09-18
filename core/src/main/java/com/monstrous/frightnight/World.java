@@ -1,10 +1,8 @@
 package com.monstrous.frightnight;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
-import net.mgsx.gltf.loaders.gltf.GLTFLoader;
 import net.mgsx.gltf.scene3d.scene.Scene;
 import net.mgsx.gltf.scene3d.scene.SceneAsset;
 import net.mgsx.gltf.scene3d.scene.SceneManager;
@@ -23,9 +21,9 @@ public class World implements Disposable {
     public ParticleEffects particleEffects;
     private Matrix4 playerTransform;
 
-    public World(SceneManager sceneManager ) {
+    public World(Assets assets, SceneManager sceneManager ) {
         this.sceneManager = sceneManager;
-        sceneAsset = new GLTFLoader().load(Gdx.files.internal(GLTF_FILE));
+        sceneAsset = assets.get(GLTF_FILE); //new GLTFLoader().load(Gdx.files.internal(GLTF_FILE));
         wheelAngle = 0;
 
         particleEffects = new ParticleEffects( sceneManager.camera );
@@ -100,8 +98,6 @@ public class World implements Disposable {
 
     @Override
     public void dispose() {
-
-        sceneAsset.dispose();
         particleEffects.dispose();
     }
 }
