@@ -104,6 +104,9 @@ public class OptionsScreen extends MenuScreen {
        CheckBox freeLook = new CheckBox("Free Look", skin);
        freeLook.setChecked(Settings.freeLook);
 
+       CheckBox weather = new CheckBox("Weather Effects", skin);
+       weather.setChecked(Settings.enableWeather);
+
        controllerLabel = new Label("None", skin);
        if(controller != null)
            controllerLabel.setText(controller.getName());
@@ -117,6 +120,7 @@ public class OptionsScreen extends MenuScreen {
        screenTable.add(fullScreen).pad(pad).row();
        screenTable.add(invertLook).pad(pad).row();
        screenTable.add(freeLook).pad(pad).row();
+       screenTable.add(weather).pad(pad).row();
        screenTable.add(new Label("Controller", skin)).pad(pad);     // todo ':' is not in font
        screenTable.add(controllerLabel).row();
        screenTable.add(done).pad(20).row();
@@ -135,6 +139,7 @@ public class OptionsScreen extends MenuScreen {
            cStage.addFocusableActor(fullScreen);
            cStage.addFocusableActor(invertLook);
            cStage.addFocusableActor(freeLook);
+           cStage.addFocusableActor(weather);
            //stage.addFocusableActor(controllerLabel);
            cStage.addFocusableActor(done);
            cStage.setFocusedActor(fullScreen);
@@ -166,6 +171,13 @@ public class OptionsScreen extends MenuScreen {
            public void changed(ChangeEvent event, Actor actor) {
                playSelectNoise();
                Settings.freeLook = freeLook.isChecked();
+           }
+       });
+       weather.addListener(new ChangeListener() {
+           @Override
+           public void changed(ChangeEvent event, Actor actor) {
+               playSelectNoise();
+               Settings.enableWeather = weather.isChecked();
            }
        });
 

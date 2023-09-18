@@ -15,11 +15,10 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.monstrous.frightnight.filters.PostProcessor;
+import com.monstrous.frightnight.input.CamController;
 import com.monstrous.frightnight.lightning.BranchedLightning;
 import com.monstrous.frightnight.Settings;
 import com.monstrous.frightnight.World;
-import com.monstrous.frightnight.filters.PostFilter;
-import com.monstrous.frightnight.input.CamController;
 import com.monstrous.frightnight.input.MyControllerAdapter;
 import net.mgsx.gltf.scene3d.attributes.FogAttribute;
 import net.mgsx.gltf.scene3d.attributes.PBRCubemapAttribute;
@@ -49,7 +48,6 @@ public class GameScreen extends StdScreenAdapter {
         private MyControllerAdapter controllerAdapter;
         private Controller currentController;
         private Vector3 tmpV = new Vector3();
-        //private PostFilter postFilter;
         private FrameBuffer fbo;
         private World world;
         private PostProcessor postProcessor;
@@ -87,23 +85,22 @@ public class GameScreen extends StdScreenAdapter {
             camController = new CamController(camera);
 
             // controller
-            currentController = Controllers.getCurrent();
-            if(currentController != null) {
-                Gdx.app.log("current controller", currentController.getName());
-                controllerAdapter = new MyControllerAdapter(camController);
-                // we define a listener that listens to all controllers, in case the current controller gets disconnected and reconnected
-                Controllers.removeListener(game.controllerToInputAdapter);
-                Controllers.addListener(controllerAdapter);
+            if(Settings.supportControllers) {
+                currentController = Controllers.getCurrent();
+                if (currentController != null) {
+                    Gdx.app.log("current controller", currentController.getName());
+                    controllerAdapter = new MyControllerAdapter(camController);
+                    // we define a listener that listens to all controllers, in case the current controller gets disconnected and reconnected
+                    Controllers.removeListener(game.controllerToInputAdapter);
+                    Controllers.addListener(controllerAdapter);
+                } else
+                    Gdx.app.log("current controller", "none");
             }
-            else
-                Gdx.app.log("current controller", "none");
 
             // input multiplexer to input to GUI and to cam controller
             InputMultiplexer im = new InputMultiplexer();
             Gdx.input.setInputProcessor(im);
             im.addProcessor(camController);
-
-
 
             sceneManager.environment.set(new PBRFloatAttribute(PBRFloatAttribute.ShadowBias, 0.001f));
 
@@ -139,10 +136,8 @@ public class GameScreen extends StdScreenAdapter {
             skybox = new SceneSkybox(environmentCubemap);
             sceneManager.setSkyBox(skybox);
 
-            //postFilter = new PostFilter();
+
             postProcessor = new PostProcessor();
-
-
 
             modelBatch = new ModelBatch();
             flashTimer = 0;
@@ -157,43 +152,45 @@ public class GameScreen extends StdScreenAdapter {
 
         @Override
         public void render(float deltaTime) {
-            if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
                 (currentController != null && currentController.getButton(currentController.getMapping().buttonStart))) {
-                game.setScreen( new PauseMenuScreen(game, this));
+                game.setScreen(new PauseMenuScreen(game, this));
                 return;
             }
 
 
-            lightning.update(deltaTime);
-
             bgColor.set(0.02f, 0, .02f, 1f);
+            sceneManager.setAmbientLight(Settings.ambientLightLevel);
 
-            thunderTimer -= deltaTime;
-            if(thunderTimer < 0 ) {
-                // random position and random direction
-                float x = MathUtils.random(-200, 200);
-                float z = MathUtils.random(-200, 200);
-                float dx = MathUtils.random(-50, 50);
-                float dz = MathUtils.random(-50, 50);
-                x = 0;
-                z = 0;
-                dx = 0;
-                dz = 0;
-                lightning.create( new Vector3(x, 200, z), new Vector3(x+dx, 0, z+dz));
-                thunder.play();
-                bgColor.set(1f, 1, 1f, 1f);
-                flashTimer = 0.1f;  // lightning effect
-                thunderTimer = MathUtils.random(Settings.lightningPeriod) + 1;      // time to next flash
+            if (Settings.enableWeather) {
+                lightning.update(deltaTime);
+
+                thunderTimer -= deltaTime;
+                if (thunderTimer < 0) {
+                    // random position and random direction
+                    float dx = MathUtils.random(-50, 50);
+                    float dz = MathUtils.random(-50, 50);
+
+                    float theta = MathUtils.random(0, 360);
+                    float distance = MathUtils.random(20, 200);
+                    float x = camera.position.x + MathUtils.cos(theta) * distance;
+                    float z = camera.position.y + MathUtils.sin(theta) * distance;
+
+                    lightning.create(new Vector3(x, 200, z), new Vector3(x + dx, 0, z + dz));
+                    thunder.play();
+                    bgColor.set(1f, 1, 1f, 1f);
+                    flashTimer = 0.1f;  // lightning effect
+                    thunderTimer = MathUtils.random(Settings.lightningPeriod) + 1;      // time to next flash
+                }
+
+                if (flashTimer > 0) {
+                    sceneManager.setAmbientLight(1f);
+                }
+                flashTimer -= deltaTime;
             }
 
-            if(flashTimer > 0) {
-                sceneManager.setAmbientLight(1f);
-            } else {
-                sceneManager.setAmbientLight(Settings.ambientLightLevel);
-            }
 
 
-            flashTimer -= deltaTime;
             world.update(deltaTime);
 
             camController.update(deltaTime);
@@ -227,18 +224,18 @@ public class GameScreen extends StdScreenAdapter {
 
             sceneManager.renderColors();
 
-            modelBatch.begin(camera);
-            world.particleEffects.render(modelBatch);     // rain
-
-            lightning.render(modelBatch, camera.position);
-
-            modelBatch.end();
+            if(Settings.enableWeather) {
+                modelBatch.begin(camera);
+                world.particleEffects.render(modelBatch);     // rain
+                lightning.render(modelBatch, camera.position);
+                modelBatch.end();
+            }
 
             fbo.end();
 
 
-            //postFilter.render(fbo);     // vignette
-            postProcessor.render(fbo);    // bloom
+
+            postProcessor.render(fbo);    // bloom & vignette
         }
 
 
@@ -250,19 +247,9 @@ public class GameScreen extends StdScreenAdapter {
             if(fbo != null)
                 fbo.dispose();
             fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
-            //postFilter.resize(width, height);
             postProcessor.resize(width, height);
         }
 
-        @Override
-        public void pause() {
-
-        }
-
-        @Override
-        public void resume() {
-
-        }
 
         @Override
         public void hide() {

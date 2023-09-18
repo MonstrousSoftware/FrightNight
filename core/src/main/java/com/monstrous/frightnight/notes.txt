@@ -10,6 +10,8 @@ Notes 18/9/2023
 - ESC doesn't work while BACK does in menu's
 - sound volume control (music?)
 - credits screen
+- save preferences
+- game icons
 
 
 Credits:
