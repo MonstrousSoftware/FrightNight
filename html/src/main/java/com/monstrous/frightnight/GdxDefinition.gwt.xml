@@ -6,7 +6,7 @@
   <inherits name="GLTF" />
   <inherits name="com.badlogic.gdx.controllers" />
   <inherits name="com.badlogic.gdx.controllers.controllers-gwt" />
-  <inherits name="com.monstrous.frightnight.Main" />
+  <inherits name="com.monstrous.frightnight.screens.Main" />
   <inherits name="de.golfgl.gdx.controllers.controller_scene2d" />
   <entry-point class="com.monstrous.frightnight.gwt.GwtLauncher" />
   <set-configuration-property name="gdx.assetpath" value="../assets" />

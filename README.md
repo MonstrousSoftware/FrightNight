@@ -7,6 +7,8 @@ This project was generated with a template including simple application launcher
 
 // needed? gdx-teavm in version 1.0.0-SNAPSHOT
 
+- It seeems gdx-teavm doesn't support controllers as they require reflection.
+
 
 ## Platforms
 

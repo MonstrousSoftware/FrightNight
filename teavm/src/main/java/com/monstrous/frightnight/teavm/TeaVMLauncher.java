@@ -2,7 +2,7 @@ package com.monstrous.frightnight.teavm;
 
 import com.github.xpenatan.gdx.backends.teavm.TeaApplicationConfiguration;
 import com.github.xpenatan.gdx.backends.teavm.TeaApplication;
-import com.monstrous.frightnight.Main;
+import com.monstrous.frightnight.screens.Main;
 
 /**
  * Launches the TeaVM/HTML application.
@@ -18,6 +18,10 @@ public class TeaVMLauncher {
         // change these to both 0 to use all available space, or both -1 for the canvas size.
         config.width = 0;
         config.height = 0;
+
+
+        //config.useGL30 = true;
+
         new TeaApplication(new Main(), config);
     }
 }
