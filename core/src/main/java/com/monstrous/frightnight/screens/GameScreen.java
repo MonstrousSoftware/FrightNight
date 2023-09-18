@@ -60,6 +60,7 @@ public class GameScreen extends StdScreenAdapter {
         private float thunderTimer;
 
         public GameScreen(Main game) {
+            Gdx.app.log("GameScreen", "constructor");
 
             this.game = game;
 
@@ -78,6 +79,7 @@ public class GameScreen extends StdScreenAdapter {
 
         @Override
         public void show() {
+            Gdx.app.log("GameScreen", "show()");
             // hide the mouse cursor and fix it to screen centre, so it doesn't go out the window canvas
             Gdx.input.setCursorCatched(true);
             Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -241,6 +243,7 @@ public class GameScreen extends StdScreenAdapter {
 
         @Override
         public void resize(int width, int height) {
+            Gdx.app.log("GameScreen", "resize()");
             // Resize your screen here. The parameters represent the new window size.
             sceneManager.updateViewport(width, height);
             //gui.resize(width, height);
@@ -253,28 +256,30 @@ public class GameScreen extends StdScreenAdapter {
 
         @Override
         public void hide() {
+            Gdx.app.log("GameScreen", "hide()");
             Gdx.input.setCursorCatched(false);
 
             if(currentController != null) {
                 Controllers.removeListener(controllerAdapter);
                 Controllers.addListener(game.controllerToInputAdapter);
             }
-            // dispose();            // todo causes crash when reentering game
+            // dispose what we created in show()
+            environmentCubemap.dispose();
+            diffuseCubemap.dispose();
+            specularCubemap.dispose();
+            brdfLUT.dispose();
+            skybox.dispose();
+            postProcessor.dispose();
         }
 
 
         @Override
         public void dispose() {
             // Destroy screen's assets here.
-            sceneManager.dispose();
-            //sceneAsset.dispose();
-            environmentCubemap.dispose();
-            diffuseCubemap.dispose();
-            specularCubemap.dispose();
-            brdfLUT.dispose();
-            skybox.dispose();
-//        gui.dispose();
+            Gdx.app.log("GameScreen", "dispose()");
+
+            // dispose what we created in constructor
             world.dispose();
-            postProcessor.dispose();
+            sceneManager.dispose();
         }
 }

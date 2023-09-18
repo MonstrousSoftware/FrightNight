@@ -26,7 +26,7 @@ void main()
 
     // vignette effect
     vec2 dist = v_texCoord0 * (1.0 - v_texCoord0.yx);
-    float vigExtent = 45;
+    float vigExtent = 45.0;
     float vig = dist.x*dist.y * vigExtent; // multiply with sth for intensity
     float vigPower = 0.45;
     vig = pow(vig, vigPower); // change pow for modifying the extent of the  vignette

@@ -6,7 +6,7 @@ public class Settings {
 
     static public String title = "Fright Night";    // e.g. HTML window title
 
-    static public boolean skipTitleScreen = false;           // also skips ExitScreen
+    static public boolean skipTitleScreen = true;           // also skips ExitScreen
 
     static public boolean supportControllers = false;       // in case it causes issues
 
