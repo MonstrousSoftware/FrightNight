@@ -1,0 +1,80 @@
+{
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"FluxischElse-Regular1": {
+		"file": "FluxischElse-Regular(1).fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	},
+	"Halloween_Fright": {
+		"file": "Halloween Fright.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
+	}
+},
+"com.badlogic.gdx.graphics.Color": {
+	"gold": {
+		"r": 1,
+		"g": 0.98039216,
+		"b": 0.52156866,
+		"a": 1
+	},
+	"white": {
+		"r": 1,
+		"g": 1,
+		"b": 1,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable": {
+	"checkbox_on_over": {
+		"name": "checkbox_on",
+		"color": {
+			"r": 1,
+			"g": 0.99215686,
+			"b": 0.38431373,
+			"a": 1
+		}
+	},
+	"checkbox_off_over": {
+		"name": "checkbox_off",
+		"color": "gold"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+	"default": {
+		"checkboxOn": "checkbox_on",
+		"checkboxOff": "checkbox_off",
+		"checkboxOnOver": "checkbox_on_over",
+		"checkboxOver": "checkbox_off_over",
+		"font": "FluxischElse-Regular1",
+		"fontColor": "white",
+		"overFontColor": "gold"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+	"default": {
+		"font": "FluxischElse-Regular1",
+		"fontColor": "white"
+	},
+	"title": {
+		"font": "Halloween_Fright",
+		"fontColor": "white"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+	"default": {
+		"font": "FluxischElse-Regular1",
+		"fontColor": "white",
+		"overFontColor": "gold",
+		"pressedOffsetX": 2,
+		"pressedOffsetY": -2
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+	"default": {
+		"label": "default"
+	}
+}
+}

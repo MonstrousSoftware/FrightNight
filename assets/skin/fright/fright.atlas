@@ -1,0 +1,34 @@
+
+fright.png
+size: 512, 512
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+FluxischElse-Regular(1)
+  rotate: false
+  xy: 1, 416
+  size: 505, 88
+  orig: 505, 88
+  offset: 0, 0
+  index: -1
+Halloween Fright
+  rotate: false
+  xy: 1, 90
+  size: 504, 324
+  orig: 504, 324
+  offset: 0, 0
+  index: -1
+checkbox_off
+  rotate: false
+  xy: 1, 62
+  size: 50, 26
+  orig: 50, 26
+  offset: 0, 0
+  index: -1
+checkbox_on
+  rotate: false
+  xy: 1, 34
+  size: 50, 26
+  orig: 50, 26
+  offset: 0, 0
+  index: -1
