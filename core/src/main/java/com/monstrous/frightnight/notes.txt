@@ -8,6 +8,8 @@ Notes 18/9/2023
 FIXED - on web the sound keeps playing after exitscreen completes, despite the sound.stop();
 - F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
 - ESC doesn't work while BACK does in menu's
+FIXED - web version doesn't catch the cursor, you cannot look all around.  Use A and D keys to turn instead of strafe.
+- crouching (even though it is useless) is too jerky.
 - sound volume control (music?)
 - credits screen
 - save preferences

@@ -14,14 +14,17 @@ import com.monstrous.frightnight.Settings;
 public class CamController extends InputAdapter {
     final static float CAM_HEIGHT = 1.5f;       // meters
 
+    final static float TURN_SPEED = 120f;
     final static float BOB_DURATION = 0.6f;     // seconds
     final static float BOB_HEIGHT = 0.04f;      // m
     final static float BOB_WIDTH = 0.03f;      // m
 
     protected final Camera camera;
     protected final IntIntMap keys = new IntIntMap();
-    public int strafeLeftKey = Input.Keys.A;
-    public int strafeRightKey = Input.Keys.D;
+    public int strafeLeftKey = Input.Keys.Q;
+    public int strafeRightKey = Input.Keys.E;
+    public int turnLeftKey = Input.Keys.A;
+    public int turnRightKey = Input.Keys.D;
     public int forwardKey = Input.Keys.W;
     public int backwardKey = Input.Keys.S;
     public int jumpKey = Input.Keys.SPACE;
@@ -161,6 +164,12 @@ public class CamController extends InputAdapter {
             tmp.set(fwdHorizontal).crs(camera.up).nor().scl(deltaTime * velocity);
             camera.position.add(tmp);
             speed = 1;
+        }
+        if (keys.containsKey(turnLeftKey)) {
+            camera.direction.rotate(camera.up, deltaTime*TURN_SPEED);
+        }
+        if (keys.containsKey(turnRightKey)) {
+            camera.direction.rotate(camera.up, -deltaTime*TURN_SPEED);
         }
         if (keys.containsKey(jumpKey) && !isJumping) {
             isJumping = true;

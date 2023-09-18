@@ -1,5 +1,6 @@
 package com.monstrous.frightnight.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -40,7 +41,9 @@ public class MainMenuScreen extends MenuScreen {
        screenTable.add(title).pad(50).row();
        screenTable.add(play).pad(pad).row();
        screenTable.add(options).pad(pad).row();
-       screenTable.add(quit).pad(pad).row();
+       // hide quit on web unless we have an outro screen
+       if(!(Gdx.app.getType() == Application.ApplicationType.WebGL) || !Settings.skipTitleScreen)
+            screenTable.add(quit).pad(pad).row();
 
        screenTable.pack();
 

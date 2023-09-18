@@ -29,6 +29,7 @@ public class Assets implements Disposable {
         assets.load("images/libgdx-faded.png", Texture.class);
         assets.load("images/areyouready.png", Texture.class);
         assets.load("images/ferocious-dinosaur2.png", Texture.class);
+        assets.load("images/cornstalk-billboard.png", Texture.class);
 
 
         assets.load("sound/click_002.ogg", Sound.class);

@@ -1,14 +1,22 @@
 package com.monstrous.frightnight;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.monstrous.frightnight.cornfield.DecalCornField;
 import net.mgsx.gltf.scene3d.scene.Scene;
 import net.mgsx.gltf.scene3d.scene.SceneAsset;
 import net.mgsx.gltf.scene3d.scene.SceneManager;
 
 public class World implements Disposable {
     public static String GLTF_FILE = "models/frightnight.gltf";
+
+    private static final float SEPARATION_DISTANCE = 1.0f;          // min distance between instances
+    private static final float AREA_LENGTH = 100.0f;                // size of the (square) field
+
 
     private SceneAsset sceneAsset;
     private SceneManager sceneManager;
@@ -20,6 +28,8 @@ public class World implements Disposable {
     private Vector3 tmpVec = new Vector3();
     public ParticleEffects particleEffects;
     private Matrix4 playerTransform;
+    private Array<DecalCornField> cornFields;
+
 
     public World(Assets assets, SceneManager sceneManager ) {
         this.sceneManager = sceneManager;
@@ -34,6 +44,15 @@ public class World implements Disposable {
         playerTransform = new Matrix4();
         playerTransform.setToTranslation(sceneManager.camera.position);
         particleEffects.addRain(playerTransform);
+
+        // road is along the y axis
+        cornFields = new Array<>();
+        Rectangle area = new Rectangle(10, -100, 50, 200);
+        DecalCornField cornField = new DecalCornField(assets, sceneManager.camera, area, SEPARATION_DISTANCE);
+        cornFields.add(cornField);
+        Rectangle area2 = new Rectangle(-65, -100, 50, 100);
+        cornField = new DecalCornField(assets, sceneManager.camera, area2, SEPARATION_DISTANCE);
+        cornFields.add(cornField);
     }
 
     public void reset() {
@@ -95,9 +114,16 @@ public class World implements Disposable {
         particleEffects.update(deltaTime);
     }
 
+    public void render(Camera camera ) {
+        for( DecalCornField cornField : cornFields)
+            cornField.render(camera);
+    }
+
 
     @Override
     public void dispose() {
         particleEffects.dispose();
+        for( DecalCornField cornField : cornFields)
+            cornField.dispose();
     }
 }

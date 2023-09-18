@@ -55,7 +55,7 @@ public class GameScreen extends StdScreenAdapter {
         private float flashTimer;
         private SpriteBatch batch;
         private BranchedLightning lightning;
-        private static Sound thunder;
+        private static Sound thunder;           // static so it can continue playing in the pause menu
         private Color bgColor;
         private float thunderTimer;
 
@@ -83,6 +83,11 @@ public class GameScreen extends StdScreenAdapter {
             // hide the mouse cursor and fix it to screen centre, so it doesn't go out the window canvas
             Gdx.input.setCursorCatched(true);
             Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+
+            // on teavm setCursorCatched() doesn't work so hide the cursor and let the user turn with the keyboard
+            // (you can turn a bit with the mouse, until it reaches the side of the canvas).
+            if(Gdx.app.getType() == Application.ApplicationType.WebGL)
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);     // hide cursor
 
             camController = new CamController(camera);
 
@@ -159,6 +164,7 @@ public class GameScreen extends StdScreenAdapter {
                 game.setScreen(new PauseMenuScreen(game, this));
                 return;
             }
+            Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 
 
             bgColor.set(0.02f, 0, .02f, 1f);
@@ -226,6 +232,8 @@ public class GameScreen extends StdScreenAdapter {
 
             sceneManager.renderColors();
 
+            world.render(camera);
+
             if(Settings.enableWeather) {
                 modelBatch.begin(camera);
                 world.particleEffects.render(modelBatch);     // rain
@@ -270,6 +278,9 @@ public class GameScreen extends StdScreenAdapter {
             brdfLUT.dispose();
             skybox.dispose();
             postProcessor.dispose();
+
+            if(Gdx.app.getType() == Application.ApplicationType.WebGL)
+                Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);     // show cursor
         }
 
 
