@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.monstrous.frightnight.Settings;
+import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 
 // main menu
@@ -71,19 +73,22 @@ public class MainMenuScreen extends MenuScreen {
            public void clicked(InputEvent event, float x, float y) {
                super.clicked(event, x, y);
                playSelectNoise();
-               //if(game.RELEASE)
+               //if(!Settings.skipTitleScreen)
                     game.setScreen(new ExitScreen( game ));
                //else
-                   // Gdx.app.exit();
+               //     Gdx.app.exit();
            }
        });
 
        // set up for keyboard/controller navigation
-       stage.clearFocusableActors();
-       stage.addFocusableActor(play);
-       stage.addFocusableActor(options);
-       stage.addFocusableActor(quit);
-       stage.setFocusedActor(play);
+        if(Settings.supportControllers) {
+            ControllerMenuStage cStage = (ControllerMenuStage)stage;
+            cStage.clearFocusableActors();
+            cStage.addFocusableActor(play);
+            cStage.addFocusableActor(options);
+            cStage.addFocusableActor(quit);
+            cStage.setFocusedActor(play);
+        }
    }
 
 }

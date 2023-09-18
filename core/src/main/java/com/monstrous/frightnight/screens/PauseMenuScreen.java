@@ -5,6 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.monstrous.frightnight.Settings;
+import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 
 // pause menu (called from game screen on Escape key)
@@ -46,12 +48,15 @@ public class PauseMenuScreen extends MenuScreen {
        stage.addActor(screenTable);
 
        // set up for keyboard/controller navigation
-       stage.clearFocusableActors();
-       stage.addFocusableActor(options);
-       stage.addFocusableActor(resume);
-       stage.addFocusableActor(stop);
-       stage.setFocusedActor(resume);
-       stage.setEscapeActor(resume);
+        if(Settings.supportControllers) {
+            ControllerMenuStage cStage = (ControllerMenuStage) stage;
+            cStage.clearFocusableActors();
+            cStage.addFocusableActor(options);
+            cStage.addFocusableActor(resume);
+            cStage.addFocusableActor(stop);
+            cStage.setFocusedActor(resume);
+            cStage.setEscapeActor(resume);
+        }
 
 
        options.addListener(new ClickListener() {

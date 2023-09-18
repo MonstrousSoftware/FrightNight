@@ -1,5 +1,6 @@
 package com.monstrous.frightnight.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
@@ -14,6 +15,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.monstrous.frightnight.filters.TitlePostFilter;
 
+
+// todo on web the sound continues playing
 
 // Exit screen, similar to TitleScreen
 
@@ -36,6 +39,7 @@ public class ExitScreen extends ScreenAdapter {
     private float blackScreenTimer;
     private float pictureWidth, pictureHeight;
     private float timer;
+    private long soundId;
 
     public ExitScreen(Main game) {
         this.game = game;
@@ -50,7 +54,7 @@ public class ExitScreen extends ScreenAdapter {
         viewport = new ScreenViewport();
         filter = new TitlePostFilter();
         staticNoise = Gdx.audio.newSound(Gdx.files.internal("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"));
-        staticNoise.play();
+        soundId = staticNoise.play();
         logoAlpha = 1f;
         bgColor = 0.5f;
         fadeOut = false;
@@ -71,7 +75,7 @@ public class ExitScreen extends ScreenAdapter {
                 pictureHeight -= 0.5f * delta * height / 2;
                 pictureWidth -= 0.5f * delta * width / 2;
                 if(pictureHeight <= 0) {
-                    staticNoise.stop();
+                    staticNoise.stop(soundId);
                     blackScreenTimer = 2f;
                 }
             }
@@ -79,7 +83,13 @@ public class ExitScreen extends ScreenAdapter {
 
                 blackScreenTimer -= delta;      // allow a silence black screen for a few seconds
                 if (blackScreenTimer <= 0) {
-                    Gdx.app.exit();
+                    Gdx.app.log("ExitScreen", "done");
+                    staticNoise.setVolume(soundId, 0);
+                    staticNoise.stop(soundId);
+                    if(Gdx.app.getType() == Application.ApplicationType.WebGL)
+                        game.setScreen( new StartScreen(game));
+                    else
+                        Gdx.app.exit();
                     return;
                 }
             }
@@ -133,7 +143,7 @@ public class ExitScreen extends ScreenAdapter {
         batch.dispose();
         titleTexture.dispose();
         filter.dispose();
-        staticNoise.stop();
+        staticNoise.stop(soundId);
         staticNoise.dispose();
     }
 }

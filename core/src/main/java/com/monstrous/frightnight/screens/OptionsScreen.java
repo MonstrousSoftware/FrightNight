@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.monstrous.frightnight.Settings;
+import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 
 public class OptionsScreen extends MenuScreen {
@@ -32,6 +33,9 @@ public class OptionsScreen extends MenuScreen {
     @Override
     public void show() {
         super.show();
+
+        if(!Settings.supportControllers)
+            return;
 
         for (Controller controller : Controllers.getControllers()) {
             Gdx.app.log("Controllers", controller.getName());
@@ -122,15 +126,17 @@ public class OptionsScreen extends MenuScreen {
        stage.addActor(screenTable);
 
        // set up for keyboard/controller navigation
-       stage.clearFocusableActors();
-       stage.addFocusableActor(fullScreen);
-       stage.addFocusableActor(invertLook);
-       stage.addFocusableActor(freeLook);
-       //stage.addFocusableActor(controllerLabel);
-       stage.addFocusableActor(done);
-       stage.setFocusedActor(fullScreen);
-       stage.setEscapeActor(done);
-
+       if(Settings.supportControllers) {
+           ControllerMenuStage cStage = (ControllerMenuStage) stage;
+           cStage.clearFocusableActors();
+           cStage.addFocusableActor(fullScreen);
+           cStage.addFocusableActor(invertLook);
+           cStage.addFocusableActor(freeLook);
+           //stage.addFocusableActor(controllerLabel);
+           cStage.addFocusableActor(done);
+           cStage.setFocusedActor(fullScreen);
+           cStage.setEscapeActor(done);
+       }
 
        fullScreen.addListener(new ChangeListener() {
            @Override
@@ -177,7 +183,8 @@ public class OptionsScreen extends MenuScreen {
 
     @Override
     public void render(float delta) {
-        checkControllerChanges();
+        if(Settings.supportControllers)
+            checkControllerChanges();
         super.render(delta);
     }
 

@@ -1,10 +1,12 @@
 package com.monstrous.frightnight.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.monstrous.frightnight.Settings;
 import com.monstrous.frightnight.shaders.MenuBackground;
 import de.golfgl.gdx.controllers.ControllerMenuStage;
 
@@ -12,11 +14,11 @@ import de.golfgl.gdx.controllers.ControllerMenuStage;
 // abstract menu screen to derive from
 
 
-public class MenuScreen implements Screen {
+public class MenuScreen extends ScreenAdapter {
 
     protected Main game;
     protected Viewport viewport;
-    protected ControllerMenuStage stage;      // from gdx-controllers-utils
+    protected Stage stage;      // from gdx-controllers-utils
     protected Skin skin;
     private MenuBackground background;
 
@@ -30,10 +32,14 @@ public class MenuScreen implements Screen {
         viewport = new ScreenViewport();
 
         skin = new Skin(Gdx.files.internal("skin/fright/fright.json"));
-        stage = new ControllerMenuStage(new ScreenViewport());
+        if(Settings.supportControllers)
+            stage = new ControllerMenuStage(new ScreenViewport());
+        else
+            stage = new Stage(new ScreenViewport());
         rebuild();
         Gdx.input.setInputProcessor(stage);
-        game.controllerToInputAdapter.setInputProcessor(stage); // forward controller input to stage
+        if(Settings.supportControllers)
+            game.controllerToInputAdapter.setInputProcessor(stage); // forward controller input to stage
 
         background = new MenuBackground();
 
@@ -50,8 +56,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //ScreenUtils.clear(0.1f, 0.2f, 0.3f, 1);
-
         background.render();
 
         stage.act(Gdx.graphics.getDeltaTime());
@@ -68,15 +72,6 @@ public class MenuScreen implements Screen {
         background.resize(width, height);
     }
 
-    @Override
-    public void pause() {
-        // Invoked when your application is paused.
-    }
-
-    @Override
-    public void resume() {
-        // Invoked when your application is resumed after pause.
-    }
 
     @Override
     public void hide() {
