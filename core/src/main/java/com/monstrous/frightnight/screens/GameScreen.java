@@ -58,6 +58,8 @@ public class GameScreen extends StdScreenAdapter {
         private static Sound thunder;           // static so it can continue playing in the pause menu
         private Color bgColor;
         private float thunderTimer;
+        private boolean gameOver = false;
+        private int viewHeight;
 
         public GameScreen(Main game) {
             Gdx.app.log("GameScreen", "constructor");
@@ -65,7 +67,7 @@ public class GameScreen extends StdScreenAdapter {
             this.game = game;
 
             // load scene asset
-            sceneManager = new SceneManager();
+            sceneManager = new SceneManager(70);
             // setup camera
             camera = new PerspectiveCamera(50f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             camera.near = 1f;
@@ -154,6 +156,7 @@ public class GameScreen extends StdScreenAdapter {
             thunder = game.assets.get("sound/thunder-25689.mp3"); // Gdx.audio.newSound(Gdx.files.internal("sound/thunder-25689.mp3"));
             thunderTimer = 3f;
             bgColor = new Color();
+            gameOver = false;
 
         }
 
@@ -164,6 +167,12 @@ public class GameScreen extends StdScreenAdapter {
                 game.setScreen(new PauseMenuScreen(game, this));
                 return;
             }
+            if(gameOver && viewHeight <= 0) {
+                game.setScreen(new GameOverScreen(game, this, world.getNameOfKiller()));
+                return;
+            }
+
+
             Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 
 
@@ -199,30 +208,20 @@ public class GameScreen extends StdScreenAdapter {
 
 
 
-            world.update(deltaTime);
-
-            camController.update(deltaTime);
-
-//        camera.position.set(world.player.eyePosition);
-////        camera.position.z = player.position.y;
-////        camera.position.y = 1.5f;
-//        camera.direction.set(world.player.forward);
-//        camera.up.set(0,1,0);
-//        camera.update();
-            // animate camera
-            //camController.update();
-
-            //camera.direction.set(world.getFocusPosition()).sub(camera.position).nor();      // aim camera at car
-//        camera.up.set(Vector3.Y);
-//        camera.update();
-
-
-            sceneManager.update(deltaTime);
+            gameOver = world.update(deltaTime);
+            if(!gameOver) {
+                camController.update(deltaTime);
+                sceneManager.update(deltaTime);
+            }
+            else {
+                if(viewHeight> 0)
+                    viewHeight -=10;
+            }
 
             // render
 
             sceneManager.renderShadows();
-           // sceneManager.renderTransmission();
+
 
             fbo.begin();
 
@@ -245,7 +244,7 @@ public class GameScreen extends StdScreenAdapter {
 
 
 
-            postProcessor.render(fbo);    // bloom & vignette
+            postProcessor.render(fbo, 0, (Gdx.graphics.getHeight()-viewHeight)/2, Gdx.graphics.getWidth(), viewHeight);    // bloom & vignette
         }
 
 
@@ -259,6 +258,7 @@ public class GameScreen extends StdScreenAdapter {
                 fbo.dispose();
             fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
             postProcessor.resize(width, height);
+            viewHeight = height;
         }
 
 

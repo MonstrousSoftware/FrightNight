@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import net.mgsx.gltf.loaders.gltf.GLTFAssetLoader;
+import net.mgsx.gltf.loaders.gltf.GLTFLoader;
 import net.mgsx.gltf.scene3d.scene.SceneAsset;
 
 public class Assets implements Disposable {
@@ -20,6 +21,7 @@ public class Assets implements Disposable {
 
         assets.setLoader(SceneAsset.class, ".gltf", new GLTFAssetLoader());
         assets.load( "models/frightnight.gltf", SceneAsset.class);
+        //assets.load( "models/zombie.gltf", SceneAsset.class);
 
 
         assets.load("skin/fright/fright.json", Skin.class);
