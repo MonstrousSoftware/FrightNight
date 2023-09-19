@@ -14,6 +14,7 @@ FIXED - web version doesn't catch the cursor, you cannot look all around.  Use A
 - credits screen
 - save preferences
 - game icons
+- font missing some characters and small h has some surplus white
 
 
 Credits:

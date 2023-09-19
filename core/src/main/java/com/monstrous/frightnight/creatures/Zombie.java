@@ -9,7 +9,7 @@ public class Zombie extends Creature {
     public static final int WANDERING = 0;
     public static final int ATTACKING = 1;
 
-    public static float MINIMUM_SEPARATION = 25;
+    public static float MINIMUM_SEPARATION = 5;
     public static float SPEED = 0.2f;
 
     public int mode;

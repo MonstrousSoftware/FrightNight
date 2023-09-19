@@ -10,9 +10,9 @@ import com.badlogic.gdx.utils.Array;
 import com.monstrous.frightnight.creatures.*;
 
 public class Population {
-    private Array<Wolf> wolves;
-    private Array<Zombie> zombies;
-    private Array<Creature> creatures;      // generic class for wolves, zombies and car
+    public Array<Wolf> wolves;
+    public Array<Zombie> zombies;
+    public Array<Creature> creatures;      // generic class for wolves, zombies and car
     private Car car;
     private Player player;
     private boolean gameOver;
@@ -51,12 +51,13 @@ public class Population {
         wolves.clear();
         //for(int x = 300; x <=  500; x += 50) {
             wolves.add( new Wolf(new Vector3(-4, 0, 28), Vector3.Z));
+        wolves.add( new Wolf(new Vector3(-8, 0, 50), Vector3.Z));
         //}
         zombies.clear();
         zombies.add( new Zombie(Vector3.Zero, Vector3.Z));
-//        for(int x = 300; x <=  500; x += 100) {
-//            zombies.add( new Zombie(x, 500, Zombie.WANDERING));
-//        }
+        for(int x = 30; x <=  130; x += 8) {
+            zombies.add( new Zombie(new Vector3(x, 0, 0), Vector3.Z));
+        }
 //        for(int x = 325; x <=  500; x += 100) {
 //            zombies.add( new Zombie(x, 450, Zombie.WANDERING));
 //        }

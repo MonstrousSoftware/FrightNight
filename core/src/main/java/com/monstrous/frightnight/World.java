@@ -34,6 +34,7 @@ public class World implements Disposable {
     private Matrix4 playerTransform;
     private Array<DecalCornField> cornFields;
     private Population population;
+    private PopulationScenes populationScenes;
 
 
     public World(Assets assets, SceneManager sceneManager ) {
@@ -44,6 +45,7 @@ public class World implements Disposable {
         particleEffects = new ParticleEffects( sceneManager.camera );
 
         population = new Population();
+        populationScenes = new PopulationScenes(population, sceneAsset, sceneManager);
 
         reset();
 
@@ -83,24 +85,25 @@ public class World implements Disposable {
         // extract some scenery items and add to scene manager
         Scene scene = new Scene(sceneAsset.scene, "road");
         sceneManager.addScene(scene);
-        carScene = new Scene(sceneAsset.scene, "car");
-        sceneManager.addScene(carScene);
-        wheelScene0 = new Scene(sceneAsset.scene, "wheel");
-        sceneManager.addScene(wheelScene0);
-        wheelScene1 = new Scene(sceneAsset.scene, "wheel");
-        sceneManager.addScene(wheelScene1);
-        wheelScene2 = new Scene(sceneAsset.scene, "wheel");
-        sceneManager.addScene(wheelScene2);
-        wheelScene3 = new Scene(sceneAsset.scene, "wheel");
-        sceneManager.addScene(wheelScene3);
+//        carScene = new Scene(sceneAsset.scene, "car");
+//        sceneManager.addScene(carScene);
+//        wheelScene0 = new Scene(sceneAsset.scene, "wheel");
+//        sceneManager.addScene(wheelScene0);
+//        wheelScene1 = new Scene(sceneAsset.scene, "wheel");
+//        sceneManager.addScene(wheelScene1);
+//        wheelScene2 = new Scene(sceneAsset.scene, "wheel");
+//        sceneManager.addScene(wheelScene2);
+//        wheelScene3 = new Scene(sceneAsset.scene, "wheel");
+//        sceneManager.addScene(wheelScene3);
         scene = new Scene(sceneAsset.scene, "groundplane");
         sceneManager.addScene(scene);
         scene = new Scene(sceneAsset.scene, "church");
         sceneManager.addScene(scene);
-        wolfScene = new Scene(sceneAsset.scene, "HellHound");
-        sceneManager.addScene(wolfScene);
-        zombieScene = new Scene(sceneAsset.scene, "zombieArmature");
-        sceneManager.addScene(zombieScene);
+//        wolfScene = new Scene(sceneAsset.scene, "HellHound");
+//        sceneManager.addScene(wolfScene);
+//        zombieScene = new Scene(sceneAsset.scene, "zombieArmature");
+//        sceneManager.addScene(zombieScene);
+
         scene = new Scene(sceneAsset.scene, "spookytree");
         sceneManager.addScene(scene);
         scene = new Scene(sceneAsset.scene, "spookytree2");
@@ -111,6 +114,7 @@ public class World implements Disposable {
         sceneManager.addScene(scene);
 
         population.reset();
+        populationScenes.reset();
     }
 
     // return true when game over
@@ -119,10 +123,7 @@ public class World implements Disposable {
             return true;
 
         population.update(sceneManager.camera.position, deltaTime);
-
-        updateCarScene(population.getCar(), deltaTime);
-        updateWolfScene(population.getWolf());
-        updateZombieScene(population.getZombie());
+        populationScenes.update(deltaTime);
 
 
         playerTransform.setToTranslation(sceneManager.camera.position);       // as this is a first person game, this is also the camera position
@@ -132,36 +133,24 @@ public class World implements Disposable {
         return false;
     }
 
-    private void updateCarScene(Car car,float deltaTime) {
-        float wx = 1f;
-        float wz = 1.83f;
-        float wy = 0.37f;
+//    private void updateCarScene(Car car,float deltaTime) {
+//        float wx = 1f;
+//        float wz = 1.83f;
+//        float wy = 0.37f;
+//
+//
+//
+//        carScene.modelInstance.transform.setTranslation(car.position);
+//
+//        wheelAngle += car.speed * 90f * deltaTime;
+//
+//        wheelScene0.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z+wz);
+//        wheelScene1.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z+wz);
+//        wheelScene2.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z-wz);
+//        wheelScene3.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z-wz);
+//
+//    }
 
-
-
-        carScene.modelInstance.transform.setTranslation(car.position);
-
-        wheelAngle += car.speed * 90f * deltaTime;
-
-        wheelScene0.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z+wz);
-        wheelScene1.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z+wz);
-        wheelScene2.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z-wz);
-        wheelScene3.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z-wz);
-
-    }
-
-    // as if there is only one....
-    private void updateWolfScene(Creature wolf) {
-        wolfScene.modelInstance.transform.set(wolf.transform);
-        if(wolf.isDead())
-            sceneManager.removeScene(wolfScene);
-    }
-
-    private void updateZombieScene(Creature zombie) {
-        zombieScene.modelInstance.transform.set(zombie.transform);
-        if(zombie.isDead())
-            sceneManager.removeScene(zombieScene);
-    }
 
     public String getNameOfKiller() {
         return population.getPlayer().killedBy.name;

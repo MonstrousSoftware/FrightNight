@@ -3,6 +3,7 @@ package com.monstrous.frightnight.creatures;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
+import net.mgsx.gltf.scene3d.scene.Scene;
 
 // base class for moving entities (zombies, wolf, car)
 // Position etc. are Vector3 even though movement is only in the horizontal plane. Just in case.
@@ -16,6 +17,7 @@ public class Creature {
     private boolean dead;
     private Vector3 tmpVec = new Vector3();
     public Creature killedBy;
+    public Scene scene;     // for rendering, gdx-gltf equivalent of model instance
 
     public Creature( String name, Vector3 position ) {
         this.name = name;
