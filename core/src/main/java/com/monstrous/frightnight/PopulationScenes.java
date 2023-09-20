@@ -19,6 +19,7 @@ public class PopulationScenes {
 
     private SceneAsset sceneAsset;
     private SceneManager sceneManager;
+    private Scene carScene;
     private Scene wheelScene0, wheelScene1, wheelScene2, wheelScene3;
     private float wheelAngle;
     private Vector3 tmpVec = new Vector3();
@@ -46,6 +47,23 @@ public class PopulationScenes {
 //        sceneManager.addScene(scene);
     }
 
+    public void clearPopulation() {
+        for(Wolf wolf : population.wolves)
+            if(wolf.scene != null)
+                sceneManager.removeScene(wolf.scene);
+        for(Zombie zombie : population.zombies)
+            if(zombie.scene != null)
+                sceneManager.removeScene(zombie.scene);
+        if(carScene != null) {
+            sceneManager.removeScene(carScene);
+            sceneManager.removeScene(wheelScene0);
+            sceneManager.removeScene(wheelScene1);
+            sceneManager.removeScene(wheelScene2);
+            sceneManager.removeScene(wheelScene3);
+        }
+    }
+
+
     public void reset() {
 
         for(Wolf wolf : population.wolves) {
@@ -62,7 +80,7 @@ public class PopulationScenes {
             zombie.scene = scene;
         }
 
-        Scene carScene = new Scene(sceneAsset.scene, "car");
+        carScene = new Scene(sceneAsset.scene, "car");
         sceneManager.addScene(carScene);
         population.getCar().scene = carScene;
 

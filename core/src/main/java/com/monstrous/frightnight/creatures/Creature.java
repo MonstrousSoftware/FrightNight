@@ -13,7 +13,7 @@ public class Creature {
     public Vector3 position;
     public Vector3 forward;         // forward unit vector
     public Matrix4 transform;
-    public float radius;
+    public float radius;            // for collision testing
     public float speed = 0;
     private boolean dead;
     private Vector3 tmpVec = new Vector3();

@@ -24,10 +24,7 @@ public class World implements Disposable {
 
     private SceneAsset sceneAsset;
     private SceneManager sceneManager;
-    private Scene carScene;
-    private Scene wolfScene;
-    private Scene zombieScene;
-    private Scene wheelScene0, wheelScene1, wheelScene2, wheelScene3;
+    private Array<Scene> staticScenes;       // for cleanup
     private float wheelAngle;
     private Vector3 tmpVec = new Vector3();
     public ParticleEffects particleEffects;
@@ -41,6 +38,8 @@ public class World implements Disposable {
         this.sceneManager = sceneManager;
         sceneAsset = assets.get(GLTF_FILE); //new GLTFLoader().load(Gdx.files.internal(GLTF_FILE));
         wheelAngle = 0;
+
+        staticScenes = new Array<>();
 
         particleEffects = new ParticleEffects( sceneManager.camera );
 
@@ -76,42 +75,37 @@ public class World implements Disposable {
 //        sceneManager.addScene(scene);
     }
 
-    public void reset() {
-        //player = new Player(10, 1.5f, 20);
-        //car = new Car(Vector3.Zero, new Vector3(0,0,1), 8f);
+    private void addStaticScene( String name ){
+        Scene scene = new Scene(sceneAsset.scene, name);
+        staticScenes.add(scene);
+        sceneManager.addScene(scene);
+    }
 
-        // todo clear sceneManager
+    public void reset() {
+
+        // clear sceneManager
+        for(Scene scene : staticScenes)
+            sceneManager.removeScene(scene);
+        staticScenes.clear();
+        populationScenes.clearPopulation();
 
         // extract some scenery items and add to scene manager
-        Scene scene = new Scene(sceneAsset.scene, "road");
-        sceneManager.addScene(scene);
-//        carScene = new Scene(sceneAsset.scene, "car");
-//        sceneManager.addScene(carScene);
-//        wheelScene0 = new Scene(sceneAsset.scene, "wheel");
-//        sceneManager.addScene(wheelScene0);
-//        wheelScene1 = new Scene(sceneAsset.scene, "wheel");
-//        sceneManager.addScene(wheelScene1);
-//        wheelScene2 = new Scene(sceneAsset.scene, "wheel");
-//        sceneManager.addScene(wheelScene2);
-//        wheelScene3 = new Scene(sceneAsset.scene, "wheel");
-//        sceneManager.addScene(wheelScene3);
-        scene = new Scene(sceneAsset.scene, "groundplane");
-        sceneManager.addScene(scene);
-        scene = new Scene(sceneAsset.scene, "church");
-        sceneManager.addScene(scene);
-//        wolfScene = new Scene(sceneAsset.scene, "HellHound");
-//        sceneManager.addScene(wolfScene);
-//        zombieScene = new Scene(sceneAsset.scene, "zombieArmature");
-//        sceneManager.addScene(zombieScene);
-
-        scene = new Scene(sceneAsset.scene, "spookytree");
-        sceneManager.addScene(scene);
-        scene = new Scene(sceneAsset.scene, "spookytree2");
-        sceneManager.addScene(scene);
-        scene = new Scene(sceneAsset.scene, "spookytree3");
-        sceneManager.addScene(scene);
-        scene = new Scene(sceneAsset.scene, "spookytree4");
-        sceneManager.addScene(scene);
+        addStaticScene("groundplane");
+        addStaticScene("road");
+        addStaticScene("church");
+        addStaticScene("spookytree");
+        addStaticScene("spookytree2");
+        addStaticScene("spookytree3");
+        addStaticScene("spookytree4");
+        addStaticScene("spookytree3.001");
+        addStaticScene("spookytree4.001");
+        addStaticScene("gravestone");
+        addStaticScene("gravestone2");
+        addStaticScene("gravestone3");
+        addStaticScene("gravestone4");
+        addStaticScene("gravestone3.001");
+        addStaticScene("gravestone4.001");
+        addStaticScene("gravestone4.002");
 
         population.reset();
         populationScenes.reset();
