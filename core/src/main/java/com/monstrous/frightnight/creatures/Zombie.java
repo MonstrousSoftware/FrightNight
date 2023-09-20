@@ -15,7 +15,7 @@ public class Zombie extends Creature {
     public static final int KILL_DISTANCE = 1;
 
     public static float MINIMUM_SEPARATION = 5;
-    public static float SPEED = 0.7f;
+    public static float SPEED = 0.2f;
 
     public int mode;
     private Vector3 tmpVec = new Vector3();
