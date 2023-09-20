@@ -19,6 +19,7 @@ public class Zombie extends Creature {
     public Zombie(Vector3 position, Vector3 forward) {
         super("zombie", position);
         this.forward.set(forward).nor();
+        turnForward();
         this.mode = WANDERING;
         speed = SPEED;
     }
@@ -54,7 +55,7 @@ public class Zombie extends Creature {
             moveForward(delta);
 //            tmpVec.set(forward).scl(speed);
 //            position.add(tmpVec);
-            if(distance < 2) {   // on top of player, kills player
+            if(distance < 1) {   // on top of player, kills player
                 player.killedBy(this);
                 mode = WANDERING;
             }

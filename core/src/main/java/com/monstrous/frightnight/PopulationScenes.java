@@ -30,23 +30,9 @@ public class PopulationScenes {
         this.sceneManager = sceneManager;
         this.sceneAsset = sceneAsset;
         this.population = population;
-
-
-
-//        String armature = "Armature";
-//        sceneAsset = assets.get("models/zombie.gltf");
-//        Scene scene = new Scene(sceneAsset.scene, "Ch10", "Armature");
-//        if(armature != null) {
-//            Gdx.app.log("GameObjectType",  " armature: "+armature + " animations: "+scene.modelInstance.animations.size);
-//            for(int i = 0; i < scene.modelInstance.animations.size; i++) {
-//                String id = scene.modelInstance.animations.get(i).id;
-//                Gdx.app.log(" animation :", id);
-//            }
-//        }
-//        scene.animationController.setAnimation("Idle", -1);
-//        sceneManager.addScene(scene);
     }
 
+    // obsolete
     public void clearPopulation() {
         for(Wolf wolf : population.wolves)
             if(wolf.scene != null)
@@ -61,6 +47,34 @@ public class PopulationScenes {
             sceneManager.removeScene(wheelScene2);
             sceneManager.removeScene(wheelScene3);
         }
+    }
+
+    // use position and orientation from place-holder to create a creature
+    private void loadCreature(String name, boolean isWolf){
+        Scene scene = new Scene(sceneAsset.scene, name);
+        Vector3 pos = new Vector3();
+        Vector3 dir = new Vector3(0, 0, 1);
+        Matrix4 transform = scene.modelInstance.nodes.first().globalTransform;
+        transform.getTranslation(pos);
+        pos.y = 0;
+        dir.rot(transform).nor();
+        population.addCreature(pos, dir,isWolf);
+    }
+
+    // create wolves in the population based on placeholder scenes in the blender file
+    public void loadFromAssetFile(SceneAsset sceneAsset) {
+        // follows object names in Blender
+        loadCreature("W1", true);
+        loadCreature("W1.001", true);
+        loadCreature("W1.002", true);
+        loadCreature("W1.003", true);
+
+        loadCreature("Z1", false);
+        loadCreature("Z1.001", false);
+        loadCreature("Z1.002", false);
+        loadCreature("Z1.003", false);
+        loadCreature("Z1.004", false);
+
     }
 
 
@@ -123,6 +137,20 @@ public class PopulationScenes {
         wheelScene3.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z-wz);
 
     }
+
+
+    //        String armature = "Armature";
+//        sceneAsset = assets.get("models/zombie.gltf");
+//        Scene scene = new Scene(sceneAsset.scene, "Ch10", "Armature");
+//        if(armature != null) {
+//            Gdx.app.log("GameObjectType",  " armature: "+armature + " animations: "+scene.modelInstance.animations.size);
+//            for(int i = 0; i < scene.modelInstance.animations.size; i++) {
+//                String id = scene.modelInstance.animations.get(i).id;
+//                Gdx.app.log(" animation :", id);
+//            }
+//        }
+//        scene.animationController.setAnimation("Idle", -1);
+//        sceneManager.addScene(scene);
 
 
 }

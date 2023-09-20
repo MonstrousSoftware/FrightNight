@@ -84,10 +84,11 @@ public class World implements Disposable {
     public void reset() {
 
         // clear sceneManager
-        for(Scene scene : staticScenes)
-            sceneManager.removeScene(scene);
+        sceneManager.getRenderableProviders().clear();      // this removes all scenes
+//        for(Scene scene : staticScenes)
+//            sceneManager.removeScene(scene);
+//        populationScenes.clearPopulation();
         staticScenes.clear();
-        populationScenes.clearPopulation();
 
         // extract some scenery items and add to scene manager
         addStaticScene("groundplane");
@@ -108,6 +109,7 @@ public class World implements Disposable {
         addStaticScene("gravestone4.002");
 
         population.reset();
+        populationScenes.loadFromAssetFile(sceneAsset);
         populationScenes.reset();
     }
 

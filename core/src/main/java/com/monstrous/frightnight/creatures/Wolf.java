@@ -28,6 +28,7 @@ public class Wolf extends Creature {
     public Wolf(Vector3 position, Vector3 forward) {
         super("hellhound", position);
         this.forward.set(forward).nor();
+        turnForward();
         this.mode = SLEEPING;
     }
 

@@ -16,8 +16,10 @@ public class Population {
     private Car car;
     private Player player;
     private boolean gameOver;
+    private PopulationScenes populationScenes;
 
     public Population() {
+
         creatures = new Array<>();
         wolves = new Array<>();
         zombies = new Array<>();
@@ -43,34 +45,34 @@ public class Population {
         return zombies.first();
     }
 
-    public void reset() {
+    // wolf or zombie
+    public void addCreature(Vector3 pos, Vector3 dir, boolean isWolf ){
+        if(isWolf) {
+            Wolf wolf = new Wolf(pos, dir);
+            wolves.add(wolf);
+            creatures.add(wolf);
+        } else {
+            Zombie zombie = new Zombie(pos, dir);
+            zombies.add(zombie);
+            creatures.add(zombie);
+        }
+    }
+
+    public void reset(  ) {
         player = new Player(new Vector3(5, 0, -10));    // to track camera
 
         car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1), 8.0f);
 
         wolves.clear();
-        //for(int x = 300; x <=  500; x += 50) {
-            wolves.add( new Wolf(new Vector3(-4, 0, 28), Vector3.Z));
-        wolves.add( new Wolf(new Vector3(-8, 0, 50), Vector3.Z));
-        //}
         zombies.clear();
-        zombies.add( new Zombie(Vector3.Zero, Vector3.Z));
-        for(int x = 30; x <=  130; x += 8) {
-            zombies.add( new Zombie(new Vector3(x, 0, 0), Vector3.Z));
-        }
-//        for(int x = 325; x <=  500; x += 100) {
-//            zombies.add( new Zombie(x, 450, Zombie.WANDERING));
-//        }
-//        for(int x = 300; x <=  500; x += 100) {
-//            zombies.add( new Zombie(x, 400, Zombie.WANDERING));
-//        }
+
 
         // aggregate creatures list
         creatures.clear();
         creatures.add(player);
         creatures.add(car);
-        creatures.addAll(wolves);
-        creatures.addAll(zombies);
+//        creatures.addAll(wolves);
+//        creatures.addAll(zombies);
 
         gameOver = false;
     }
