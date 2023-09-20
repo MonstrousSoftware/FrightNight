@@ -27,8 +27,7 @@ public class Wolf extends Creature {
 
     public Wolf(Vector3 position, Vector3 forward) {
         super("hellhound", position);
-        this.forward.set(forward).nor();
-        turnForward();
+        setForward(forward);
         this.mode = SLEEPING;
     }
 
@@ -46,15 +45,13 @@ public class Wolf extends Creature {
             mode = Wolf.ALERT;
             target = player;
             speed = 0;
-            forward.set(player.position).sub(position).nor();
-            turnForward();
+            faceTowards(player.position);
         }
         if(mode == Wolf.ALERT && target == player && distance > FOLLOW_DISTANCE ){ // player moves away, wolf starts following
             Gdx.app.log("Wolf goes FOLLOWING", target.name);
             mode = Wolf.FOLLOWING;
             speed = SPEED;
-            forward.set(player.position).sub(position).nor();
-            turnForward();
+            faceTowards(player.position);
         }
         if( mode != ATTACKING && distance < ATTACK_DISTANCE ){    // player gets too close, attack mode
             mode = Wolf.ATTACKING;
@@ -80,7 +77,8 @@ public class Wolf extends Creature {
         // movement logic
         if(mode == Wolf.FOLLOWING){
 
-            forward.set(player.position).sub(position).nor();
+            faceTowards(player.position);
+
             speed = SPEED;
 
             // separation from other wolves
@@ -93,16 +91,14 @@ public class Wolf extends Creature {
                 float d = other.position.dst(position);
                 if( d < MINIMUM_SEPARATION ){   // too close to other wolf
                     tmpVec.set(other.position).sub(position).nor().scl(-1f);
-                    forward.add(tmpVec).nor();
-                    turnForward();
+                    setForward(tmpVec); // face away from the other one
                 }
             }
             moveForward(deltaTime);
         }
         if(mode == Wolf.ATTACKING){
             // move quickly towards target
-            forward.set(target.position).sub(position).nor();
-            turnForward();
+            faceTowards(player.position);
             speed = ATTACK_SPEED;
             distance = position.dst(target.position);
             moveForward(deltaTime);

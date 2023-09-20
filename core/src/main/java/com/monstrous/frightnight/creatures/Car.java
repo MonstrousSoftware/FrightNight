@@ -12,7 +12,7 @@ public class Car extends Creature {
 
     public Car(Vector3 position, Vector3 forward, float speed) {
         super("car", position);
-        this.forward.set(forward).nor();
+        setForward(forward);
         this.speed = speed;
     }
 

@@ -9,6 +9,10 @@ public class Zombie extends Creature {
     public static final int WANDERING = 0;
     public static final int ATTACKING = 1;
 
+    public static final int FORGET_DISTANCE = 20;
+    public static final int ATTACK_DISTANCE = 10;
+    public static final int KILL_DISTANCE = 1;
+
     public static float MINIMUM_SEPARATION = 5;
     public static float SPEED = 0.7f;
 
@@ -18,8 +22,7 @@ public class Zombie extends Creature {
 
     public Zombie(Vector3 position, Vector3 forward) {
         super("zombie", position);
-        this.forward.set(forward).nor();
-        turnForward();
+        setForward(forward);
         this.mode = WANDERING;
         speed = SPEED;
     }
@@ -31,11 +34,11 @@ public class Zombie extends Creature {
         // change mode based on distance of player
 
         float distance = position.dst(player.position);
-        if( distance < 100 ){    // player gets too close, attack mode
+        if( distance < ATTACK_DISTANCE ){    // player gets too close, attack mode
             mode = ATTACKING;
             //speed = SPEED;
         }
-        if(distance > 200 ){    // out of sight
+        if(distance > FORGET_DISTANCE ){    // out of sight
             mode = WANDERING;
         }
         // movement logic
@@ -43,19 +46,16 @@ public class Zombie extends Creature {
            // float delta = Gdx.graphics.getDeltaTime();
             wanderTimer -= delta;
             if(wanderTimer <= 0) {
-                forward.rotate(Vector3.Y, MathUtils.random(360));
+                turn( MathUtils.random(360));
                 wanderTimer = 3 + MathUtils.random(6f);
             }
             moveForward(delta);
         }
         if(mode == ATTACKING){
             // move towards player
-            forward.set(player.position).sub(position).nor();
-            turnForward();
+            faceTowards(player.position);
             moveForward(delta);
-//            tmpVec.set(forward).scl(speed);
-//            position.add(tmpVec);
-            if(distance < 1) {   // on top of player, kills player
+            if(distance < KILL_DISTANCE) {   // on top of player, kills player
                 player.killedBy(this);
                 mode = WANDERING;
             }
