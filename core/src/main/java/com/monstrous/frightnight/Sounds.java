@@ -14,6 +14,7 @@ public class Sounds implements Disposable {
     public static int BARK = 2;
     public static int GROWL = 3;
     public static int THUNDER = 4;
+    public static int FOOT_STEP = 5;
 
     private static Array<Sound> sounds;
     private final Preferences preferences;
@@ -30,6 +31,8 @@ public class Sounds implements Disposable {
         sounds.add( assets.get("sound/Dog Bark 2.wav"));
         sounds.add( assets.get("sound/dog-frieda-grunt-96khz-01.wav"));
         sounds.add( assets.get("sound/thunder-25689.mp3"));
+        sounds.add( assets.get("sound/footstep_concrete_001.ogg"));
+
 
         preferences = Gdx.app.getPreferences(Settings.preferencesName);
         soundVolume = preferences.getFloat("soundVolume", 1.0f);

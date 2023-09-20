@@ -8,12 +8,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.IntIntMap;
 import com.monstrous.frightnight.Settings;
+import com.monstrous.frightnight.Sounds;
 
 // derived from FirstPersonCameraController
 
 public class CamController extends InputAdapter {
     final static float CAM_HEIGHT = 1.5f;       // meters
 
+    final static float WALK_SPEED = 5f;
     final static float TURN_SPEED = 120f;
     final static float BOB_DURATION = 0.6f;     // seconds
     final static float BOB_HEIGHT = 0.04f;      // m
@@ -30,7 +32,7 @@ public class CamController extends InputAdapter {
     public int jumpKey = Input.Keys.SPACE;
     public int crouchKey = Input.Keys.C;
     public boolean autoUpdate = true;
-    protected float velocity = 5;                   // todo via Settings
+    //protected static float final SPEED = 5;                   // todo via Settings
     protected float degreesPerPixel = 0.1f;
     protected final Vector3 tmp = new Vector3();
     protected final Vector3 tmp2 = new Vector3();
@@ -45,6 +47,7 @@ public class CamController extends InputAdapter {
     private float verticalRotationSpeed;
     private float walkSpeed;
     private float strafeSpeed;
+
 
     public CamController(Camera camera) {
         this.camera = camera;
@@ -130,7 +133,8 @@ public class CamController extends InputAdapter {
     public void update (float deltaTime) {
         fwdHorizontal.set(camera.direction).y = 0;
         fwdHorizontal.nor();
-        float speed= 0;
+        float bobSpeed= 0;
+
 
         camera.direction.rotate(camera.up, -horizontalRotationSpeed);
         tmp.set(camera.direction).crs(camera.up).nor();
@@ -142,28 +146,29 @@ public class CamController extends InputAdapter {
         camera.position.add(tmp);
 
 
-        speed += Math.abs(walkSpeed);   // for head bobbing
-        speed += Math.abs(strafeSpeed);
+        bobSpeed += Math.abs(walkSpeed);   // for head bobbing
+        bobSpeed += Math.abs(strafeSpeed);
+
 
         if (keys.containsKey(forwardKey)) {
-            tmp.set(fwdHorizontal).scl(deltaTime * velocity);
+            tmp.set(fwdHorizontal).scl(deltaTime * WALK_SPEED);
             camera.position.add(tmp);
-            speed = 1;
+            bobSpeed = 1;
         }
         if (keys.containsKey(backwardKey)) {
-            tmp.set(fwdHorizontal).scl(-deltaTime * velocity);
+            tmp.set(fwdHorizontal).scl(-deltaTime * WALK_SPEED);
             camera.position.add(tmp);
-            speed = -1;
+            bobSpeed = -1;
         }
         if (keys.containsKey(strafeLeftKey)) {
-            tmp.set(fwdHorizontal).crs(camera.up).nor().scl(-deltaTime * velocity);
+            tmp.set(fwdHorizontal).crs(camera.up).nor().scl(-deltaTime * WALK_SPEED);
             camera.position.add(tmp);
-            speed = 1;
+            bobSpeed = 1;
         }
         if (keys.containsKey(strafeRightKey)) {
-            tmp.set(fwdHorizontal).crs(camera.up).nor().scl(deltaTime * velocity);
+            tmp.set(fwdHorizontal).crs(camera.up).nor().scl(deltaTime * WALK_SPEED);
             camera.position.add(tmp);
-            speed = 1;
+            bobSpeed = 1;
         }
         if (keys.containsKey(turnLeftKey)) {
             camera.direction.rotate(camera.up, deltaTime*TURN_SPEED);
@@ -189,7 +194,7 @@ public class CamController extends InputAdapter {
         //camera.position.y = CAM_HEIGHT;
 
         if(isJumping){
-            speed = 0;
+            bobSpeed = 0;
             jumpV -= deltaTime*20;
             jumpH += jumpV*deltaTime;
             if(jumpH < 0){
@@ -199,10 +204,11 @@ public class CamController extends InputAdapter {
         }
 
 
-        camera.position.y = CAM_HEIGHT + jumpH + bobHeight( speed, deltaTime); // apply some head bob if we're moving
+        camera.position.y = CAM_HEIGHT + jumpH + bobHeight( bobSpeed, deltaTime); // apply some head bob if we're moving
         if (autoUpdate) camera.update(true);
     }
 
+    private boolean playing = false;
 
     private float bobHeight(float speed, float deltaTime ) {
 
@@ -210,6 +216,7 @@ public class CamController extends InputAdapter {
         if(Math.abs(speed) > 0.1f ) {
             bobAngle += deltaTime * 2.0f * Math.PI / BOB_DURATION;
             bobAngle += MathUtils.random(0.4f) - 0.2f;  // add bit of noise to the angle
+
 
             // move the head up and down in a sine wave
             bobHeight = (float) (BOB_HEIGHT * Math.sin(bobAngle));
