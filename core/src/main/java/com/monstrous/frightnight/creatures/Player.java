@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 public class Player extends Creature {
     public Player(Vector3 position) {
         super("Player", position);
+        this.radius = 0.5f;     // give a bit of an advantage
     }
 
     @Override

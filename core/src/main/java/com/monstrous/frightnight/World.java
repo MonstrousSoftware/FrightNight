@@ -133,24 +133,6 @@ public class World implements Disposable {
         return false;
     }
 
-//    private void updateCarScene(Car car,float deltaTime) {
-//        float wx = 1f;
-//        float wz = 1.83f;
-//        float wy = 0.37f;
-//
-//
-//
-//        carScene.modelInstance.transform.setTranslation(car.position);
-//
-//        wheelAngle += car.speed * 90f * deltaTime;
-//
-//        wheelScene0.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z+wz);
-//        wheelScene1.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z+wz);
-//        wheelScene2.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).trn(car.position.x+wx, wy, car.position.z-wz);
-//        wheelScene3.modelInstance.transform.setToRotation(Vector3.X, wheelAngle).rotate(Vector3.Y, 180).trn(car.position.x-wx, wy, car.position.z-wz);
-//
-//    }
-
 
     public String getNameOfKiller() {
         return population.getPlayer().killedBy.name;

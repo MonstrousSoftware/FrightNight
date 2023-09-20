@@ -13,6 +13,7 @@ public class Creature {
     public Vector3 position;
     public Vector3 forward;         // forward unit vector
     public Matrix4 transform;
+    public float radius;
     public float speed = 0;
     private boolean dead;
     private Vector3 tmpVec = new Vector3();
@@ -24,6 +25,7 @@ public class Creature {
         this.position = new Vector3(position);
         this.forward = new Vector3();
         this.speed = 0;
+        radius = 1f;
         transform = new Matrix4();
         turnForward();
         dead = false;

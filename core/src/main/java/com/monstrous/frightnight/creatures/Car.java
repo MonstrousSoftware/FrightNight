@@ -1,6 +1,7 @@
 package com.monstrous.frightnight.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -11,13 +12,16 @@ public class Car extends Creature {
 
     public Car(Vector3 position, Vector3 forward, float speed) {
         super("car", position);
-        this.forward.set(forward);
+        this.forward.set(forward).nor();
         this.speed = speed;
     }
 
     public void move( float deltaTime, Array<Creature> creatures) {
         moveForward(deltaTime);
 
+        int a = 0;
+        if(Gdx.input.isKeyPressed(Input.Keys.F1))
+            a = 1;
 
         if(position.len() > 200){       // wrap from 200 to -200
             position.scl(-1);
@@ -32,8 +36,9 @@ public class Car extends Creature {
                 continue;
 
             // assumes car is traveling on Z axis
-            if(creature.position.x >= position.x-WIDTH/2f && creature.position.x <= position.x+WIDTH/2f &&
-                creature.position.z >= position.z-LENGTH/2f && creature.position.z <= position.z+LENGTH/2f ) {
+            // rectangle vs. circle overlap test
+            if(creature.position.x+creature.radius >= position.x-WIDTH/2f && creature.position.x-creature.radius <= position.x+WIDTH/2f &&
+                creature.position.z+creature.radius >= position.z-LENGTH/2f && creature.position.z-creature.radius <= position.z+LENGTH/2f ) {
                 creature.killedBy(this);
                 Gdx.app.log("car kills:", creature.name+ " at "+position+" creature at "+creature.position);
             }

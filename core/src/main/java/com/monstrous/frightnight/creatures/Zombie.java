@@ -18,7 +18,7 @@ public class Zombie extends Creature {
 
     public Zombie(Vector3 position, Vector3 forward) {
         super("zombie", position);
-        this.forward.set(forward);
+        this.forward.set(forward).nor();
         this.mode = WANDERING;
         speed = SPEED;
     }
