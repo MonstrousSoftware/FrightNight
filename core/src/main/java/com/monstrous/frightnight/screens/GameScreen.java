@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.monstrous.frightnight.Sounds;
 import com.monstrous.frightnight.filters.PostProcessor;
 import com.monstrous.frightnight.input.CamController;
 import com.monstrous.frightnight.lightning.BranchedLightning;
@@ -55,7 +56,6 @@ public class GameScreen extends StdScreenAdapter {
         private float flashTimer;
         private SpriteBatch batch;
         private BranchedLightning lightning;
-        private static Sound thunder;           // static so it can continue playing in the pause menu
         private Color bgColor;
         private float thunderTimer;
         private boolean gameOver = false;
@@ -76,7 +76,7 @@ public class GameScreen extends StdScreenAdapter {
             camera.lookAt(0,Settings.eyeHeight,0);
             sceneManager.setCamera(camera);
 
-            world = new World( game.assets, sceneManager );
+            world = new World( game.assets, game.sounds, sceneManager );
         }
 
         @Override
@@ -153,7 +153,6 @@ public class GameScreen extends StdScreenAdapter {
 
             batch = new SpriteBatch();
             lightning = new BranchedLightning();
-            thunder = game.assets.get("sound/thunder-25689.mp3"); // Gdx.audio.newSound(Gdx.files.internal("sound/thunder-25689.mp3"));
             thunderTimer = 3f;
             bgColor = new Color();
             gameOver = false;
@@ -194,7 +193,8 @@ public class GameScreen extends StdScreenAdapter {
                     float z = camera.position.y + MathUtils.sin(theta) * distance;
 
                     lightning.create(new Vector3(x, 200, z), new Vector3(x + dx, 0, z + dz));
-                    thunder.play();
+                    game.sounds.playSound(Sounds.THUNDER);
+
                     bgColor.set(1f, 1, 1f, 1f);
                     flashTimer = 0.1f;  // lightning effect
                     thunderTimer = MathUtils.random(Settings.lightningPeriod) + 1;      // time to next flash
@@ -208,7 +208,11 @@ public class GameScreen extends StdScreenAdapter {
 
 
 
-            gameOver = world.update(deltaTime);
+            boolean over = world.update(deltaTime);
+            if(over && !gameOver) {
+                game.sounds.playSound(Sounds.AARGH);
+                gameOver = true;
+            }
             if(!gameOver) {
                 camController.update(deltaTime);
                 sceneManager.update(deltaTime);

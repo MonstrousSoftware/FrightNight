@@ -17,7 +17,7 @@ public class Car extends Creature {
     }
 
     public void move( float deltaTime, Array<Creature> creatures) {
-        moveForward(deltaTime);
+        update(deltaTime);
 
         int a = 0;
         if(Gdx.input.isKeyPressed(Input.Keys.F1))

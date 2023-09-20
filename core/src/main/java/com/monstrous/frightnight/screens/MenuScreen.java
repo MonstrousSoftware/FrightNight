@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.monstrous.frightnight.Settings;
+import com.monstrous.frightnight.Sounds;
 import com.monstrous.frightnight.shaders.MenuBackground;
 import de.golfgl.gdx.controllers.ControllerMenuStage;
 
@@ -45,7 +46,7 @@ public class MenuScreen extends StdScreenAdapter {
     }
 
     protected void playSelectNoise() {
-        game.playSelectSound();
+        game.sounds.playSound(Sounds.MENU_CLICK);
     }
 
     // override this!

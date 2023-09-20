@@ -12,7 +12,9 @@ import net.mgsx.gltf.scene3d.scene.Scene;
 public class Creature {
     public String name;
     public Vector3 position;
-    private Vector3 forward;         // forward unit vector
+    private Vector3 forward;         // actual forward unit vector
+    private Vector3 targetDir;       // desired forward direction
+    private Vector3 turnStart;       // direction at start or turning
     public Matrix4 transform;
     public float radius;            // for collision testing
     public float speed = 0;
@@ -20,16 +22,20 @@ public class Creature {
     private Vector3 tmpVec = new Vector3();
     public Creature killedBy;
     public Scene scene;     // for rendering, gdx-gltf equivalent of model instance
+    private float alpha;
 
     public Creature( String name, Vector3 position ) {
         this.name = name;
         this.position = new Vector3(position);
         this.forward = new Vector3(0,0,1);
+        this.targetDir = new Vector3(forward);
+        turnStart = new Vector3();
         this.speed = 0;
         radius = 1f;
         transform = new Matrix4();
         turnForward();
         dead = false;
+        alpha = 1.0f;
     }
 
     public void setDead( boolean dead ){
@@ -53,13 +59,15 @@ public class Creature {
 
 
     public void faceTowards( Vector3 target ){
-        forward.set(target).sub(position).nor();
-        turnForward();
+        targetDir.set(target).sub(position).nor();
+        alpha = 0;
+        turnStart.set(forward);
     }
 
     public void setForward( Vector3 fwd ){
-        forward.set(fwd).nor();
-        turnForward();
+        targetDir.set(fwd).nor();
+        alpha = 0;
+        turnStart.set(forward);
     }
 
     public Vector3 getForward() {
@@ -67,22 +75,34 @@ public class Creature {
     }
 
     public void turn( float degrees ) {
-        forward.rotate(Vector3.Y, degrees);
-        turnForward();
+        targetDir.set(forward);
+        targetDir.rotate(Vector3.Y, degrees);
+        alpha = 0;
+        turnStart.set(forward);
     }
 
     // orient model to point to forward vector
-    public void turnForward() {
+    private void turnForward() {
         float degrees = (float)Math.toDegrees(Math.atan2(forward.x, forward.z));
         transform.setToRotation(Vector3.Y, degrees);
         transform.setTranslation(position);
     }
 
-    public void moveForward( float deltaTime ) {
+    // move creature according to orientation and speed
+    public void update( float deltaTime ) {
+        if(alpha < 1.0f) {
+            float turnSpeed = Math.max(speed, 1f);  // turn faster if speed is high to avoid overshoot, also allow turn if not moving
+            alpha += deltaTime*turnSpeed;
+            forward.set(turnStart);
+            forward.slerp(targetDir, alpha);
+        }
+        turnForward();
+
         tmpVec.set(forward).scl(speed*deltaTime);
         position.add(tmpVec);
         transform.setTranslation(position);
     }
+
 
 
 }

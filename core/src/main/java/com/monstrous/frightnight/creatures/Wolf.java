@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.monstrous.frightnight.Sounds;
 
 public class Wolf extends Creature {
     public static final int SLEEPING = 0;
@@ -31,7 +32,7 @@ public class Wolf extends Creature {
         this.mode = SLEEPING;
     }
 
-    public void move(float deltaTime, Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
+    public void move(float deltaTime, Sounds sounds, Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
         if(isDead())
             return;
 
@@ -40,8 +41,9 @@ public class Wolf extends Creature {
 
         float distance = position.dst(player.position);
         //Gdx.app.log("Wolf player distance", ""+distance);
-        if(  mode != ALERT && distance < ALERT_DISTANCE ){   // player gets close, wolf is on alert but does not move yet
+        if(  mode != ALERT && mode != ATTACKING && distance < ALERT_DISTANCE ){   // player gets close, wolf is on alert but does not move yet
             Gdx.app.log("Wolf goes ALERT", "");
+            sounds.playSound(Sounds.BARK);
             mode = Wolf.ALERT;
             target = player;
             speed = 0;
@@ -55,7 +57,9 @@ public class Wolf extends Creature {
         }
         if( mode != ATTACKING && distance < ATTACK_DISTANCE ){    // player gets too close, attack mode
             mode = Wolf.ATTACKING;
+            sounds.playSound(Sounds.GROWL);
             target = player;
+            Gdx.app.log("Wolf goes ATTACKING", target.name);
             smallestDistance = distance;
         }
 
@@ -64,15 +68,18 @@ public class Wolf extends Creature {
                 continue;
             distance = position.dst(zombie.position);
             if( distance < ATTACK_DISTANCE ){    // zombie gets too close, attack mode
-                mode = Wolf.ATTACKING;
+                if(mode != ATTACKING) {
+                    sounds.playSound(Sounds.GROWL);
+                    mode = Wolf.ATTACKING;
+                    Gdx.app.log("Wolf goes ATTACKING", target.name);
+                }
                 if(distance < smallestDistance) {
                     target = zombie;
                     smallestDistance = distance;
                 }
             }
         }
-        if(mode == Wolf.ATTACKING)
-            Gdx.app.log("Wolf goes ATTACKING", target.name);
+
 
         // movement logic
         if(mode == Wolf.FOLLOWING){
@@ -94,20 +101,24 @@ public class Wolf extends Creature {
                     setForward(tmpVec); // face away from the other one
                 }
             }
-            moveForward(deltaTime);
+            update(deltaTime);
         }
         if(mode == Wolf.ATTACKING){
             // move quickly towards target
             faceTowards(player.position);
             speed = ATTACK_SPEED;
             distance = position.dst(target.position);
-            moveForward(deltaTime);
+            update(deltaTime);
 
             if(distance < KILL_DISTANCE && !target.isDead()) {  // on top of target, kills target
                 Gdx.app.log("Wolf KILLS", target.name);
                 target.killedBy(this);
                 mode = ALERT;
             }
+        }
+        if(mode == ALERT) {
+            faceTowards(player.position);
+            update(deltaTime);  // rotate to follow target, but don't move
         }
     }
 

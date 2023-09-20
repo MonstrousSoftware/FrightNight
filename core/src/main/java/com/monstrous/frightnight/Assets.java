@@ -35,6 +35,9 @@ public class Assets implements Disposable {
 
 
         assets.load("sound/click_002.ogg", Sound.class);
+        assets.load("sound/aargh0.wav", Sound.class);
+        assets.load("sound/Dog Bark 2.wav", Sound.class);
+        assets.load("sound/dog-frieda-grunt-96khz-01.wav", Sound.class);
         assets.load("sound/thunder-25689.mp3", Sound.class);
 
         assets.load("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3", Music.class);

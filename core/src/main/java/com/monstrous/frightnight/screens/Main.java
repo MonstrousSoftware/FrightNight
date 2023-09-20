@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.controllers.Controllers;
 import com.monstrous.frightnight.Assets;
 import com.monstrous.frightnight.Settings;
+import com.monstrous.frightnight.Sounds;
 import com.monstrous.frightnight.input.MyControllerMappings;
 import de.golfgl.gdx.controllers.mapping.ControllerToInputAdapter;
 
@@ -16,7 +17,8 @@ public class Main extends Game {
 
     public Assets assets;
     public ControllerToInputAdapter controllerToInputAdapter;
-    private Sound selectSound;
+    public Sounds sounds;
+    //private Sound selectSound;
 
     @Override
     public void create() {
@@ -28,6 +30,8 @@ public class Main extends Game {
         assets = new Assets();
         assets.finishLoading();         // todo asynch
 
+        sounds = new Sounds(assets);
+
 
         if (Settings.supportControllers) {
             controllerToInputAdapter = new ControllerToInputAdapter(new MyControllerMappings());
@@ -36,9 +40,6 @@ public class Main extends Game {
             controllerToInputAdapter.addAxisMapping(MyControllerMappings.AXIS_VERTICAL, Input.Keys.UP, Input.Keys.DOWN);
             Controllers.addListener(controllerToInputAdapter);
         }
-
-        selectSound = assets.get("sound/click_002.ogg");
-
 
         onLoadingComplete();
         //setScreen(new StartScreen(this));
@@ -51,10 +52,6 @@ public class Main extends Game {
             setScreen(new MainMenuScreen(this));
     }
 
-    // we put this in main so the sound can keep playing during a screen switch
-    public void playSelectSound() {
-        selectSound.play();
-    }
 
     @Override
     public void dispose() {

@@ -34,7 +34,7 @@ public class World implements Disposable {
     private PopulationScenes populationScenes;
 
 
-    public World(Assets assets, SceneManager sceneManager ) {
+    public World(Assets assets, Sounds sounds, SceneManager sceneManager ) {
         this.sceneManager = sceneManager;
         sceneAsset = assets.get(GLTF_FILE); //new GLTFLoader().load(Gdx.files.internal(GLTF_FILE));
         wheelAngle = 0;
@@ -43,7 +43,7 @@ public class World implements Disposable {
 
         particleEffects = new ParticleEffects( sceneManager.camera );
 
-        population = new Population();
+        population = new Population(sounds);
         populationScenes = new PopulationScenes(population, sceneAsset, sceneManager);
 
         reset();

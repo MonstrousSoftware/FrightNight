@@ -17,8 +17,10 @@ public class Population {
     private Player player;
     private boolean gameOver;
     private PopulationScenes populationScenes;
+    private Sounds sounds;
 
-    public Population() {
+    public Population(Sounds sounds) {
+        this.sounds = sounds;
 
         creatures = new Array<>();
         wolves = new Array<>();
@@ -61,7 +63,7 @@ public class Population {
     public void reset(  ) {
         player = new Player(new Vector3(5, 0, -10));    // to track camera
 
-        car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1), 8.0f);
+        car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1), 0.0f);
 
         wolves.clear();
         zombies.clear();
@@ -71,8 +73,6 @@ public class Population {
         creatures.clear();
         creatures.add(player);
         creatures.add(car);
-//        creatures.addAll(wolves);
-//        creatures.addAll(zombies);
 
         gameOver = false;
     }
@@ -80,12 +80,12 @@ public class Population {
 
     private void moveWolves(float deltaTime) {
         for(Wolf wolf : wolves )
-            wolf.move(deltaTime, player, wolves, zombies);
+            wolf.move(deltaTime, sounds, player, wolves, zombies);
     }
 
     private void moveZombies(float deltaTime) {
         for(Zombie zombie : zombies )
-            zombie.move(deltaTime, player, zombies);
+            zombie.move(deltaTime, sounds, player, zombies);
     }
 
 

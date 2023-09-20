@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.monstrous.frightnight.Sounds;
 
 public class Zombie extends Creature {
     public static final int WANDERING = 0;
@@ -26,7 +27,7 @@ public class Zombie extends Creature {
         this.mode = WANDERING;
         speed = SPEED;
     }
-    public void move(float delta, Player player, Array<Zombie> zombies ) {
+    public void move(float delta, Sounds sounds,  Player player, Array<Zombie> zombies ) {
         if(isDead())
             return;
 
@@ -49,12 +50,12 @@ public class Zombie extends Creature {
                 turn( MathUtils.random(360));
                 wanderTimer = 3 + MathUtils.random(6f);
             }
-            moveForward(delta);
+            update(delta);
         }
         if(mode == ATTACKING){
             // move towards player
             faceTowards(player.position);
-            moveForward(delta);
+            update(delta);
             if(distance < KILL_DISTANCE) {   // on top of player, kills player
                 player.killedBy(this);
                 mode = WANDERING;
