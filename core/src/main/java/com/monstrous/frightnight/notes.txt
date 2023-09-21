@@ -11,10 +11,11 @@ FIXED - on web the sound keeps playing after exitscreen completes, despite the s
 FIXED - web version doesn't catch the cursor, you cannot look all around.  Use A and D keys to turn instead of strafe. Strafing was moved to Q and E.
 - (minor) crouching (even though it is useless) is too jerky.
 - sound volume control (music?)
-- credits screen
+DONE - credits screen
 - save preferences
 - game icons
-- font missing some characters and small h has some surplus white
+IMPROVED - font missing some characters and small h has some surplus white
+- road texture does not appear on web
 
 
 Credits:
@@ -35,3 +36,5 @@ Credits:
 sky box: https://www.cleanpng.com/png-cube-mapping-night-sky-star-counter-strike-1-6-sky-5778000/download-png.html
 
 sky box: https://www.cleanpng.com/png-skybox-texture-mapping-cube-mapping-sky-cloud-920475/download-png.html
+
+https://fontmeme.com/fonts/halloween-fright-font/

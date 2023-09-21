@@ -15,7 +15,7 @@ import com.monstrous.frightnight.Sounds;
 public class CamController extends InputAdapter {
     final static float CAM_HEIGHT = 1.5f;       // meters
 
-    final static float WALK_SPEED = 15f;
+    final static float WALK_SPEED = 10f;
     final static float TURN_SPEED = 120f;
     final static float BOB_DURATION = 0.6f;     // seconds
     final static float BOB_HEIGHT = 0.04f;      // m

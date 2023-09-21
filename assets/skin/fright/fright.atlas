@@ -6,35 +6,42 @@ filter: Linear, Linear
 repeat: none
 FluxischElse-Regular
   rotate: false
-  xy: 1, 376
+  xy: 1, 355
   size: 505, 90
   orig: 505, 90
   offset: 0, 0
   index: -1
 FluxischElse-Regular(1)
   rotate: false
-  xy: 1, 468
+  xy: 1, 447
   size: 505, 88
   orig: 505, 88
   offset: 0, 0
   index: -1
 Halloween Fright
   rotate: false
-  xy: 1, 50
+  xy: 1, 29
   size: 504, 324
   orig: 504, 324
   offset: 0, 0
   index: -1
+OpenSans_Regular16
+  rotate: false
+  xy: 1, 537
+  size: 506, 61
+  orig: 506, 61
+  offset: 0, 0
+  index: -1
 checkbox_off
   rotate: false
-  xy: 508, 530
+  xy: 509, 572
   size: 50, 26
   orig: 50, 26
   offset: 0, 0
   index: -1
 checkbox_on
   rotate: false
-  xy: 1, 22
+  xy: 1, 1
   size: 50, 26
   orig: 50, 26
   offset: 0, 0

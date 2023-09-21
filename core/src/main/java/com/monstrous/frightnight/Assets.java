@@ -53,8 +53,10 @@ public class Assets implements Disposable {
         assets.load("voicelines/weather.mp3", Sound.class);
 
 
-        assets.load("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3", Music.class);
-
+        assets.load("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3", Music.class);      // not music, but a very long sound effect
+        assets.load("music/dark-ambient-121126.mp3", Music.class);
+        assets.load("music/spooky-music-theme-121127.mp3", Music.class);
+        assets.load("music/happy-quirky-theme-160995.mp3", Music.class);
     }
 
     public boolean update() {
@@ -65,7 +67,9 @@ public class Assets implements Disposable {
         assets.finishLoading();
     }
 
-
+    public float getProgress() {
+        return assets.getProgress();
+    }
 
     public <T> T get(String name ) {
         return assets.get(name);

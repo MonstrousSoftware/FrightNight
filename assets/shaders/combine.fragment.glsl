@@ -22,7 +22,7 @@ void main()
 	vec4 color = texture2D(u_texture, v_texCoord0);
     vec4 color2 = texture2D(u_highlightTexture, v_texCoord0);
 
-    color = color + color2 *2.0;     // change the constant for effect
+    color = color + color2 *1.0;     // change the constant for effect
 
     // vignette effect
     vec2 dist = v_texCoord0 * (1.0 - v_texCoord0.yx);

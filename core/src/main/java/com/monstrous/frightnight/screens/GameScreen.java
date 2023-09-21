@@ -84,6 +84,8 @@ public class GameScreen extends StdScreenAdapter {
 
         startedWithWeather = Settings.enableWeather;
 
+        game.musicManager.startMusic("music/dark-ambient-121126.mp3", true);
+
     }
 
     @Override
@@ -192,8 +194,8 @@ public class GameScreen extends StdScreenAdapter {
 
         bgColor.set(0.02f, 0, .02f, 1f);
         if (gameCompleted) {
-            bgColor.set(1, 1, 1, 1f);
-            Settings.ambientLightLevel = 0.8f;
+            bgColor.set(Color.ORANGE);
+            Settings.ambientLightLevel = 0.6f;
         }
         sceneManager.setAmbientLight(Settings.ambientLightLevel);
 
@@ -247,6 +249,13 @@ public class GameScreen extends StdScreenAdapter {
         if (!gameCompleted && world.gameCompleted()) {
             gameCompleted = true;
             world.brightenUp();
+//            environmentCubemap = EnvironmentUtil.createCubemap(new InternalFileHandleResolver(),
+//                "textures/daysky/environment_", ".jpg", EnvironmentUtil.FACE_NAMES_NEG_POS);
+//            skybox = new SceneSkybox(environmentCubemap);
+//            sceneManager.setSkyBox(skybox);
+            sceneManager.setSkyBox(null);
+            game.musicManager.stopMusic();
+            game.musicManager.startMusic("music/happy-quirky-theme-160995.mp3", true);
         }
         if (gameCompleted) {
             startedWithWeather = true;
@@ -331,6 +340,7 @@ public class GameScreen extends StdScreenAdapter {
             world.dispose();
             sceneManager.dispose();
             gui.dispose();
+            game.musicManager.stopMusic();
 
         }
 }

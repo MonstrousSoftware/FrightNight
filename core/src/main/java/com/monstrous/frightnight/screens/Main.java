@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.controllers.Controllers;
 import com.monstrous.frightnight.Assets;
+import com.monstrous.frightnight.MusicManager;
 import com.monstrous.frightnight.Settings;
 import com.monstrous.frightnight.Sounds;
 import com.monstrous.frightnight.input.MyControllerMappings;
@@ -18,7 +19,8 @@ public class Main extends Game {
     public Assets assets;
     public ControllerToInputAdapter controllerToInputAdapter;
     public Sounds sounds;
-    //private Sound selectSound;
+    public MusicManager musicManager;
+
 
     @Override
     public void create() {
@@ -28,10 +30,7 @@ public class Main extends Game {
 
         // load assets
         assets = new Assets();
-        assets.finishLoading();         // todo asynch
-
-        sounds = new Sounds(assets);
-
+       // assets.finishLoading();         // todo asynch
 
         if (Settings.supportControllers) {
             controllerToInputAdapter = new ControllerToInputAdapter(new MyControllerMappings());
@@ -41,11 +40,13 @@ public class Main extends Game {
             Controllers.addListener(controllerToInputAdapter);
         }
 
-        onLoadingComplete();
-        //setScreen(new StartScreen(this));
+        setScreen(new StartScreen(this));
     }
 
     public void onLoadingComplete() {
+        sounds = new Sounds(assets);
+        musicManager = new MusicManager(assets);
+
         if(!Settings.skipTitleScreen)
             setScreen(new TitleScreen(this));
         else
@@ -57,5 +58,6 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         assets.dispose();
+        musicManager.dispose();
     }
 }

@@ -2590,11 +2590,11 @@
 			"source":0
 		},
 		{
-			"sampler":0,
+			"sampler":1,
 			"source":1
 		},
 		{
-			"sampler":0,
+			"sampler":1,
 			"source":2
 		}
 	],
@@ -4930,6 +4930,10 @@
 		}
 	],
 	"samplers":[
+		{
+			"magFilter":9728,
+			"minFilter":9984
+		},
 		{
 			"magFilter":9729,
 			"minFilter":9987

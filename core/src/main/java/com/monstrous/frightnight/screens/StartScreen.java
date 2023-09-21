@@ -4,27 +4,35 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 // on web this screen is to get a user key press so we can start playing sound
-// todo add logo
-// todo nicer font
 
 public class StartScreen extends StdScreenAdapter {
 
     private Main game;
+    private Stage stage;
+    private Skin skin;
+    private ProgressBar progressBar;
+    private Texture texture;
+    private float timer;
+    private boolean loaded;
+    private Label prompt;
 
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private OrthographicCamera cam;
-    private int width, height;
 
     public StartScreen(Main game) {
         Gdx.app.log("StartScreen constructor", "");
         this.game = game;
+
     }
 
 
@@ -32,42 +40,73 @@ public class StartScreen extends StdScreenAdapter {
     public void show() {
         Gdx.app.log("StartScreen show()", "");
 
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        cam = new OrthographicCamera();
+        // todo add progress bar to fright skin
+        skin = new Skin(Gdx.files.internal("Particle Park UI Skin/Particle Park UI.json"));
+        stage = new Stage(new ScreenViewport());
+
+        progressBar = new ProgressBar(0f, 1.0f, 0.01f, false, skin);
+        progressBar.setSize(300, 50);
+        progressBar.setValue(0);
+
+        Label textLabel = new Label("Monstrous Software\npresents",skin, "window");
+        textLabel.setColor(Color.DARK_GRAY);
+        textLabel.setAlignment(Align.center);
+
+        texture =  new Texture(Gdx.files.internal("images/monstrous.png"));
+        Image logo = new Image( new TextureRegion(texture));
+
+        prompt = new Label("Press any key",skin, "window");
+        prompt.setColor(Color.DARK_GRAY);
+        prompt.setVisible(false);
+
+        Table screenTable = new Table();
+        screenTable.setFillParent(true);
+        screenTable.add(logo).pad(10).row();
+        screenTable.add(textLabel).row();
+        screenTable.add(progressBar).pad(50).row();
+        screenTable.add(prompt).pad(50);
+        screenTable.pack();
+
+        stage.addActor(screenTable);
+        timer= 0;
+        loaded = false;
+
     }
 
 
     @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
+        timer += deltaTime;
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            game.onLoadingComplete();
-            return;
+        // load assets asynchronously
+        if(!loaded) {
+            loaded = game.assets.update();
+            float fraction = game.assets.getProgress();
+            progressBar.setValue(fraction);
+        }
+        else {
+            prompt.setVisible(true);
+            if( Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                game.onLoadingComplete();
+                return;
+            }
         }
 
-//        // load assets asynchronously
-//        if(game.assets.update()) {
-//
-//        }
+        ScreenUtils.clear(137f/255f, 255f/255f, 247f/255f, 1f);
+        stage.act(deltaTime);
+        stage.draw();
 
-
-        ScreenUtils.clear(Color.BLACK);
-
-        batch.setProjectionMatrix(cam.combined);
-        batch.begin();
-        font.draw(batch, "Press any key to start....", width/2f, height/8f);
-        batch.end();
     }
 
     @Override
     public void resize(int w, int h) {
-        this.width = w;
-        this.height = h;
+//        this.width = w;
+//        this.height = h;
         Gdx.app.log("StartScreen resize()", "");
-        cam.setToOrtho(false, width, height);
-        cam.update();
+        stage.getViewport().update(w, h, true);
+//        cam.setToOrtho(false, width, height);
+//        cam.update();
     }
 
     @Override
@@ -79,8 +118,10 @@ public class StartScreen extends StdScreenAdapter {
     @Override
     public void dispose() {
         Gdx.app.log("StartScreen dispose()", "");
-        batch.dispose();
-        font.dispose();
+//        batch.dispose();
+//        font.dispose();
+        stage.dispose();
+        skin.dispose();
     }
 
 }

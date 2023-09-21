@@ -11,6 +11,12 @@
 		"scaledSize": -1,
 		"markupEnabled": false,
 		"flip": false
+	},
+	"OpenSans_Regular16": {
+		"file": "OpenSans_Regular16.fnt",
+		"scaledSize": -1,
+		"markupEnabled": false,
+		"flip": false
 	}
 },
 "Color": {
@@ -61,6 +67,10 @@
 	"title": {
 		"font": "Halloween_Fright",
 		"fontColor": "white"
+	},
+	"small": {
+		"font": "OpenSans_Regular16",
+		"fontColor": "white"
 	}
 },
 "TextButtonStyle": {
@@ -70,6 +80,12 @@
 		"overFontColor": "gold",
 		"pressedOffsetX": 2,
 		"pressedOffsetY": -2
+	}
+},
+"TextFieldStyle": {
+	"default": {
+		"font": "FluxischElse-Regular32",
+		"fontColor": "white"
 	}
 },
 "TextTooltipStyle": {
