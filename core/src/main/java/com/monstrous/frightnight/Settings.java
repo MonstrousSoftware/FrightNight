@@ -21,8 +21,12 @@ public class Settings {
     static public Color fogColour = new Color(.1f, 0.1f, 0.2f, 1f);
 
 
-    static public boolean enableWeather = false;
+    static public boolean enableWeather = true;
     static public float lightningPeriod = 24f;          // period of lightning (randomized: average will be half this)
+
+    static public boolean enableHints = true;
+    static public boolean enableNarrator = true;
+
 
     static public String preferencesName = "frightnight";
 }

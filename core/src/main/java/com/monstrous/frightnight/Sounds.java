@@ -16,6 +16,18 @@ public class Sounds implements Disposable {
     public static int THUNDER = 4;
     public static int FOOT_STEP = 5;
 
+    public static int VOICE_BRAVE_KNIGHT = 6;
+    public static int VOICE_CAR = 7;
+    public static int VOICE_CARRIAGE = 8;
+    public static int VOICE_CORN = 9;
+    public static int VOICE_GLORY = 10;
+    public static int VOICE_HOUNDS = 11;
+    public static int VOICE_NO_CREATURE = 12;
+    public static int VOICE_UNDEAD = 13;
+    public static int VOICE_VOID = 14;
+    public static int VOICE_WEATHER = 15;
+
+
     private static Array<Sound> sounds;
     private final Preferences preferences;
     public static float soundVolume;
@@ -32,6 +44,18 @@ public class Sounds implements Disposable {
         sounds.add( assets.get("sound/dog-frieda-grunt-96khz-01.wav"));
         sounds.add( assets.get("sound/thunder-25689.mp3"));
         sounds.add( assets.get("sound/footstep_concrete_001.ogg"));
+
+
+        sounds.add( assets.get("voicelines/braveknight.mp3"));
+        sounds.add( assets.get("voicelines/car.mp3"));
+        sounds.add( assets.get("voicelines/carriage.mp3"));
+        sounds.add( assets.get("voicelines/corn.mp3"));
+        sounds.add( assets.get("voicelines/glory.mp3"));
+        sounds.add( assets.get("voicelines/hounds.mp3"));
+        sounds.add( assets.get("voicelines/nocreature.mp3"));
+        sounds.add( assets.get("voicelines/undead.mp3"));
+        sounds.add( assets.get("voicelines/void.mp3"));
+        sounds.add( assets.get("voicelines/weather.mp3"));
 
 
         preferences = Gdx.app.getPreferences(Settings.preferencesName);

@@ -43,10 +43,11 @@ public class HintQueue {
         Notification note = queue.first();
         if(time >= note.startTime) {
             Gdx.app.log("Hint Message", note.message.text);
-            gui.showMessage( note.message.text );
-//            sounds.playSound(note.message.soundId);
+            if(Settings.enableHints || note.message == HintMessage.GLORY)
+                gui.showMessage( note.message.text );
+            if(Settings.enableNarrator)
+                sounds.playSound(note.message.soundId);
             endTime = time + MESSAGE_DURATION;
-            // play sound
             queue.removeIndex(0);
         }
 

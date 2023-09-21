@@ -21,16 +21,24 @@ public class DecalCornField implements Disposable {
     private float minSeparation;
     private Array<Decal>decals;
     private DecalBatch decalBatch;
+    private Color baseColor;
+
+    public void setColor( Color color ){
+        baseColor.set(color);
+        for(Decal decal: decals ) {
+            decal.setColor(baseColor);
+        }
+    }
 
     public DecalCornField(Assets assets, Camera camera, Rectangle area, float minSeparation) {
         this.area = new Rectangle(area);
         this.minSeparation = minSeparation;
+        baseColor = Color.DARK_GRAY;
 
         decals = new Array<>();
 
         // generate a random poisson distribution of instances over a rectangular area, meaning instances are never too close together
         PoissonDistribution poisson = new PoissonDistribution();
-        //Rectangle area = new Rectangle(-AREA_LENGTH, -AREA_LENGTH, AREA_LENGTH, AREA_LENGTH);
         Array<Vector2> points = poisson.generatePoissonDistribution(minSeparation, area);
 
         Texture billboard = assets.get("images/cornstalk-billboard.png");
@@ -42,7 +50,7 @@ public class DecalCornField implements Disposable {
             float ht = baseHeight * MathUtils.random(0.8f, 1.2f);                       // vary heights
             Decal decal = Decal.newDecal(1, ht, region, true);
             decal.setPosition(point.x, ht/2f, point.y);
-            decal.setColor(Color.DARK_GRAY);
+            decal.setColor(baseColor);
             decals.add(decal);
         }
         decalBatch = new DecalBatch(new CameraGroupStrategy(camera));

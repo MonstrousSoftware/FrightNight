@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.monstrous.frightnight.HintMessage;
+import com.monstrous.frightnight.HintQueue;
 import com.monstrous.frightnight.Sounds;
 
 public class Zombie extends Creature {
@@ -20,6 +22,7 @@ public class Zombie extends Creature {
     public int mode;
     private Vector3 tmpVec = new Vector3();
     private float wanderTimer;
+    private static boolean firstZombie = true;
 
     public Zombie(Vector3 position, Vector3 forward) {
         super("zombie", position);
@@ -27,7 +30,7 @@ public class Zombie extends Creature {
         this.mode = WANDERING;
         speed = SPEED;
     }
-    public void move(float delta, Sounds sounds,  Player player, Array<Zombie> zombies ) {
+    public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Zombie> zombies ) {
         if(isDead())
             return;
 
@@ -35,6 +38,16 @@ public class Zombie extends Creature {
         // change mode based on distance of player
 
         float distance = position.dst(player.position);
+
+        if(firstZombie && distance < 50 ){
+            Vector3 view = new Vector3(position).sub(player.position);  // view vector from player to zombie
+            float dot = view.dot(player.getForward());  // angle with player's forward direction
+            if(dot > 0.3f) {  // player is able to see zombie
+                firstZombie = false;
+                hintQueue.addHint(0f, HintMessage.UNDEAD);
+            }
+        }
+
         if( distance < ATTACK_DISTANCE ){    // player gets too close, attack mode
             mode = ATTACKING;
             //speed = SPEED;

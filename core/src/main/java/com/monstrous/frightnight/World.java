@@ -2,6 +2,7 @@ package com.monstrous.frightnight;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -32,10 +33,12 @@ public class World implements Disposable {
     private Array<DecalCornField> cornFields;
     private Population population;
     private PopulationScenes populationScenes;
+    private HintQueue hintQueue;
 
 
-    public World(Assets assets, Sounds sounds, SceneManager sceneManager ) {
+    public World(Assets assets, Sounds sounds, SceneManager sceneManager, HintQueue hintQueue ) {
         this.sceneManager = sceneManager;
+        this.hintQueue = hintQueue;
         sceneAsset = assets.get(GLTF_FILE); //new GLTFLoader().load(Gdx.files.internal(GLTF_FILE));
         wheelAngle = 0;
 
@@ -81,6 +84,8 @@ public class World implements Disposable {
         sceneManager.addScene(scene);
     }
 
+
+
     public void reset() {
 
         // clear sceneManager
@@ -113,12 +118,12 @@ public class World implements Disposable {
         populationScenes.reset();
     }
 
-    // return true when game over
+    // return true if player died
     public boolean update(float deltaTime ) {
         if(population.getPlayer().isDead())
             return true;
 
-        population.update(sceneManager.camera.position, deltaTime);
+        population.update(sceneManager.camera.position, hintQueue, deltaTime );
         populationScenes.update(deltaTime);
 
 
@@ -129,6 +134,14 @@ public class World implements Disposable {
         return false;
     }
 
+    public boolean gameCompleted() {
+        return population.getCar().pickedUp;
+    }
+
+    public void brightenUp(){
+        for(DecalCornField field : cornFields)
+            field.setColor(Color.WHITE);
+    }
 
     public String getNameOfKiller() {
         return population.getPlayer().killedBy.name;

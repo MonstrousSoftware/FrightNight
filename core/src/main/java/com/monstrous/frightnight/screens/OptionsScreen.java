@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.monstrous.frightnight.Settings;
 import de.golfgl.gdx.controllers.ControllerMenuStage;
 
@@ -107,22 +108,28 @@ public class OptionsScreen extends MenuScreen {
        CheckBox weather = new CheckBox("Weather Effects", skin);
        weather.setChecked(Settings.enableWeather);
 
+       CheckBox hints = new CheckBox("Text Hints", skin);
+       hints.setChecked(Settings.enableHints);
+
+       CheckBox narrator = new CheckBox("Narrated Hints", skin);
+       narrator.setChecked(Settings.enableNarrator);
+
        controllerLabel = new Label("None", skin);
        if(controller != null)
            controllerLabel.setText(controller.getName());
 
        TextButton done = new TextButton("Done", skin);
 
-       // todo improve left alignment
-
-
        int pad = 10;
-       screenTable.add(fullScreen).pad(pad).row();
-       screenTable.add(invertLook).pad(pad).row();
-       screenTable.add(freeLook).pad(pad).row();
-       screenTable.add(weather).pad(pad).row();
-       screenTable.add(new Label("Controller: ", skin)).pad(pad);
-       screenTable.add(controllerLabel).row();
+
+       screenTable.add(fullScreen).pad(pad).left().row();
+       screenTable.add(invertLook).pad(pad).left().row();
+       screenTable.add(freeLook).pad(pad).left().row();
+       screenTable.add(weather).pad(pad).left().row();
+       screenTable.add(hints).pad(pad).left().row();
+       screenTable.add(narrator).pad(pad).left().row();
+       screenTable.add(new Label("Controller: ", skin)).pad(pad).left();
+       screenTable.add(controllerLabel).left().row();
        screenTable.add(done).pad(20).row();
 
        screenTable.pack();
@@ -140,6 +147,8 @@ public class OptionsScreen extends MenuScreen {
            cStage.addFocusableActor(invertLook);
            cStage.addFocusableActor(freeLook);
            cStage.addFocusableActor(weather);
+           cStage.addFocusableActor(hints);
+           cStage.addFocusableActor(narrator);
            //stage.addFocusableActor(controllerLabel);
            cStage.addFocusableActor(done);
            cStage.setFocusedActor(fullScreen);
@@ -178,6 +187,20 @@ public class OptionsScreen extends MenuScreen {
            public void changed(ChangeEvent event, Actor actor) {
                playSelectNoise();
                Settings.enableWeather = weather.isChecked();
+           }
+       });
+       hints.addListener(new ChangeListener() {
+           @Override
+           public void changed(ChangeEvent event, Actor actor) {
+               playSelectNoise();
+               Settings.enableHints = hints.isChecked();
+           }
+       });
+       narrator.addListener(new ChangeListener() {
+           @Override
+           public void changed(ChangeEvent event, Actor actor) {
+               playSelectNoise();
+               Settings.enableNarrator = narrator.isChecked();
            }
        });
 

@@ -15,7 +15,7 @@ import com.monstrous.frightnight.Sounds;
 public class CamController extends InputAdapter {
     final static float CAM_HEIGHT = 1.5f;       // meters
 
-    final static float WALK_SPEED = 5f;
+    final static float WALK_SPEED = 15f;
     final static float TURN_SPEED = 120f;
     final static float BOB_DURATION = 0.6f;     // seconds
     final static float BOB_HEIGHT = 0.04f;      // m
@@ -47,6 +47,7 @@ public class CamController extends InputAdapter {
     private float verticalRotationSpeed;
     private float walkSpeed;
     private float strafeSpeed;
+    private Vector3 prevPosition;
 
 
     public CamController(Camera camera) {
@@ -59,6 +60,7 @@ public class CamController extends InputAdapter {
         verticalRotationSpeed = 0;
         walkSpeed = 0;
         strafeSpeed = 0;
+        prevPosition = new Vector3();
     }
 
     @Override
@@ -131,6 +133,8 @@ public class CamController extends InputAdapter {
     }
 
     public void update (float deltaTime) {
+        prevPosition.set(camera.position);
+
         fwdHorizontal.set(camera.direction).y = 0;
         fwdHorizontal.nor();
         float bobSpeed= 0;
@@ -203,6 +207,10 @@ public class CamController extends InputAdapter {
             }
         }
 
+
+        // don't allow walking off world
+        if(Math.abs(camera.position.x) > 180f || Math.abs(camera.position.z) > 180f)
+            camera.position.set(prevPosition);
 
         camera.position.y = CAM_HEIGHT + jumpH + bobHeight( bobSpeed, deltaTime); // apply some head bob if we're moving
         if (autoUpdate) camera.update(true);

@@ -41,6 +41,18 @@ public class Assets implements Disposable {
         assets.load("sound/thunder-25689.mp3", Sound.class);
         assets.load("sound/footstep_concrete_001.ogg", Sound.class);
 
+        assets.load("voicelines/braveknight.mp3", Sound.class);
+        assets.load("voicelines/car.mp3", Sound.class);
+        assets.load("voicelines/carriage.mp3", Sound.class);
+        assets.load("voicelines/corn.mp3", Sound.class);
+        assets.load("voicelines/glory.mp3", Sound.class);
+        assets.load("voicelines/hounds.mp3", Sound.class);
+        assets.load("voicelines/nocreature.mp3", Sound.class);
+        assets.load("voicelines/undead.mp3", Sound.class);
+        assets.load("voicelines/void.mp3", Sound.class);
+        assets.load("voicelines/weather.mp3", Sound.class);
+
+
         assets.load("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3", Music.class);
 
     }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.monstrous.frightnight.HintMessage;
+import com.monstrous.frightnight.HintQueue;
 import com.monstrous.frightnight.Sounds;
 
 public class Wolf extends Creature {
@@ -21,6 +23,7 @@ public class Wolf extends Creature {
     public static float MINIMUM_SEPARATION = 12f;
     public static float SPEED = 4f;
     public static float ATTACK_SPEED = 6f;
+    public static boolean firstBark = true;
 
     public int mode;
     private Creature target;
@@ -33,7 +36,7 @@ public class Wolf extends Creature {
         this.mode = SLEEPING;
     }
 
-    public void move(float deltaTime, Sounds sounds, Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
+    public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
         if(isDead())
             return;
 
@@ -67,6 +70,10 @@ public class Wolf extends Creature {
             mode = Wolf.ALERT;
             target = closest;
             Gdx.app.log("Wolf goes ALERT", target.name);
+            if(firstBark){
+                firstBark = false;
+                hintQueue.addHint(0.5f, HintMessage.HELL_HOUND);
+            }
         }
         if(mode == Wolf.ALERT && position.dst(target.position) > FOLLOW_DISTANCE ){ // player moves away, wolf starts following
             mode = Wolf.FOLLOWING;
@@ -82,7 +89,7 @@ public class Wolf extends Creature {
 
             faceTowards(target.position);
 
-            speed = 1;
+            speed = SPEED;
             distance = position.dst(target.position);
             if(distance <= FOLLOW_CLOSE_DISTANCE & speed > 0) {
                 speed = 0;

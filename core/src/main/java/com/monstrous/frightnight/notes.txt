@@ -33,3 +33,5 @@ How to import FBX animations in Blender: https://www.youtube.com/watch?v=RFPzlSd
 Credits:
 
 sky box: https://www.cleanpng.com/png-cube-mapping-night-sky-star-counter-strike-1-6-sky-5778000/download-png.html
+
+sky box: https://www.cleanpng.com/png-skybox-texture-mapping-cube-mapping-sky-cloud-920475/download-png.html

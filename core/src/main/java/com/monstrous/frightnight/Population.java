@@ -18,6 +18,7 @@ public class Population {
     private boolean gameOver;
     private PopulationScenes populationScenes;
     private Sounds sounds;
+    private boolean zombiesDead;
 
     public Population(Sounds sounds) {
         this.sounds = sounds;
@@ -63,7 +64,7 @@ public class Population {
     public void reset(  ) {
         player = new Player(new Vector3(5, 0, -10));    // to track camera
 
-        car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1), 0.0f);
+        car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1));
 
         wolves.clear();
         zombies.clear();
@@ -75,22 +76,23 @@ public class Population {
         creatures.add(car);
 
         gameOver = false;
+        zombiesDead = false;
     }
 
 
-    private void moveWolves(float deltaTime) {
+    private void moveWolves(float deltaTime, HintQueue hintQueue) {
         for(Wolf wolf : wolves )
-            wolf.move(deltaTime, sounds, player, wolves, zombies);
+            wolf.move(deltaTime, sounds, hintQueue, player, wolves, zombies);
     }
 
-    private void moveZombies(float deltaTime) {
+    private void moveZombies(float deltaTime, HintQueue hintQueue) {
         for(Zombie zombie : zombies )
-            zombie.move(deltaTime, sounds, player, zombies);
+            zombie.move(deltaTime, sounds, hintQueue, player, zombies);
     }
 
 
 
-    public void update(Vector3 playerPosition, float deltaTime ) {
+    public void update(Vector3 playerPosition, HintQueue hintQueue, float deltaTime ) {
         //Gdx.app.log("population.update", "gameOver"+gameOver);
 
         if(Gdx.input.isKeyPressed(Input.Keys.R))
@@ -100,11 +102,29 @@ public class Population {
         player.position.y = 0;  // set entity position at ground level, not eye level
 
         if(!gameOver) {
-            float delta = 0.05f; //Gdx.graphics.getDeltaTime();
+            float delta = deltaTime; //0.05f; //Gdx.graphics.getDeltaTime();
 
-            moveWolves(delta);
-            moveZombies(delta);
-            car.move(delta, creatures);
+            moveWolves(delta, hintQueue);
+            moveZombies(delta, hintQueue);
+            car.move(delta, hintQueue, player, creatures);
+            player.move(hintQueue);
+
+            int zombieCount = 0;
+            for(Zombie zombie : zombies)
+                if(!zombie.isDead())
+                    zombieCount++;
+            if(!zombiesDead && zombieCount == 0){
+                zombiesDead = true;
+                hintQueue.addHint(2f, HintMessage.NO_CREATURE); // all zombies are dead, now kill the wolves
+            }
+            int wolfCount = 0;
+            for(Wolf wolf : wolves)
+                if(!wolf.isDead())
+                    wolfCount++;
+
+            if(zombieCount == 0 && wolfCount == 0)
+                car.makePickup();
+
 //            if(player.isDead)
 //                gameOver = true;
         }
