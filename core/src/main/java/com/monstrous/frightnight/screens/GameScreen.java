@@ -14,12 +14,10 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.monstrous.frightnight.Sounds;
+import com.monstrous.frightnight.*;
 import com.monstrous.frightnight.filters.PostProcessor;
 import com.monstrous.frightnight.input.CamController;
 import com.monstrous.frightnight.lightning.BranchedLightning;
-import com.monstrous.frightnight.Settings;
-import com.monstrous.frightnight.World;
 import com.monstrous.frightnight.input.MyControllerAdapter;
 import net.mgsx.gltf.scene3d.attributes.FogAttribute;
 import net.mgsx.gltf.scene3d.attributes.PBRCubemapAttribute;
@@ -60,6 +58,8 @@ public class GameScreen extends StdScreenAdapter {
         private float thunderTimer;
         private boolean gameOver = false;
         private int viewHeight;
+        private GUI gui;
+        private HintQueue hintQueue;
 
         public GameScreen(Main game) {
             Gdx.app.log("GameScreen", "constructor");
@@ -77,6 +77,8 @@ public class GameScreen extends StdScreenAdapter {
             sceneManager.setCamera(camera);
 
             world = new World( game.assets, game.sounds, sceneManager );
+            gui = new GUI(game.assets);
+            hintQueue = new HintQueue();
         }
 
         @Override
@@ -90,6 +92,7 @@ public class GameScreen extends StdScreenAdapter {
             // (you can turn a bit with the mouse, until it reaches the side of the canvas).
             if(Gdx.app.getType() == Application.ApplicationType.WebGL)
                 Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);     // hide cursor
+
 
             camController = new CamController(camera);
 
@@ -157,6 +160,9 @@ public class GameScreen extends StdScreenAdapter {
             bgColor = new Color();
             gameOver = false;
 
+            hintQueue.addHint(3f, HintMessage.FRIGHT);
+            hintQueue.addHint(10f, HintMessage.HELLHOUND);
+
         }
 
         @Override
@@ -170,6 +176,8 @@ public class GameScreen extends StdScreenAdapter {
                 game.setScreen(new GameOverScreen(game, this, world.getNameOfKiller()));
                 return;
             }
+
+            hintQueue.update(deltaTime, gui, game.sounds);
 
 
             Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
@@ -249,6 +257,8 @@ public class GameScreen extends StdScreenAdapter {
 
 
             postProcessor.render(fbo, 0, (Gdx.graphics.getHeight()-viewHeight)/2, Gdx.graphics.getWidth(), viewHeight);    // bloom & vignette
+
+            gui.render(deltaTime);
         }
 
 
@@ -257,7 +267,7 @@ public class GameScreen extends StdScreenAdapter {
             Gdx.app.log("GameScreen", "resize()");
             // Resize your screen here. The parameters represent the new window size.
             sceneManager.updateViewport(width, height);
-            //gui.resize(width, height);
+            gui.resize(width, height);
             if(fbo != null)
                 fbo.dispose();
             fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, true);
@@ -296,5 +306,7 @@ public class GameScreen extends StdScreenAdapter {
             // dispose what we created in constructor
             world.dispose();
             sceneManager.dispose();
+            gui.dispose();
+
         }
 }

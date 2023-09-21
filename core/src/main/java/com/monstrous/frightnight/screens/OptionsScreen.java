@@ -121,7 +121,7 @@ public class OptionsScreen extends MenuScreen {
        screenTable.add(invertLook).pad(pad).row();
        screenTable.add(freeLook).pad(pad).row();
        screenTable.add(weather).pad(pad).row();
-       screenTable.add(new Label("Controller", skin)).pad(pad);     // todo ':' is not in font
+       screenTable.add(new Label("Controller: ", skin)).pad(pad);
        screenTable.add(controllerLabel).row();
        screenTable.add(done).pad(20).row();
 
