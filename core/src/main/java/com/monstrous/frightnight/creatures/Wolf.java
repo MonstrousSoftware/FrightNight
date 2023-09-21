@@ -18,11 +18,11 @@ public class Wolf extends Creature {
     public static final int ALERT_DISTANCE = 20;
     public static final int FOLLOW_CLOSE_DISTANCE = 12;
     public static final int ATTACK_DISTANCE = 10;
-    public static final int KILL_DISTANCE = 2;
+    public static final int KILL_DISTANCE = 1;
 
     public static float MINIMUM_SEPARATION = 12f;
     public static float SPEED = 4f;
-    public static float ATTACK_SPEED = 6f;
+    public static float ATTACK_SPEED = 10f;
     public static boolean firstBark = true;
 
     public int mode;

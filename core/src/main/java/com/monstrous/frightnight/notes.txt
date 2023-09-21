@@ -16,6 +16,11 @@ DONE - credits screen
 - game icons
 IMPROVED - font missing some characters and small h has some surplus white
 - road texture does not appear on web
+- to improve animations
+- trigger animation from creature state machine
+- boid separation
+- more corn fields
+
 
 
 Credits:

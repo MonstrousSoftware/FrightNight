@@ -1,5 +1,7 @@
 package com.monstrous.frightnight;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -51,7 +53,7 @@ public class PopulationScenes {
 
     // use position and orientation from place-holder to create a creature
     private void loadCreature(String name, boolean isWolf){
-        Scene scene = new Scene(sceneAsset.scene, name);
+        Scene scene = new Scene(sceneAsset.scene, name);        // load a place-holder object to obtain position and orientation, it is not added to the scene manager
         Vector3 pos = new Vector3();
         Vector3 dir = new Vector3(0, 0, 1);
         Matrix4 transform = scene.modelInstance.nodes.first().globalTransform;
@@ -88,8 +90,23 @@ public class PopulationScenes {
         }
 
         for(Zombie zombie : population.zombies) {
-            Scene scene = new Scene(sceneAsset.scene, "zombieArmature");
+//            Scene scene = new Scene(sceneAsset.scene, "zombieArmature");
+//            scene.modelInstance.transform.set(zombie.transform);
+//            sceneManager.addScene(scene);
+//            zombie.scene = scene;
+
+            String armature = "ArmatureZombie";
+            Scene scene = new Scene(sceneAsset.scene, "zombie", armature );
+            if(armature != null) {
+                Gdx.app.log("GameObjectType",  " armature: "+armature + " animations: "+scene.modelInstance.animations.size);
+                for(int i = 0; i < scene.modelInstance.animations.size; i++) {
+                    String id = scene.modelInstance.animations.get(i).id;
+                    Gdx.app.log(" animation :", id);
+                }
+            }
             scene.modelInstance.transform.set(zombie.transform);
+            scene.animationController.setAnimation("Walk", -1);
+            scene.animationController.update(MathUtils.random(60f));            // advance some random amount to get zombies out of synch
             sceneManager.addScene(scene);
             zombie.scene = scene;
         }
