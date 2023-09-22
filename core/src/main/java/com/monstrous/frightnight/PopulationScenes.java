@@ -79,7 +79,7 @@ public class PopulationScenes {
 
     }
 
-
+    // add scenes to creatures in population (except player)
     public void reset() {
 
         for(Wolf wolf : population.wolves) {

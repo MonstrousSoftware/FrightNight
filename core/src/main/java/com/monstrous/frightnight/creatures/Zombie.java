@@ -24,6 +24,10 @@ public class Zombie extends Creature {
     private float wanderTimer;
     private static boolean firstZombie = true;
 
+    public Zombie() {
+
+    }
+
     public Zombie(Vector3 position, Vector3 forward) {
         super("zombie", position);
         setForward(forward);

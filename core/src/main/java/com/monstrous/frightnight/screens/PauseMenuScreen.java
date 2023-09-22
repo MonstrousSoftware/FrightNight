@@ -32,11 +32,15 @@ public class PauseMenuScreen extends MenuScreen {
 
        TextButton options = new TextButton("Options", skin);
        TextButton resume = new TextButton("Resume", skin);
+       TextButton quickSave = new TextButton("Quick Save", skin);
+       TextButton quickLoad = new TextButton("Quick Load", skin);
        TextButton stop = new TextButton("Stop", skin);
 
        float pad = 10f;
        screenTable.add(options).pad(pad).row();
        screenTable.add(resume).pad(pad).row();
+       screenTable.add(quickSave).pad(pad).row();
+       screenTable.add(quickLoad).pad(pad).row();
        screenTable.add(stop).pad(pad).row();
 
        screenTable.pack();
@@ -53,6 +57,8 @@ public class PauseMenuScreen extends MenuScreen {
             cStage.clearFocusableActors();
             cStage.addFocusableActor(options);
             cStage.addFocusableActor(resume);
+            cStage.addFocusableActor(quickSave);
+            cStage.addFocusableActor(quickLoad);
             cStage.addFocusableActor(stop);
             cStage.setFocusedActor(resume);
             cStage.setEscapeActor(resume);
@@ -76,6 +82,28 @@ public class PauseMenuScreen extends MenuScreen {
                game.setScreen( gameScreen );
            }
        });
+
+        quickSave.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                playSelectNoise();
+                /// quick save
+                gameScreen.getWorld().quickSave();
+                game.setScreen( gameScreen );
+            }
+        });
+
+        quickLoad.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                playSelectNoise();
+                // quick load
+                gameScreen.getWorld().quickLoad();
+                game.setScreen( gameScreen );
+            }
+        });
 
        stop.addListener(new ClickListener() {
            @Override

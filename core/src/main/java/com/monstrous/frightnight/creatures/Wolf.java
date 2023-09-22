@@ -29,7 +29,9 @@ public class Wolf extends Creature {
     private Creature target;
     private Vector3 tmpVec = new Vector3();
 
+    public Wolf() {
 
+    }
     public Wolf(Vector3 position, Vector3 forward) {
         super("hellhound", position);
         setForward(forward);

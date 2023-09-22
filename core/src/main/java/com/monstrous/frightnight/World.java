@@ -1,6 +1,7 @@
 package com.monstrous.frightnight;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
@@ -8,6 +9,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.monstrous.frightnight.cornfield.DecalCornField;
 import com.monstrous.frightnight.creatures.Car;
 import com.monstrous.frightnight.creatures.Creature;
@@ -16,8 +19,11 @@ import net.mgsx.gltf.scene3d.scene.Scene;
 import net.mgsx.gltf.scene3d.scene.SceneAsset;
 import net.mgsx.gltf.scene3d.scene.SceneManager;
 
+import java.io.StringWriter;
+
 public class World implements Disposable {
     public static String GLTF_FILE = "models/frightnight.gltf";
+    public static String SAVE_FILE_NAME = "save_file.txt";
 
     private static final float SEPARATION_DISTANCE = 1.0f;          // min distance between instances
     private static final float AREA_LENGTH = 100.0f;                // size of the (square) field
@@ -86,7 +92,7 @@ public class World implements Disposable {
 
 
 
-    public void reset() {
+    private void loadStaticScenes() {
 
         // clear sceneManager
         sceneManager.getRenderableProviders().clear();      // this removes all scenes
@@ -112,9 +118,28 @@ public class World implements Disposable {
         addStaticScene("gravestone3.001");
         addStaticScene("gravestone4.001");
         addStaticScene("gravestone4.002");
+    }
 
+    public void reset() {
+        loadStaticScenes();
         population.reset();
         populationScenes.loadFromAssetFile(sceneAsset);
+        populationScenes.reset();
+    }
+
+    public void quickSave() {
+        Gdx.app.log("quick save", "");
+        hintQueue.addHint(-1, HintMessage.QUICKSAVE);
+        population.save(SAVE_FILE_NAME);
+    }
+
+    public void quickLoad() {
+        Gdx.app.log("quick load", "");
+        hintQueue.addHint(-1, HintMessage.QUICKLOAD);
+
+        loadStaticScenes();
+        population.reset();
+        population.load(SAVE_FILE_NAME);
         populationScenes.reset();
     }
 

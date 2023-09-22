@@ -14,6 +14,10 @@ import com.monstrous.frightnight.Sounds;
 public class Player extends Creature {
     private boolean firstVoid = true;
 
+    public Player() {
+
+    }
+
     public Player(Vector3 position) {
         super("Player", position);
         this.radius = 0.5f;     // give a bit of an advantage

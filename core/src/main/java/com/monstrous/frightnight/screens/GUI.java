@@ -1,6 +1,7 @@
 package com.monstrous.frightnight.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 //import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -31,18 +32,26 @@ public class GUI implements Disposable {
 
     }
 
-    public void showMessage( String text ){
+    public void showMessage( String text, boolean priority ){
         Table screenTable = new Table();
         screenTable.setFillParent(true);
 
         Label message = new Label(text, skin);
 
         screenTable.align(Align.bottom);
+        if(priority)
+            screenTable.align(Align.top);
         screenTable.add(message).pad(50);
         screenTable.pack();
 
-        screenTable.setColor(1,1,1,0);                   // set alpha to zero
-        screenTable.addAction(sequence(fadeIn(3f), delay(2f), fadeOut(1f), removeActor()));           // fade in .. fade out, then remove this actor
+        if(!priority) {
+            screenTable.setColor(1,1,1,0);                   // set alpha to zero
+            screenTable.addAction(sequence(fadeIn(3f), delay(2f), fadeOut(1f), removeActor()));           // fade in .. fade out, then remove this actor
+        }
+        else {
+            screenTable.setColor(Color.WHITE);
+            screenTable.addAction(sequence(delay(0.5f), removeActor()));           // fade in .. fade out, then remove this actor
+        }
 
         stage.addActor(screenTable);
     }

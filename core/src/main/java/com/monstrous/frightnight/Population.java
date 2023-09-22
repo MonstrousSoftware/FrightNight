@@ -4,10 +4,15 @@ package com.monstrous.frightnight;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.monstrous.frightnight.creatures.*;
+
+import java.io.StringWriter;
 
 public class Population {
     public Array<Wolf> wolves;
@@ -26,9 +31,6 @@ public class Population {
         creatures = new Array<>();
         wolves = new Array<>();
         zombies = new Array<>();
-
-
-
         reset();
     }
 
@@ -130,7 +132,39 @@ public class Population {
         }
     }
 
+    public void save(String filename) {
+        Gdx.app.log("quick save", filename);
 
+        Json json = new Json(JsonWriter.OutputType.json);
+        JsonWriter writer = new JsonWriter( new StringWriter() );
+        json.setWriter(writer);
+
+        FileHandle file = Gdx.files.local(filename);
+        file.writeString("", false);    // overwrite
+
+        String s = json.prettyPrint(creatures);
+        file.writeString(s, true); // append
+    }
+
+    public void load(String filename) {
+        Gdx.app.log("quick load", filename);
+
+        Json json = new Json();
+        FileHandle file = Gdx.files.local(filename);
+        json.addClassTag("Creature", Creature.class);
+        creatures = json.fromJson(Array.class, Creature.class, file);
+        for(Creature creature : creatures){
+            if(creature instanceof Player)
+                player = (Player)creature;
+            if(creature instanceof Car)
+                car = (Car) creature;
+            if(creature instanceof Wolf)
+                wolves.add((Wolf)creature);
+            if(creature instanceof Zombie)
+                zombies.add((Zombie)creature);
+        }
+
+    }
 
     public void dispose() {
 

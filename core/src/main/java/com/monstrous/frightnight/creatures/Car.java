@@ -20,6 +20,9 @@ public class Car extends Creature {
     public boolean slowDown;
     public boolean stopped;
 
+    public Car() {
+
+    }
     public Car(Vector3 position, Vector3 forward) {
         super("car", position);
         setForward(forward);

@@ -13,7 +13,9 @@ public enum HintMessage     {
     VOID (Sounds.VOICE_VOID, "Though the idea must have been enjoyed\nThere is no escape to the empty void"),
     CARRIAGE (Sounds.VOICE_CARRIAGE, "The nightmare abates\nYour carriage awaits"),
     GLORY (Sounds.VOICE_GLORY, "Glory be the righteous knight\nLone survivor of the night of fright\nHe lives to see another day\nNow it`s time to go away"),
-    WEATHER (Sounds.VOICE_WEATHER, "  For reasons beyond comprehension\nThe weather is removed from the tension");
+    WEATHER (Sounds.VOICE_WEATHER, "  For reasons beyond comprehension\nThe weather is removed from the tension"),
+    QUICKSAVE (Sounds.MENU_CLICK, "Quick Save"),
+    QUICKLOAD (Sounds.MENU_CLICK, "Quick Load");
 
     public String text;
     public int soundId;

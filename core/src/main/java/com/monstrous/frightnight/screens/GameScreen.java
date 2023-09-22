@@ -181,6 +181,11 @@ public class GameScreen extends StdScreenAdapter {
             game.setScreen(new PauseMenuScreen(game, this));
             return;
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F5) )
+            world.quickSave();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F9) )
+            world.quickLoad();
+
         if (playerDied && viewHeight <= 0) {
             game.setScreen(new GameOverScreen(game, this, world.getNameOfKiller()));
             return;
@@ -342,5 +347,9 @@ public class GameScreen extends StdScreenAdapter {
             gui.dispose();
             game.musicManager.stopMusic();
 
+        }
+
+        public World getWorld() {
+            return world;
         }
 }
