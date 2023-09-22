@@ -43,6 +43,7 @@ public class Creature implements Json.Serializable {
         this();
         this.name = name;
         this.position.set(position);
+        turnForward();
     }
 
     @Override
@@ -71,6 +72,7 @@ public class Creature implements Json.Serializable {
         speed = json.readValue("speed", Float.class, jsonData);
         dead = json.readValue("dead", Boolean.class, jsonData);
         turnFraction = json.readValue("turnFraction", Float.class, jsonData);
+        turnForward(); // update matrix
     }
 
 

@@ -141,12 +141,18 @@ public class World implements Disposable {
         population.reset();
         population.load(SAVE_FILE_NAME);
         populationScenes.reset();
+
+        // move camera to player position
+        sceneManager.camera.position.set(population.getPlayer().position);
+        sceneManager.camera.direction.set(population.getPlayer().getForward());
+        sceneManager.camera.update();
     }
 
     // return true if player died
     public boolean update(float deltaTime ) {
         if(population.getPlayer().isDead())
             return true;
+        population.getPlayer().getForward().set(sceneManager.camera.direction);
 
         population.update(sceneManager.camera.position, hintQueue, deltaTime );
         populationScenes.update(deltaTime);

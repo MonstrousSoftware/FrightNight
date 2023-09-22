@@ -1,0 +1,210 @@
+[
+{
+	"class": "com.monstrous.frightnight.creatures.Player",
+	"id": 0,
+	"name": "Player",
+	"position": {
+		"x": -7.105872,
+		"z": 18.28827
+	},
+	"forward": {
+		"x": 0.032415066,
+		"y": 0.06804253,
+		"z": -0.9971534
+	},
+	"transform": {
+		"val": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, -10, 1 ]
+	},
+	"targetDir": {
+		"z": 1
+	},
+	"turnStart": {},
+	"speed": 0,
+	"dead": false,
+	"turnFraction": 1
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Car",
+	"id": 0,
+	"name": "car",
+	"position": {
+		"z": -5.9208803
+	},
+	"forward": {
+		"z": 1
+	},
+	"transform": {
+		"val": [ 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5.9208803, 1 ]
+	},
+	"targetDir": {
+		"z": 1
+	},
+	"turnStart": {
+		"z": 1
+	},
+	"speed": 16,
+	"dead": false,
+	"turnFraction": 10.084292
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Wolf",
+	"id": 0,
+	"name": "hellhound",
+	"position": {
+		"x": -6.867207,
+		"z": 1.1121441
+	},
+	"forward": {
+		"x": -0.013508026,
+		"z": 0.99990743
+	},
+	"transform": {
+		"val": [ 0.99990875, 0, 0.013507734, 0, 0, 1, 0, 0, -0.013507734, 0, 0.99990875, 0, -6.867207, 0, 1.1121441, 1 ]
+	},
+	"targetDir": {
+		"x": -0.013892211,
+		"z": 0.9999035
+	},
+	"turnStart": {
+		"x": -0.0134780435,
+		"z": 0.99990773
+	},
+	"speed": 4,
+	"dead": false,
+	"turnFraction": 0.0723916
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Zombie",
+	"id": 0,
+	"name": "zombie",
+	"position": {
+		"x": -96.42176,
+		"z": 91.86263
+	},
+	"forward": {
+		"x": 0.669214,
+		"z": -0.7430697
+	},
+	"transform": {
+		"val": [ -0.74306977, 0, -0.6692139, 0, 0, 1, 0, 0, 0.6692139, 0, -0.74306977, 0, -96.42176, 0, 91.86263, 1 ]
+	},
+	"targetDir": {
+		"x": 0.65980023,
+		"z": -0.75144106
+	},
+	"turnStart": {
+		"x": -0.06479995,
+		"z": -0.9978983
+	},
+	"speed": 0.8,
+	"dead": false,
+	"turnFraction": 1.0160398
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Zombie",
+	"id": 0,
+	"name": "zombie",
+	"position": {
+		"x": -56.479923,
+		"z": 80.6776
+	},
+	"forward": {
+		"x": 0.9589124,
+		"z": -0.2837025
+	},
+	"transform": {
+		"val": [ -0.2837026, 0, -0.9589123, 0, 0, 1, 0, 0, 0.9589123, 0, -0.2837026, 0, -56.479923, 0, 80.6776, 1 ]
+	},
+	"targetDir": {
+		"x": 0.9613107,
+		"z": -0.2754665
+	},
+	"turnStart": {
+		"x": 0.9396318,
+		"z": 0.3421872
+	},
+	"speed": 0.8,
+	"dead": false,
+	"turnFraction": 1.0136526
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Zombie",
+	"id": 0,
+	"name": "zombie",
+	"position": {
+		"x": -54.68667,
+		"z": 100.87608
+	},
+	"forward": {
+		"x": 0.50904167,
+		"z": 0.86074185
+	},
+	"transform": {
+		"val": [ 0.86074185, 0, -0.50904167, 0, 0, 1, 0, 0, 0.50904167, 0, 0.86074185, 0, -54.68667, 0, 100.87608, 1 ]
+	},
+	"targetDir": {
+		"x": 0.531649,
+		"z": 0.8469649
+	},
+	"turnStart": {
+		"x": 0.78675264,
+		"z": -0.61726844
+	},
+	"speed": 0.8,
+	"dead": false,
+	"turnFraction": 1.0158012
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Zombie",
+	"id": 0,
+	"name": "zombie",
+	"position": {
+		"x": -73.06059,
+		"z": 63.859077
+	},
+	"forward": {
+		"x": 0.5389809,
+		"z": 0.84231806
+	},
+	"transform": {
+		"val": [ 0.84231806, 0, -0.53898084, 0, 0, 1, 0, 0, 0.53898084, 0, 0.84231806, 0, -73.06059, 0, 63.859077, 1 ]
+	},
+	"targetDir": {
+		"x": 0.5637183,
+		"z": 0.8259673
+	},
+	"turnStart": {
+		"x": 0.43344957,
+		"z": -0.90117794
+	},
+	"speed": 0.8,
+	"dead": false,
+	"turnFraction": 1.0141586
+},
+{
+	"class": "com.monstrous.frightnight.creatures.Zombie",
+	"id": 0,
+	"name": "zombie",
+	"position": {
+		"x": -1.2474841,
+		"z": 2.9439263
+	},
+	"forward": {
+		"x": 0.962666,
+		"z": -0.27069223
+	},
+	"transform": {
+		"val": [ -0.27069223, 0, -0.96266603, 0, 0, 1, 0, 0, 0.96266603, 0, -0.27069223, 0, -1.2474841, 0, 2.9439263, 1 ]
+	},
+	"targetDir": {
+		"x": 0.9945219,
+		"z": -0.10452855
+	},
+	"turnStart": {
+		"z": 1
+	},
+	"speed": 0.8,
+	"dead": true,
+	"turnFraction": 1.1010985
+}
+]

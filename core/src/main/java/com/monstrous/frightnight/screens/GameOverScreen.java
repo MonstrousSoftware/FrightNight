@@ -35,12 +35,13 @@ public class GameOverScreen extends MenuScreen {
        Label gameOver = new Label("GAME OVER", skin);
 
        Label killedBy = new Label("You were killed by a "+killer, skin);
-
+       TextButton quickLoad = new TextButton("Return to last save", skin);
        TextButton continueButton = new TextButton("Continue", skin);
 
        float pad = 20f;
        screenTable.add(gameOver).pad(pad).row();
        screenTable.add(killedBy).pad(pad).row();
+       screenTable.add(quickLoad).pad(pad).row();
        screenTable.add(continueButton).pad(3*pad).row();
 
 
@@ -56,11 +57,22 @@ public class GameOverScreen extends MenuScreen {
         if(Settings.supportControllers) {
             ControllerMenuStage cStage = (ControllerMenuStage) stage;
             cStage.clearFocusableActors();
+            cStage.addFocusableActor(quickLoad);
             cStage.addFocusableActor(continueButton);
-            cStage.setFocusedActor(continueButton);
+            cStage.setFocusedActor(quickLoad);
             cStage.setEscapeActor(continueButton);
         }
 
+        quickLoad.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                playSelectNoise();
+                // quick load
+                gameScreen.getWorld().quickLoad();
+                game.setScreen( gameScreen );
+            }
+        });
 
         continueButton.addListener(new ClickListener() {
            @Override

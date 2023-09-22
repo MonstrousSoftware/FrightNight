@@ -183,8 +183,9 @@ public class GameScreen extends StdScreenAdapter {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5) )
             world.quickSave();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F9) )
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F9) ) {
             world.quickLoad();
+        }
 
         if (playerDied && viewHeight <= 0) {
             game.setScreen(new GameOverScreen(game, this, world.getNameOfKiller()));

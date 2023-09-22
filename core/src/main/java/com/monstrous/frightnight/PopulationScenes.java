@@ -67,9 +67,9 @@ public class PopulationScenes {
     public void loadFromAssetFile(SceneAsset sceneAsset) {
         // follows object names in Blender
         loadCreature("W1", true);
-        loadCreature("W1.001", true);
-        loadCreature("W1.002", true);
-        loadCreature("W1.003", true);
+//        loadCreature("W1.001", true);
+//        loadCreature("W1.002", true);
+//        loadCreature("W1.003", true);
 
         loadCreature("Z1", false);
         loadCreature("Z1.001", false);
