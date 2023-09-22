@@ -19,8 +19,9 @@ public class Creature implements Json.Serializable {
     private Vector3 targetDir;       // desired forward direction
     private Vector3 turnStart;       // direction at start or turning
     public float speed = 0;
+    protected int mode;
     private boolean dead;
-    private Vector3 tmpVec = new Vector3();
+    protected Vector3 tmpVec = new Vector3();
     public Creature killedBy;
     public Scene scene;     // for rendering, gdx-gltf equivalent of model instance
     private float turnFraction;
@@ -58,6 +59,7 @@ public class Creature implements Json.Serializable {
         json.writeValue("speed", speed);
         json.writeValue("dead", dead);
         json.writeValue("turnFraction", turnFraction);
+        json.writeValue("mode", mode);
     }
 
     @Override
@@ -72,6 +74,7 @@ public class Creature implements Json.Serializable {
         speed = json.readValue("speed", Float.class, jsonData);
         dead = json.readValue("dead", Boolean.class, jsonData);
         turnFraction = json.readValue("turnFraction", Float.class, jsonData);
+        mode = json.readValue("mode", Integer.class, jsonData);
         turnForward(); // update matrix
     }
 

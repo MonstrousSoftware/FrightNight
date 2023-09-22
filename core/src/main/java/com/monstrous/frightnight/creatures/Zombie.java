@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.monstrous.frightnight.HintMessage;
 import com.monstrous.frightnight.HintQueue;
 import com.monstrous.frightnight.Sounds;
@@ -16,16 +18,13 @@ public class Zombie extends Creature {
     public static final int ATTACK_DISTANCE = 10;
     public static final int KILL_DISTANCE = 1;
 
-    public static float MINIMUM_SEPARATION = 5;
-    public static float SPEED = 0.8f;
+    public static final float MINIMUM_SEPARATION = 5;
+    public static final float SPEED = 0.8f;
 
-    public int mode;
-    private Vector3 tmpVec = new Vector3();
     private float wanderTimer;
     private static boolean firstZombie = true;
 
     public Zombie() {
-
     }
 
     public Zombie(Vector3 position, Vector3 forward) {
@@ -34,6 +33,19 @@ public class Zombie extends Creature {
         this.mode = WANDERING;
         speed = SPEED;
     }
+
+    @Override
+    public void write(Json json) {
+        super.write(json);
+        json.writeValue("wanderTimer", id);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        super.read(json, jsonData);
+        wanderTimer = json.readValue("wanderTimer", Float.class, jsonData);
+    }
+
     public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Zombie> zombies ) {
         if(isDead())
             return;

@@ -8,6 +8,11 @@ import com.monstrous.frightnight.HintMessage;
 import com.monstrous.frightnight.HintQueue;
 
 public class Car extends Creature {
+    public static final int DRIVING = 0;
+    public static final int TO_PICKUP = 1;
+    public static final int SLOW_DOWN = 2;
+    public static final int STOPPED = 3;
+    public static final int PICKED_UP = 4;
 
     public static final float SPEED = 16f;
 
@@ -15,22 +20,15 @@ public class Car extends Creature {
     public static final float LENGTH= 6f;
 
     private static boolean firstView = true;
-    private boolean toPickup;
-    public boolean pickedUp;
-    public boolean slowDown;
-    public boolean stopped;
 
     public Car() {
-
     }
+
     public Car(Vector3 position, Vector3 forward) {
         super("car", position);
         setForward(forward);
         this.speed = SPEED;
-        toPickup = false;
-        pickedUp = false;
-        slowDown = false;
-        stopped = false;
+        mode = DRIVING;
     }
 
 
@@ -47,9 +45,9 @@ public class Car extends Creature {
                 hintQueue.addHint(0f, HintMessage.CAR);
             }
         }
-        if(!pickedUp && toPickup && stopped && distance < 4){
+        if(mode == STOPPED && distance < 4){
             hintQueue.addHint(0f, HintMessage.GLORY);
-            pickedUp = true;
+            mode = PICKED_UP;
         }
 
 
@@ -57,15 +55,15 @@ public class Car extends Creature {
             position.scl(-1);
         }
 
-        if(toPickup && position.len() < 2 && speed == SPEED) { // near map centre
-            slowDown = true;
+        if(mode == TO_PICKUP && position.len() < 2 && speed == SPEED) { // near map centre
+            mode = SLOW_DOWN;
         }
-        if(slowDown && !stopped){
+        if(mode == SLOW_DOWN ){
             if(speed > 0.1f)
-                speed -= deltaTime * SPEED;
+                speed -= deltaTime * SPEED * 0.3f;
             else {
                 speed = 0;
-                stopped = true;
+                mode = STOPPED;
                 hintQueue.addHint(1, HintMessage.CARRIAGE);
             }
         }
@@ -81,8 +79,6 @@ public class Car extends Creature {
             if(creature.isDead())
                 continue;
 
-
-
             // assumes car is traveling on Z axis
             // rectangle vs. circle overlap test
             if(creature.position.x+creature.radius >= position.x-WIDTH/2f && creature.position.x-creature.radius <= position.x+WIDTH/2f &&
@@ -93,7 +89,12 @@ public class Car extends Creature {
         }
     }
 
-    public void makePickup() {
-        toPickup = true;
+    public void makePickup() {  // signals end game sequence
+        if(mode == DRIVING)
+            mode = TO_PICKUP;
+    }
+
+    public boolean hasPickedUp() {
+        return mode == PICKED_UP;
     }
 }
