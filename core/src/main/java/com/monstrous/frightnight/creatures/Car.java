@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.monstrous.frightnight.HintMessage;
 import com.monstrous.frightnight.HintQueue;
+import net.mgsx.gltf.scene3d.scene.Scene;
 
 public class Car extends Creature {
     public static final int DRIVING = 0;
@@ -20,6 +21,7 @@ public class Car extends Creature {
     public static final float LENGTH= 6f;
 
     private static boolean firstView = true;
+    public Scene altScene;                      // alternative scene with door open
 
     public Car() {
     }
@@ -97,6 +99,10 @@ public class Car extends Creature {
     public void makePickup() {  // signals end game sequence
         if(mode == DRIVING)
             mode = TO_PICKUP;
+    }
+
+    public boolean isWaitingForPlayer() {
+        return mode == STOPPED;
     }
 
     public boolean hasPickedUp() {

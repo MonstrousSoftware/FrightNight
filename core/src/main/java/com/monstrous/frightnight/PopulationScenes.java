@@ -21,35 +21,22 @@ public class PopulationScenes {
 
     private SceneAsset sceneAsset;
     private SceneManager sceneManager;
-    private Scene carScene;
+    //private Scene carScene;
     private Scene wheelScene0, wheelScene1, wheelScene2, wheelScene3;
     private float wheelAngle;
     private Vector3 tmpVec = new Vector3();
     private Population population;
+    private boolean carRendersOpen;
 
 
     public PopulationScenes(Population population, SceneAsset sceneAsset, SceneManager sceneManager ) {
         this.sceneManager = sceneManager;
         this.sceneAsset = sceneAsset;
         this.population = population;
+        carRendersOpen = false;
     }
 
-    // obsolete
-    public void clearPopulation() {
-        for(Wolf wolf : population.wolves)
-            if(wolf.scene != null)
-                sceneManager.removeScene(wolf.scene);
-        for(Zombie zombie : population.zombies)
-            if(zombie.scene != null)
-                sceneManager.removeScene(zombie.scene);
-        if(carScene != null) {
-            sceneManager.removeScene(carScene);
-            sceneManager.removeScene(wheelScene0);
-            sceneManager.removeScene(wheelScene1);
-            sceneManager.removeScene(wheelScene2);
-            sceneManager.removeScene(wheelScene3);
-        }
-    }
+
 
     // use position and orientation from place-holder to create a creature
     private void loadCreature(String name, boolean isWolf, boolean isPlayer){
@@ -68,16 +55,16 @@ public class PopulationScenes {
         // follows object names in Blender
         loadCreature("PlayerSpawn", false, true);
 
-        loadCreature("W1", true, false);
-        loadCreature("W1.001", true, false);
-        loadCreature("W1.002", true, false);
-        loadCreature("W1.003", true, false);
-
-        loadCreature("Z1", false, false);
-        loadCreature("Z1.001", false, false);
-        loadCreature("Z1.002", false, false);
-        loadCreature("Z1.003", false, false);
-        loadCreature("Z1.004", false, false);
+//        loadCreature("W1", true, false);
+//        loadCreature("W1.001", true, false);
+//        loadCreature("W1.002", true, false);
+//        loadCreature("W1.003", true, false);
+//
+//        loadCreature("Z1", false, false);
+//        loadCreature("Z1.001", false, false);
+//        loadCreature("Z1.002", false, false);
+//        loadCreature("Z1.003", false, false);
+//        loadCreature("Z1.004", false, false);
 
     }
 
@@ -113,9 +100,11 @@ public class PopulationScenes {
             zombie.scene = scene;
         }
 
-        carScene = new Scene(sceneAsset.scene, "car");
+        Scene carScene = new Scene(sceneAsset.scene, "car");
         sceneManager.addScene(carScene);
         population.getCar().scene = carScene;
+        Scene carAltScene = new Scene(sceneAsset.scene, "carOpen");
+        population.getCar().altScene = carAltScene;
 
         wheelScene0 = new Scene(sceneAsset.scene, "wheel");
         sceneManager.addScene(wheelScene0);
@@ -141,10 +130,30 @@ public class PopulationScenes {
 
     }
 
+    private void swapCarScenes(Car car) {
+        Scene swap = car.scene;
+        sceneManager.removeScene(car.scene);
+        car.scene = car.altScene;
+        car.altScene = swap;
+        sceneManager.addScene(car.scene);
+
+    }
+
     private void updateCarScene(Car car, float deltaTime) {
         float wx = 1f;
         float wz = 1.83f;
         float wy = 0.37f;
+
+        // replace car mode with the 'door open' model when it is stopped
+        if(!carRendersOpen && car.isWaitingForPlayer()) {
+            swapCarScenes(car);
+            carRendersOpen = true;
+        }
+        if(carRendersOpen && !car.isWaitingForPlayer()) {
+            swapCarScenes(car);
+            carRendersOpen = false;
+        }
+
 
         car.scene.modelInstance.transform.setTranslation(car.position);
 
