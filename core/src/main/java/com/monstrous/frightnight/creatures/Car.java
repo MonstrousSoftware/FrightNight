@@ -46,8 +46,13 @@ public class Car extends Creature {
             }
         }
         if(mode == STOPPED && distance < 4){
+            hintQueue.flush();
             hintQueue.addHint(0f, HintMessage.GLORY);
             mode = PICKED_UP;
+        }
+
+        if(mode == PICKED_UP){
+            speed += deltaTime;
         }
 
 

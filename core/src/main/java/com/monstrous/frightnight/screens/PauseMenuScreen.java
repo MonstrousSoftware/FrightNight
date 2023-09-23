@@ -19,6 +19,8 @@ public class PauseMenuScreen extends MenuScreen {
     public PauseMenuScreen(Main game, GameScreen gameScreen) {
         super(game);
         this.gameScreen = gameScreen;
+
+
     }
 
 

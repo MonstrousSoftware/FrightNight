@@ -56,6 +56,22 @@ public class GUI implements Disposable {
         stage.addActor(screenTable);
     }
 
+    public void rollCredits( String text  ){
+        Table screenTable = new Table();
+        screenTable.setFillParent(true);
+
+        Label message = new Label(text, skin);
+        message.setBounds( 100, 100, Gdx.graphics.getWidth() - 100, 1000 );
+        message.setAlignment( Align.center );
+
+        screenTable.align(Align.bottom).align(Align.center);
+        screenTable.add(message).pad(50);
+        screenTable.pack();
+
+        screenTable.addAction(sequence(moveTo(0, -1200), delay(10f),   moveTo(0,800, 12), delay(2f), fadeOut(1f), removeActor()));           // fade in .. fade out, then remove this actor
+        stage.addActor(screenTable);
+    }
+
     public void render(float deltaTime) {
         stage.act(deltaTime);
         stage.draw();

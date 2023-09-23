@@ -56,6 +56,9 @@ public class HintQueue {
 
     }
 
+    public void flush() {
+        queue.clear();
+    }
     public void addHint(float delay, HintMessage msg ){
         Notification note = new Notification();
         note.startTime = time+delay;

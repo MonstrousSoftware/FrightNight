@@ -37,7 +37,7 @@ public class World implements Disposable {
     public ParticleEffects particleEffects;
     private Matrix4 playerTransform;
     private Array<DecalCornField> cornFields;
-    private Population population;
+    public Population population;
     private PopulationScenes populationScenes;
     private HintQueue hintQueue;
 

@@ -168,7 +168,7 @@ public class GameScreen extends StdScreenAdapter {
         playerDied = false;
         gameCompleted = false;
 
-        if (startedWithWeather && !Settings.enableWeather)   // switched off weather mid game?
+        if (startedWithWeather && !Settings.enableWeather && !gameCompleted)   // switched off weather mid game?
             hintQueue.addHint(2f, HintMessage.WEATHER); // make snarky comment
 
 
@@ -178,7 +178,12 @@ public class GameScreen extends StdScreenAdapter {
     public void render(float deltaTime) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) ||
             (currentController != null && currentController.getButton(currentController.getMapping().buttonStart))) {
-            game.setScreen(new PauseMenuScreen(game, this));
+            if(gameCompleted) {
+                dispose();  // if game is completed, go straight to main menu
+                game.setScreen(new MainMenuScreen(game));
+            }
+            else
+                game.setScreen(new PauseMenuScreen(game, this));
             return;
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.F5) )
@@ -245,7 +250,11 @@ public class GameScreen extends StdScreenAdapter {
             playerDied = true;
         }
         if (!playerDied) {
-            camController.update(deltaTime);
+            if(gameCompleted) {
+                camera.lookAt(world.population.getCar().position);     // let camera follow car
+                camera.update();
+            }else
+                camController.update(deltaTime);
             sceneManager.update(deltaTime);
         } else {
             if (viewHeight > 0)
@@ -253,7 +262,7 @@ public class GameScreen extends StdScreenAdapter {
         }
 
         if (!gameCompleted && world.gameCompleted()) {
-            gameCompleted = true;
+            gameCompleted = true;   // player solved the game
             world.brightenUp();
 //            environmentCubemap = EnvironmentUtil.createCubemap(new InternalFileHandleResolver(),
 //                "textures/daysky/environment_", ".jpg", EnvironmentUtil.FACE_NAMES_NEG_POS);
@@ -262,6 +271,7 @@ public class GameScreen extends StdScreenAdapter {
             sceneManager.setSkyBox(null);
             game.musicManager.stopMusic();
             game.musicManager.startMusic("music/happy-quirky-theme-160995.mp3", true);
+            gui.rollCredits(CreditsScreen.credits);
         }
         if (gameCompleted) {
             startedWithWeather = true;
@@ -353,4 +363,9 @@ public class GameScreen extends StdScreenAdapter {
         public World getWorld() {
             return world;
         }
+
+
+
+
+
 }

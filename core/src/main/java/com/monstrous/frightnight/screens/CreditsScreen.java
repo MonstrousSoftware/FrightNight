@@ -12,7 +12,7 @@ import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 public class CreditsScreen extends MenuScreen {
 
-    private String credits = "Fright Night, a game made for the LibGDX jam 26 by Monstrous Software\n\n"+
+    public static final String credits = "Fright Night, a game made for the LibGDX jam 26 by Monstrous Software\n\n"+
                     "Made using:\n- libGDX v1.12.0\n- gdx-teavm\n- gdx-gltf\n- gdx-controllers\n- gdx-liftoff\n\n"+
                     "Models created in Blender\n"+
                     "- using tutorials from Imphenzia\n- spooky tree tutorial by Grant Abbitt\n"+
@@ -20,7 +20,8 @@ public class CreditsScreen extends MenuScreen {
                     "Sky box from cleanpng.com\n\n"+
                     "Fonts from fontmeme.com:\n- Fluxisch Else by OSP Foundry\n- Halloween Fright by Brithos Type\n- OpenSans by Steve Matteson\n"+
                     "Voice synthesis:\n-ttsmaker.com\n\n"+
-                    "Music from Pixabay.com:\n- Dark Ambient, Spooky Music Theme, Happy Quirky Theme by TheoJT\n\n";
+                    "Music from Pixabay.com:\n- Dark Ambient, Spooky Music Theme, Happy Quirky Theme by TheoJT\n\n\n\n"+
+                    "Thank you for playing";
 
     public CreditsScreen(Main game ) {
         super(game);

@@ -115,14 +115,16 @@ public class Population {
             for(Zombie zombie : zombies)
                 if(!zombie.isDead())
                     zombieCount++;
-            if(!zombiesDead && zombieCount == 0){
-                zombiesDead = true;
-                hintQueue.addHint(2f, HintMessage.NO_CREATURE); // all zombies are dead, now kill the wolves
-            }
             int wolfCount = 0;
             for(Wolf wolf : wolves)
                 if(!wolf.isDead())
                     wolfCount++;
+
+            if(!zombiesDead && zombieCount == 0){
+                zombiesDead = true;
+                if(wolfCount > 0)
+                    hintQueue.addHint(2f, HintMessage.NO_CREATURE); // all zombies are dead, now kill the wolves
+            }
 
             if(zombieCount == 0 && wolfCount == 0)
                 car.makePickup();

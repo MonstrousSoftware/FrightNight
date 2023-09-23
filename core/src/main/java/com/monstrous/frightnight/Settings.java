@@ -7,9 +7,9 @@ public class Settings {
     static public String title = "Fright Night";    // e.g. HTML window title
 
     static public boolean skipTitleScreen = true;
-    static public boolean skipExitScreen = true;
+    static public boolean skipExitScreen = false;
 
-    static public boolean supportControllers = false;       // in case it causes issues
+    static public boolean supportControllers = true;       // in case it causes issues
 
     static public float eyeHeight = 1.5f;   // meters
 
