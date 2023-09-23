@@ -18,8 +18,9 @@ public class Player extends Creature {
 
     }
 
-    public Player(Vector3 position) {
+    public Player(Vector3 position, Vector3 forward) {
         super("Player", position);
+        setForward(forward);
         this.radius = 0.5f;     // give a bit of an advantage
     }
 

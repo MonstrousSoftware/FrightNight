@@ -52,7 +52,7 @@ public class PopulationScenes {
     }
 
     // use position and orientation from place-holder to create a creature
-    private void loadCreature(String name, boolean isWolf){
+    private void loadCreature(String name, boolean isWolf, boolean isPlayer){
         Scene scene = new Scene(sceneAsset.scene, name);        // load a place-holder object to obtain position and orientation, it is not added to the scene manager
         Vector3 pos = new Vector3();
         Vector3 dir = new Vector3(0, 0, 1);
@@ -60,22 +60,24 @@ public class PopulationScenes {
         transform.getTranslation(pos);
         pos.y = 0;
         dir.rot(transform).nor();
-        population.addCreature(pos, dir,isWolf);
+        population.addCreature(pos, dir,isWolf, isPlayer);
     }
 
     // create wolves in the population based on placeholder scenes in the blender file
     public void loadFromAssetFile(SceneAsset sceneAsset) {
         // follows object names in Blender
-//        loadCreature("W1", true);
-//        loadCreature("W1.001", true);
-//        loadCreature("W1.002", true);
-//        loadCreature("W1.003", true);
-//
-//        loadCreature("Z1", false);
-//        loadCreature("Z1.001", false);
-//        loadCreature("Z1.002", false);
-//        loadCreature("Z1.003", false);
-//        loadCreature("Z1.004", false);
+        loadCreature("PlayerSpawn", false, true);
+
+        loadCreature("W1", true, false);
+        loadCreature("W1.001", true, false);
+        loadCreature("W1.002", true, false);
+        loadCreature("W1.003", true, false);
+
+        loadCreature("Z1", false, false);
+        loadCreature("Z1.001", false, false);
+        loadCreature("Z1.002", false, false);
+        loadCreature("Z1.003", false, false);
+        loadCreature("Z1.004", false, false);
 
     }
 

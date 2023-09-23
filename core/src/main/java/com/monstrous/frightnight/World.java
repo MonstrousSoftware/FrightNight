@@ -58,17 +58,24 @@ public class World implements Disposable {
         reset();
         population.save(SAVE_FILE_NAME);    // overwrite quick save from previous play through
 
+        setCameraToPlayerPosition(sceneManager.camera);
         playerTransform = new Matrix4();
         playerTransform.setToTranslation(sceneManager.camera.position);
         particleEffects.addRain(playerTransform);
 
         // road is along the y axis
         cornFields = new Array<>();
-        Rectangle area = new Rectangle(10, -100, 50, 200);
+        Rectangle area = new Rectangle(10, -200, 50, 400);      // south side along whole width of map
         DecalCornField cornField = new DecalCornField(assets, sceneManager.camera, area, SEPARATION_DISTANCE);
         cornFields.add(cornField);
-        Rectangle area2 = new Rectangle(-65, -100, 50, 100);
+        Rectangle area2 = new Rectangle(-165, -200, 150, 200);
         cornField = new DecalCornField(assets, sceneManager.camera, area2, SEPARATION_DISTANCE);
+        cornFields.add(cornField);
+        Rectangle area3 = new Rectangle(-165, 150, 150, 50);
+        cornField = new DecalCornField(assets, sceneManager.camera, area3, SEPARATION_DISTANCE);
+        cornFields.add(cornField);
+        Rectangle area4 = new Rectangle(-165, 0, 20, 150);  // behind church
+        cornField = new DecalCornField(assets, sceneManager.camera, area4, SEPARATION_DISTANCE);
         cornFields.add(cornField);
 
 //        String armature = "Armature";
@@ -142,11 +149,15 @@ public class World implements Disposable {
         population.reset();
         population.load(SAVE_FILE_NAME);
         populationScenes.reset();
+        setCameraToPlayerPosition(sceneManager.camera);
+    }
+
+    private void setCameraToPlayerPosition(Camera camera) {
 
         // move camera to player position
-        sceneManager.camera.position.set(population.getPlayer().position);
-        sceneManager.camera.direction.set(population.getPlayer().getForward());
-        sceneManager.camera.update();
+        camera.position.set(population.getPlayer().position);
+        camera.direction.set(population.getPlayer().getForward());
+        camera.update();
     }
 
     // return true if player died

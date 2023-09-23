@@ -20,6 +20,7 @@ IMPROVED - font missing some characters and small h has some surplus white
 - trigger animation from creature state machine
 DONE - boid separation
 - more corn fields
+- 2 wolves going in a spin
 
 
 

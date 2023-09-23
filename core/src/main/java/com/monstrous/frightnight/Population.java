@@ -51,20 +51,24 @@ public class Population {
     }
 
     // wolf or zombie
-    public void addCreature(Vector3 pos, Vector3 dir, boolean isWolf ){
+    public void addCreature(Vector3 pos, Vector3 dir, boolean isWolf, boolean isPlayer ){
         if(isWolf) {
             Wolf wolf = new Wolf(pos, dir);
             wolves.add(wolf);
             creatures.add(wolf);
-        } else {
+        } else if (!isPlayer){
             Zombie zombie = new Zombie(pos, dir);
             zombies.add(zombie);
             creatures.add(zombie);
         }
+        else {
+            player = new Player(pos, dir);
+            creatures.add(player);
+        }
     }
 
     public void reset(  ) {
-        player = new Player(new Vector3(5, 0, -10));    // to track camera
+        //player = new Player(new Vector3(5, 0, -10));    // to track camera
 
         car = new Car(new Vector3(0, 0, -100), new Vector3(0,0,1));
 
@@ -74,7 +78,6 @@ public class Population {
 
         // aggregate creatures list
         creatures.clear();
-        creatures.add(player);
         creatures.add(car);
 
         gameOver = false;
