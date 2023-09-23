@@ -163,13 +163,13 @@ public class GameScreen extends StdScreenAdapter {
 
         batch = new SpriteBatch();
         lightning = new BranchedLightning();
-        thunderTimer = 3f;
+        thunderTimer = 30f;         // big delay for first thunder
         bgColor = new Color();
         playerDied = false;
         gameCompleted = false;
 
         if (startedWithWeather && !Settings.enableWeather)   // switched off weather mid game?
-            hintQueue.addHint(2f, HintMessage.WEATHER);
+            hintQueue.addHint(2f, HintMessage.WEATHER); // make snarky comment
 
 
     }

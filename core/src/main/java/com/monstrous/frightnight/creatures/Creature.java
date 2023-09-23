@@ -26,11 +26,13 @@ public class Creature implements Json.Serializable {
     public Scene scene;     // for rendering, gdx-gltf equivalent of model instance
     private float turnFraction;
     public float radius;            // for collision testing
+    protected Vector3 repelVelocity;    // for boid separation
 
     public Creature() {
         this.speed = 0;
         this.position = new Vector3();
         this.forward = new Vector3(0,0,1);
+        repelVelocity = new Vector3();
         this.targetDir = new Vector3(forward);
         radius = 1f;
         transform = new Matrix4();
@@ -142,7 +144,9 @@ public class Creature implements Json.Serializable {
         }
         turnForward();
 
-        tmpVec.set(forward).scl(speed*deltaTime);
+        tmpVec.set(forward).scl(speed);
+        tmpVec.add(repelVelocity);
+        tmpVec.scl(deltaTime);
         position.add(tmpVec);
         transform.setTranslation(position);
     }

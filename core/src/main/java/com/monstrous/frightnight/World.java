@@ -151,7 +151,7 @@ public class World implements Disposable {
 
     // return true if player died
     public boolean update(float deltaTime ) {
-        deltaTime = Math.max(deltaTime, 0.05f); // don't go haywire when debugging
+        deltaTime = Math.min(deltaTime, 0.05f); // don't go haywire when debugging
 
         if(population.getPlayer().isDead())
             return true;

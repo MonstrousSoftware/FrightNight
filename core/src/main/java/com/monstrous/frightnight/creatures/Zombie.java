@@ -18,7 +18,7 @@ public class Zombie extends Creature {
     public static final int ATTACK_DISTANCE = 10;
     public static final int KILL_DISTANCE = 1;
 
-    public static final float MINIMUM_SEPARATION = 5;
+    public static final float MINIMUM_SEPARATION = 3;
     public static final float SPEED = 0.8f;
 
     private float wanderTimer;
@@ -46,7 +46,7 @@ public class Zombie extends Creature {
         wanderTimer = json.readValue("wanderTimer", Float.class, jsonData);
     }
 
-    public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Zombie> zombies ) {
+    public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Creature> creatures ) {
         if(isDead())
             return;
 
@@ -90,16 +90,17 @@ public class Zombie extends Creature {
                 mode = WANDERING;
             }
 
-
             // separation from other zombies
-            for(int i = 0; i < zombies.size; i++) {
-                Zombie other = zombies.get(i);
-                if(other == this)
+            repelVelocity.set(0,0,0);
+            for(Creature otherZombie : creatures){
+                if( otherZombie == this)
                     continue;
-                float d = other.position.dst(position);
-                if( d < MINIMUM_SEPARATION ){   // too close to other one
-                    tmpVec.set(position).sub(other.position).nor().scl(MINIMUM_SEPARATION);
-                    position.add(tmpVec);
+                if (!(otherZombie instanceof Zombie))
+                    continue;
+                float d = otherZombie.position.dst(position);
+                if( d < MINIMUM_SEPARATION ){   // too close to other zonmbie
+                    tmpVec.set(position).sub(otherZombie.position); // vector away from other
+                    repelVelocity.add(tmpVec);
                 }
             }
         }

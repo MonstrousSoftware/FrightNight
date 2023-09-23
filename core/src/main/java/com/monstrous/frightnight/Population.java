@@ -84,12 +84,12 @@ public class Population {
 
     private void moveWolves(float deltaTime, HintQueue hintQueue) {
         for(Wolf wolf : wolves )
-            wolf.move(deltaTime, sounds, hintQueue, player, wolves, zombies);
+            wolf.move(deltaTime, sounds, hintQueue, creatures); //player, wolves, zombies);
     }
 
     private void moveZombies(float deltaTime, HintQueue hintQueue) {
         for(Zombie zombie : zombies )
-            zombie.move(deltaTime, sounds, hintQueue, player, zombies);
+            zombie.move(deltaTime, sounds, hintQueue, player, creatures);
     }
 
 

@@ -66,16 +66,16 @@ public class PopulationScenes {
     // create wolves in the population based on placeholder scenes in the blender file
     public void loadFromAssetFile(SceneAsset sceneAsset) {
         // follows object names in Blender
-//        loadCreature("W1", true);
-//        loadCreature("W1.001", true);
-//        loadCreature("W1.002", true);
-//        loadCreature("W1.003", true);
+        loadCreature("W1", true);
+        loadCreature("W1.001", true);
+        loadCreature("W1.002", true);
+        loadCreature("W1.003", true);
 
-//        loadCreature("Z1", false);
-//        loadCreature("Z1.001", false);
-//        loadCreature("Z1.002", false);
-//        loadCreature("Z1.003", false);
-//        loadCreature("Z1.004", false);
+        loadCreature("Z1", false);
+        loadCreature("Z1.001", false);
+        loadCreature("Z1.002", false);
+        loadCreature("Z1.003", false);
+        loadCreature("Z1.004", false);
 
     }
 

@@ -17,10 +17,10 @@ public class Wolf extends Creature {
     public static final int FOLLOW_DISTANCE = 22;
     public static final int ALERT_DISTANCE = 20;
     public static final int FOLLOW_CLOSE_DISTANCE = 12;
-    public static final int ATTACK_DISTANCE = 10;
+    public static final int ATTACK_DISTANCE = 8;
     public static final int KILL_DISTANCE = 1;
 
-    public static final float MINIMUM_SEPARATION = 12f;
+    public static final float MINIMUM_SEPARATION = 1f;
     public static final float SPEED = 4f;
     public static final float ATTACK_SPEED = 10f;
     public static boolean firstBark = true;
@@ -37,7 +37,7 @@ public class Wolf extends Creature {
         this.mode = SLEEPING;
     }
 
-    public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
+    public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Array<Creature> creatures) { //Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
         if(isDead())
             return;
 
@@ -45,14 +45,16 @@ public class Wolf extends Creature {
 
         // which is closest by?
 
-        float distance = position.dst(player.position);
-        Creature closest = player;
-        for(Zombie zombie : zombies){
-            if(zombie.isDead())
+        float distance = 999999f;
+        Creature closest = null;
+        for(Creature creature : creatures){
+            if(creature == this || creature.isDead() )
                 continue;
-            float d = position.dst(zombie.position);
+            if(! (creature instanceof Zombie || creature instanceof Player ))
+                continue;
+            float d = position.dst(creature.position);
             if(d < distance) {
-                closest = zombie;
+                closest = creature;
                 distance = d;
             }
         }
@@ -81,10 +83,6 @@ public class Wolf extends Creature {
             Gdx.app.log("Wolf goes FOLLOWING", target.name);
         }
 
-
-
-
-
         // movement logic
         if(mode == Wolf.FOLLOWING){
 
@@ -98,18 +96,20 @@ public class Wolf extends Creature {
             }
 
             // separation from other wolves
-//            for(int i = 0; i < wolves.size; i++) {
-//                Wolf other = wolves.get(i);
-//                if(other == this)
-//                    continue;
-//                if(other.mode == ATTACKING)     // wolf pack mentality
-//                    mode = ATTACKING;
-//                float d = other.position.dst(position);
-//                if( d < MINIMUM_SEPARATION ){   // too close to other wolf
-//                    tmpVec.set(other.position).sub(position).nor().scl(-1f);
-//                    setForward(tmpVec); // face away from the other one
-//                }
-//            }
+            repelVelocity.set(0,0,0);
+            for(Creature other : creatures){
+                if( other == this)
+                    continue;
+                if (!(other instanceof Wolf))
+                    continue;
+                float d = other.position.dst(position);
+                if( d < MINIMUM_SEPARATION ){   // too close to other wolf
+//                    if(other.mode == ATTACKING)     // wolf pack mentality
+//                        mode = ATTACKING;
+                    tmpVec.set(position).sub(other.position); // vector away from other
+                    repelVelocity.add(tmpVec);
+                }
+            }
             update(deltaTime);
         }
         if(mode == Wolf.ATTACKING){
