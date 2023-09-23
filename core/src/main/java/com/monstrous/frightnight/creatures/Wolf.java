@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.monstrous.frightnight.HintMessage;
 import com.monstrous.frightnight.HintQueue;
 import com.monstrous.frightnight.Sounds;
@@ -25,7 +27,8 @@ public class Wolf extends Creature {
     public static final float ATTACK_SPEED = 10f;
     public static boolean firstBark = true;
 
-    private Creature target;
+    public Creature target;
+    public int targetId;       // for serialization
 
 
     public Wolf() {
@@ -35,6 +38,21 @@ public class Wolf extends Creature {
         super("hellhound", position);
         setForward(forward);
         this.mode = SLEEPING;
+    }
+
+    @Override
+    public void write(Json json) {
+        super.write(json);
+        targetId = -1;
+        if(target != null)
+            targetId = target.id;
+        json.writeValue("targetId", targetId);
+    }
+
+    @Override
+    public void read(Json json, JsonValue jsonData) {
+        super.read(json, jsonData);
+        targetId = json.readValue("targetId", Integer.class, jsonData); // to recover 'target'
     }
 
     public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Array<Creature> creatures) { //Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
@@ -86,47 +104,57 @@ public class Wolf extends Creature {
         // movement logic
         if(mode == Wolf.FOLLOWING){
 
-            faceTowards(target.position);
+            if(target.isDead())
+                mode = SLEEPING;
+            else {
+                faceTowards(target.position);
 
-            speed = SPEED;
-            distance = position.dst(target.position);
-            if(distance <= FOLLOW_CLOSE_DISTANCE & speed > 0) {
-                speed = 0;
-                Gdx.app.log("Wolf is FOLLOWING but keeps distance", target.name);
-            }
-
-            // separation from other wolves
-            repelVelocity.set(0,0,0);
-            for(Creature other : creatures){
-                if( other == this)
-                    continue;
-                if (!(other instanceof Wolf))
-                    continue;
-                float d = other.position.dst(position);
-                if( d < MINIMUM_SEPARATION ){   // too close to other wolf
-//                    if(other.mode == ATTACKING)     // wolf pack mentality
-//                        mode = ATTACKING;
-                    tmpVec.set(position).sub(other.position); // vector away from other
-                    repelVelocity.add(tmpVec);
+                speed = SPEED;
+                distance = position.dst(target.position);
+                if (distance <= FOLLOW_CLOSE_DISTANCE & speed > 0) {
+                    speed = 0;
+                    Gdx.app.log("Wolf is FOLLOWING but keeps distance", target.name);
                 }
+
+                // separation from other wolves
+                repelVelocity.set(0, 0, 0);
+                for (Creature other : creatures) {
+                    if (other == this)
+                        continue;
+                    if (!(other instanceof Wolf))
+                        continue;
+                    float d = other.position.dst(position);
+                    if (d < MINIMUM_SEPARATION) {   // too close to other wolf
+                        tmpVec.set(position).sub(other.position); // vector away from other
+                        tmpVec.scl(0.5f);
+                        repelVelocity.add(tmpVec);
+                    }
+                }
+                update(deltaTime);
             }
-            update(deltaTime);
         }
         if(mode == Wolf.ATTACKING){
             // move quickly towards target
-            faceTowards(target.position);
-            speed = ATTACK_SPEED;
-            update(deltaTime);
-            distance = position.dst(target.position);
-            if(distance < KILL_DISTANCE && !target.isDead()) {  // on top of target, kills target
-                Gdx.app.log("Wolf KILLS", target.name);
-                target.killedBy(this);
+            if(target.isDead())
                 mode = SLEEPING;
+            else {
+                faceTowards(target.position);
+                speed = ATTACK_SPEED;
+                update(deltaTime);
+                distance = position.dst(target.position);
+                if (distance < KILL_DISTANCE && !target.isDead()) {  // on top of target, kills target
+                    Gdx.app.log("Wolf KILLS", target.name);
+                    target.killedBy(this);
+                    mode = SLEEPING;
+                }
             }
         }
         if(mode == ALERT) {
             speed = 0;
-            faceTowards(target.position);
+            if(target.isDead())
+                mode = SLEEPING;
+            else
+                faceTowards(target.position);
             update(deltaTime);  // rotate to follow target, but don't move
         }
     }

@@ -54,15 +54,18 @@ public class Population {
     public void addCreature(Vector3 pos, Vector3 dir, boolean isWolf, boolean isPlayer ){
         if(isWolf) {
             Wolf wolf = new Wolf(pos, dir);
+            wolf.id = creatures.size;
             wolves.add(wolf);
             creatures.add(wolf);
         } else if (!isPlayer){
             Zombie zombie = new Zombie(pos, dir);
+            zombie.id = creatures.size;
             zombies.add(zombie);
             creatures.add(zombie);
         }
         else {
             player = new Player(pos, dir);
+            player.id = creatures.size;
             creatures.add(player);
         }
     }
@@ -78,6 +81,7 @@ public class Population {
 
         // aggregate creatures list
         creatures.clear();
+        car.id = creatures.size;
         creatures.add(car);
 
         gameOver = false;
@@ -163,10 +167,15 @@ public class Population {
                 player = (Player)creature;
             if(creature instanceof Car)
                 car = (Car) creature;
-            if(creature instanceof Wolf)
-                wolves.add((Wolf)creature);
+            if(creature instanceof Wolf) {
+                Wolf wolf = (Wolf)creature;
+                if(wolf.targetId >= 0)
+                    wolf.target = creatures.get(wolf.targetId);
+                wolves.add(wolf);
+            }
             if(creature instanceof Zombie)
                 zombies.add((Zombie)creature);
+
         }
 
     }

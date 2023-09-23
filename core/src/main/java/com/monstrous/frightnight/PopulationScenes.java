@@ -55,16 +55,16 @@ public class PopulationScenes {
         // follows object names in Blender
         loadCreature("PlayerSpawn", false, true);
 
-//        loadCreature("W1", true, false);
-//        loadCreature("W1.001", true, false);
-//        loadCreature("W1.002", true, false);
-//        loadCreature("W1.003", true, false);
-//
-//        loadCreature("Z1", false, false);
-//        loadCreature("Z1.001", false, false);
-//        loadCreature("Z1.002", false, false);
-//        loadCreature("Z1.003", false, false);
-//        loadCreature("Z1.004", false, false);
+        loadCreature("W1", true, false);
+        loadCreature("W1.001", true, false);
+        loadCreature("W1.002", true, false);
+        loadCreature("W1.003", true, false);
+
+        loadCreature("Z1", false, false);
+        loadCreature("Z1.001", false, false);
+        loadCreature("Z1.002", false, false);
+        loadCreature("Z1.003", false, false);
+        loadCreature("Z1.004", false, false);
 
     }
 
