@@ -1,5 +1,6 @@
 package com.monstrous.frightnight.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -28,9 +29,12 @@ public class Main extends Game {
         Gdx.app.log("Gdx version", com.badlogic.gdx.Version.VERSION);
         Gdx.app.log("OpenGL version", Gdx.gl.glGetString(Gdx.gl.GL_VERSION));
 
+        if(Gdx.app.getType() == Application.ApplicationType.WebGL)
+            Settings.supportControllers = false;
+
         // load assets
         assets = new Assets();
-       // assets.finishLoading();         // todo asynch
+
 
         if (Settings.supportControllers) {
             controllerToInputAdapter = new ControllerToInputAdapter(new MyControllerMappings());

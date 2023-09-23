@@ -52,8 +52,6 @@ public class HintQueue {
             endTime = time + MESSAGE_DURATION;
             queue.removeIndex(0);
         }
-
-
     }
 
     public void flush() {

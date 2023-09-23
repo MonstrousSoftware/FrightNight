@@ -24,7 +24,6 @@ public class StartScreen extends StdScreenAdapter {
     private Skin skin;
     private ProgressBar progressBar;
     private Texture texture;
-    private float timer;
     private boolean loaded;
     private Label prompt;
 
@@ -48,27 +47,26 @@ public class StartScreen extends StdScreenAdapter {
         progressBar.setSize(300, 50);
         progressBar.setValue(0);
 
-        Label textLabel = new Label("Monstrous Software\npresents",skin, "window");
+        Label textLabel = new Label("Monstrous Software",skin, "window");
         textLabel.setColor(Color.DARK_GRAY);
         textLabel.setAlignment(Align.center);
 
         texture =  new Texture(Gdx.files.internal("images/monstrous.png"));
         Image logo = new Image( new TextureRegion(texture));
 
-        prompt = new Label("Press any key",skin, "window");
+        prompt = new Label("Continue",skin, "window");
         prompt.setColor(Color.DARK_GRAY);
         prompt.setVisible(false);
 
         Table screenTable = new Table();
         screenTable.setFillParent(true);
         screenTable.add(logo).pad(10).row();
-        screenTable.add(textLabel).row();
-        screenTable.add(progressBar).pad(50).row();
-        screenTable.add(prompt).pad(50);
+        screenTable.add(textLabel).pad(10).row();
+        screenTable.add(progressBar).row();
+        screenTable.add(prompt).pad(10);
         screenTable.pack();
 
         stage.addActor(screenTable);
-        timer= 0;
         loaded = false;
 
     }
@@ -77,7 +75,6 @@ public class StartScreen extends StdScreenAdapter {
     @Override
     public void render(float deltaTime) {
         super.render(deltaTime);
-        timer += deltaTime;
 
         // load assets asynchronously
         if(!loaded) {
@@ -93,7 +90,7 @@ public class StartScreen extends StdScreenAdapter {
             }
         }
 
-        ScreenUtils.clear(137f/255f, 255f/255f, 247f/255f, 1f);
+        ScreenUtils.clear(.2f, .5f, .6f, 1f);
         stage.act(deltaTime);
         stage.draw();
 
