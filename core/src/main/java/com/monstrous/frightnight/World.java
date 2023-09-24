@@ -56,7 +56,7 @@ public class World implements Disposable {
         populationScenes = new PopulationScenes(population, sceneAsset, sceneManager);
 
         reset();
- //       population.save(SAVE_FILE_NAME);    // overwrite quick save from previous play through
+        population.save(SAVE_FILE_NAME);    // overwrite quick save from previous play through
 
         setCameraToPlayerPosition(sceneManager.camera);
         playerTransform = new Matrix4();

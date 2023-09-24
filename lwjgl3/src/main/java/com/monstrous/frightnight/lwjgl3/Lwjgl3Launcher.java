@@ -30,7 +30,7 @@ public class Lwjgl3Launcher {
         configuration.setWindowedMode(1200, 800);
         configuration.setBackBufferConfig(8, 8, 8, 8, 16, 0, 4);
 
-        configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+        configuration.setWindowIcon("logo128x128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
         return configuration;
     }
 }

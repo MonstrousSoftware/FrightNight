@@ -1,5 +1,6 @@
 package com.monstrous.frightnight.screens;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
@@ -83,6 +84,10 @@ public class StartScreen extends StdScreenAdapter {
             progressBar.setValue(fraction);
         }
         else {
+            if(Gdx.app.getType() != Application.ApplicationType.WebGL){
+                game.onLoadingComplete();
+                return;
+            }
             prompt.setVisible(true);
             if( Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 game.onLoadingComplete();

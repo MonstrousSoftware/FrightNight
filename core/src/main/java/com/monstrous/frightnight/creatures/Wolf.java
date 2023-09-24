@@ -84,6 +84,7 @@ public class Wolf extends Creature {
             target = closest;
             sounds.playSound(Sounds.GROWL);
             Gdx.app.log("Wolf goes ATTACKING", target.name);
+            //scene.animationController.setAnimation("WolfAttack", -1);
         }
 
         if(  mode == SLEEPING && distance < ALERT_DISTANCE ){   // player gets close, wolf is on alert but does not move yet
@@ -95,18 +96,21 @@ public class Wolf extends Creature {
                 firstBark = false;
                 hintQueue.addHint(0.5f, HintMessage.HELL_HOUND);
             }
+            scene.animationController.setAnimation("WolfAlert", -1);
         }
         if(mode == Wolf.ALERT && position.dst(target.position) > FOLLOW_DISTANCE ){ // player moves away, wolf starts following
             mode = Wolf.FOLLOWING;
             Gdx.app.log("Wolf goes FOLLOWING", target.name);
+            scene.animationController.setAnimation("WolfWalk", -1);
         }
 
         // movement logic
         if(mode == Wolf.FOLLOWING){
 
-            if(target.isDead())
+            if(target.isDead()) {
                 mode = SLEEPING;
-            else {
+                scene.animationController.setAnimation("WolfRestPose", -1);
+            } else {
                 faceTowards(target.position);
 
                 speed = SPEED;
@@ -135,9 +139,10 @@ public class Wolf extends Creature {
         }
         if(mode == Wolf.ATTACKING){
             // move quickly towards target
-            if(target.isDead())
+            if(target.isDead()) {
                 mode = SLEEPING;
-            else {
+                scene.animationController.setAnimation("WolfRestPose", -1);
+            } else {
                 faceTowards(target.position);
                 speed = ATTACK_SPEED;
                 update(deltaTime);
@@ -146,14 +151,16 @@ public class Wolf extends Creature {
                     Gdx.app.log("Wolf KILLS", target.name);
                     target.killedBy(this);
                     mode = SLEEPING;
+                    scene.animationController.setAnimation("WolfRestPose", -1);
                 }
             }
         }
         if(mode == ALERT) {
             speed = 0;
-            if(target.isDead())
+            if(target.isDead()) {
                 mode = SLEEPING;
-            else
+                scene.animationController.setAnimation("WolfRestPose", -1);
+            } else
                 faceTowards(target.position);
             update(deltaTime);  // rotate to follow target, but don't move
         }

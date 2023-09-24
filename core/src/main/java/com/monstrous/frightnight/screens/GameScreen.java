@@ -186,9 +186,9 @@ public class GameScreen extends StdScreenAdapter {
                 game.setScreen(new PauseMenuScreen(game, this));
             return;
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F5) )
+        if (!gameCompleted && Gdx.input.isKeyJustPressed(Input.Keys.F5) )
             world.quickSave();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F9) ) {
+        if (!gameCompleted && Gdx.input.isKeyJustPressed(Input.Keys.F9) ) {
             world.quickLoad();
         }
 

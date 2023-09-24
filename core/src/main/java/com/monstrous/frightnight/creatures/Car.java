@@ -47,7 +47,7 @@ public class Car extends Creature {
                 hintQueue.addHint(0f, HintMessage.CAR);
             }
         }
-        if(mode == STOPPED && distance < 4){
+        if(mode == STOPPED && distance < 3){
             hintQueue.flush();
             hintQueue.addHint(0f, HintMessage.GLORY);
             mode = PICKED_UP;
@@ -62,7 +62,7 @@ public class Car extends Creature {
             position.scl(-1);
         }
 
-        if(mode == TO_PICKUP && position.len() < 2 && speed == SPEED) { // near map centre
+        if(mode == TO_PICKUP && speed == SPEED) {
             mode = SLOW_DOWN;
         }
         if(mode == SLOW_DOWN ){
@@ -75,7 +75,7 @@ public class Car extends Creature {
             }
         }
 
-        if(speed < 0.1f)    // harmless when stood still
+        if(speed < 0.1f || mode == PICKED_UP)    // harmless when stood still
             return;
 
         // kill any creature on its path

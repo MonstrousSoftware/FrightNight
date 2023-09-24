@@ -19,8 +19,13 @@ IMPROVED - font missing some characters and small h has some surplus white
 - to improve animations
 - trigger animation from creature state machine
 DONE - boid separation
-- more corn fields
-- 2 wolves going in a spin
+DONE - more corn fields
+DONE- 2 wolves going in a spin
+DONE- stop car sooner
+DONE - trigger closer to car
+DONE- block save after game completed
+- credits spacing
+- display key bindings
 
 
 

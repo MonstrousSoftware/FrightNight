@@ -72,8 +72,21 @@ public class PopulationScenes {
     public void reset() {
 
         for(Wolf wolf : population.wolves) {
-            Scene scene = new Scene(sceneAsset.scene, "HellHound");
+            String armature = "ArmatureHellHound";
+            Scene scene = new Scene(sceneAsset.scene, "HellHound", armature );
+            if(armature != null) {
+                Gdx.app.log("GameObjectType",  " armature: "+armature + " animations: "+scene.modelInstance.animations.size);
+                for(int i = 0; i < scene.modelInstance.animations.size; i++) {
+                    String id = scene.modelInstance.animations.get(i).id;
+                    Gdx.app.log(" animation :", id);
+                }
+            }
             scene.modelInstance.transform.set(wolf.transform);
+            scene.animationController.setAnimation("WolfRestPose", -1);
+            scene.animationController.update(MathUtils.random(60f));            // advance some random amount to get zombies out of synch
+
+//            Scene scene = new Scene(sceneAsset.scene, "HellHound");
+//            scene.modelInstance.transform.set(wolf.transform);
             sceneManager.addScene(scene);
             wolf.scene = scene;
         }
