@@ -15,7 +15,7 @@ DONE - credits screen
 - save preferences
 - game icons
 IMPROVED - font missing some characters and small h has some surplus white
-- road texture does not appear on web
+DONE - road texture does not appear on web (png instead of jpg, also power of 2 dimensions)
 - to improve animations
 - trigger animation from creature state machine
 DONE - boid separation
