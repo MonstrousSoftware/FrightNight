@@ -32,10 +32,4 @@ public class Player extends Creature {
         }
     }
 
-
-        @Override
-    public void die() {
-        super.die();
-        Gdx.app.log("Game Over", "player died");
-    }
 }

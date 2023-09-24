@@ -43,6 +43,10 @@ public class PopulationScenes {
         Scene scene = new Scene(sceneAsset.scene, name);        // load a place-holder object to obtain position and orientation, it is not added to the scene manager
         Vector3 pos = new Vector3();
         Vector3 dir = new Vector3(0, 0, 1);
+        if(scene.modelInstance.nodes.size == 0) {
+            Gdx.app.error("Model without nodes", name);
+            return;
+        }
         Matrix4 transform = scene.modelInstance.nodes.first().globalTransform;
         transform.getTranslation(pos);
         pos.y = 0;

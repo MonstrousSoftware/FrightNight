@@ -83,7 +83,7 @@ public class Wolf extends Creature {
             mode = Wolf.ATTACKING;
             target = closest;
             sounds.playSound(Sounds.GROWL);
-            Gdx.app.log("Wolf goes ATTACKING", target.name);
+            //Gdx.app.log("Wolf goes ATTACKING", target.name);
             //scene.animationController.setAnimation("WolfAttack", -1);
         }
 
@@ -91,16 +91,16 @@ public class Wolf extends Creature {
             sounds.playSound(Sounds.BARK);
             mode = Wolf.ALERT;
             target = closest;
-            Gdx.app.log("Wolf goes ALERT", target.name);
+            //Gdx.app.log("Wolf goes ALERT", target.name);
             if(firstBark){
                 firstBark = false;
                 hintQueue.addHint(0.5f, HintMessage.HELL_HOUND);
             }
-            scene.animationController.setAnimation("WolfAlert", -1);
+            //scene.animationController.setAnimation("WolfAlert", -1);
         }
         if(mode == Wolf.ALERT && position.dst(target.position) > FOLLOW_DISTANCE ){ // player moves away, wolf starts following
             mode = Wolf.FOLLOWING;
-            Gdx.app.log("Wolf goes FOLLOWING", target.name);
+            //Gdx.app.log("Wolf goes FOLLOWING", target.name);
             scene.animationController.setAnimation("WolfWalk", -1);
         }
 
@@ -117,7 +117,7 @@ public class Wolf extends Creature {
                 distance = position.dst(target.position);
                 if (distance <= FOLLOW_CLOSE_DISTANCE & speed > 0) {
                     speed = 0;
-                    Gdx.app.log("Wolf is FOLLOWING but keeps distance", target.name);
+                    //Gdx.app.log("Wolf is FOLLOWING but keeps distance", target.name);
                 }
 
                 // separation from other wolves

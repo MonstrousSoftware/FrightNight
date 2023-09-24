@@ -92,7 +92,7 @@ public class Creature implements Json.Serializable {
         return dead;
     }
 
-    public void die() { // override for death animation etc.
+    private void die() { // override for death animation etc.
         dead = true;
         Gdx.app.log("creature died", name+ " at "+position+position);
     }
