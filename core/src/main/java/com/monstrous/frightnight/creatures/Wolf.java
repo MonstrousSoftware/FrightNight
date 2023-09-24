@@ -24,7 +24,7 @@ public class Wolf extends Creature {
 
     public static final float MINIMUM_SEPARATION = 1f;
     public static final float SPEED = 4f;
-    public static final float ATTACK_SPEED = 10f;
+    public static final float ATTACK_SPEED = 16f;
     public static boolean firstBark = true;
 
     public Creature target;
