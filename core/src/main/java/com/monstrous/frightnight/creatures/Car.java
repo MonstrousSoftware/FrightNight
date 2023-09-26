@@ -1,7 +1,6 @@
 package com.monstrous.frightnight.creatures;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.monstrous.frightnight.HintMessage;
@@ -44,12 +43,12 @@ public class Car extends Creature {
             float dot = view.dot(player.getForward());  // angle with player's forward direction
             if(dot > 0.3f) {  // player is able to see car
                 firstView = false;
-                hintQueue.addHint(0f, HintMessage.CAR);
+                hintQueue.showMessage(0f, HintMessage.CAR);
             }
         }
         if(mode == STOPPED && distance < 3){
             hintQueue.flush();
-            hintQueue.addHint(0f, HintMessage.GLORY);
+            hintQueue.showMessage(0f, HintMessage.GLORY);
             mode = PICKED_UP;
         }
 
@@ -71,7 +70,7 @@ public class Car extends Creature {
             else {
                 speed = 0;
                 mode = STOPPED;
-                hintQueue.addHint(1, HintMessage.CARRIAGE);
+                hintQueue.showMessage(1, HintMessage.CARRIAGE);
             }
         }
 

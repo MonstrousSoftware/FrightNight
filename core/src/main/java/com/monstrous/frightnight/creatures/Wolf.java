@@ -1,7 +1,6 @@
 package com.monstrous.frightnight.creatures;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -94,7 +93,7 @@ public class Wolf extends Creature {
             //Gdx.app.log("Wolf goes ALERT", target.name);
             if(firstBark){
                 firstBark = false;
-                hintQueue.addHint(0.5f, HintMessage.HELL_HOUND);
+                hintQueue.showMessage(0.5f, HintMessage.HELL_HOUND);
             }
             //scene.animationController.setAnimation("WolfAlert", -1);
         }

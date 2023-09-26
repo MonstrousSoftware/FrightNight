@@ -34,13 +34,17 @@ public class PauseMenuScreen extends MenuScreen {
 
        TextButton options = new TextButton("Options", skin);
        TextButton resume = new TextButton("Resume", skin);
+       TextButton keys = new TextButton("Keys", skin);
+
        TextButton quickSave = new TextButton("Quick Save", skin);
        TextButton quickLoad = new TextButton("Quick Load", skin);
        TextButton stop = new TextButton("Stop", skin);
 
        float pad = 10f;
-       screenTable.add(options).pad(pad).row();
+
        screenTable.add(resume).pad(pad).row();
+       screenTable.add(keys).pad(pad).row();
+       screenTable.add(options).pad(pad).row();
        screenTable.add(quickSave).pad(pad).row();
        screenTable.add(quickLoad).pad(pad).row();
        screenTable.add(stop).pad(pad).row();
@@ -75,6 +79,15 @@ public class PauseMenuScreen extends MenuScreen {
                game.setScreen(new OptionsScreen( game, gameScreen ));
            }
        });
+
+        keys.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                playSelectNoise();
+                game.setScreen(new KeysScreen( game, gameScreen ));
+            }
+        });
 
        resume.addListener(new ClickListener() {
            @Override

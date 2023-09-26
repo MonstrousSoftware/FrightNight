@@ -14,6 +14,14 @@ public enum HintMessage     {
     CARRIAGE (Sounds.VOICE_CARRIAGE, "The nightmare abates\nYour carriage awaits"),
     GLORY (Sounds.VOICE_GLORY, "Glory be the righteous knight\nLone survivor of the night of fright\nHe lives to see another day\nNow it`s time to go away"),
     WEATHER (Sounds.VOICE_WEATHER, "  For reasons beyond comprehension\nThe weather is removed from the tension"),
+    F1_FOR_HELP (Sounds.MENU_CLICK, "Press H for hints"),
+    HINT_1 (Sounds.MENU_CLICK, "Though you have no weapons, you need to eliminate all the creatures"),
+    HINT_2 (Sounds.MENU_CLICK, "There are no weapons to be found"),
+    HINT_3 (Sounds.MENU_CLICK, "The enemies of your enemies are your friends"),
+    HINT_4 (Sounds.MENU_CLICK, "You can get the hell hounds to follow you"),
+    HINT_5 (Sounds.MENU_CLICK, "The hell hounds will attack the zombies if you lure them close by"),
+    HINT_6 (Sounds.MENU_CLICK, "Hell hounds should be more careful crossing the road"),
+    HINT_7 (Sounds.MENU_CLICK, "You can escape only when all zombies and hell hounds are dead"),
     QUICKSAVE (Sounds.MENU_CLICK, "Quick Save"),
     QUICKLOAD (Sounds.MENU_CLICK, "Quick Load");
 

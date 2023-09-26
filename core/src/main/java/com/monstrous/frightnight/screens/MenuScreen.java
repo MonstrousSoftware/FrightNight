@@ -1,6 +1,8 @@
 package com.monstrous.frightnight.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -10,15 +12,17 @@ import com.monstrous.frightnight.Sounds;
 import com.monstrous.frightnight.shaders.MenuBackground;
 import de.golfgl.gdx.controllers.ControllerMenuStage;
 
+import static com.badlogic.gdx.Gdx.input;
 
-// abstract menu screen to derive from
+
+// abstract menu screen to derive from, this is the base class for different menu screens
 
 
 public class MenuScreen extends StdScreenAdapter {
 
     protected Main game;
     protected Viewport viewport;
-    protected Stage stage;      // from gdx-controllers-utils
+    protected ControllerMenuStage stage;      // from gdx-controllers-utils
     protected Skin skin;
     private MenuBackground background;
 
@@ -31,18 +35,16 @@ public class MenuScreen extends StdScreenAdapter {
     public void show() {
         viewport = new ScreenViewport();
 
-        skin = game.assets.get("skin/fright/fright.json"); //new Skin(Gdx.files.internal("skin/fright/fright.json"));
-        if(Settings.supportControllers)
-            stage = new ControllerMenuStage(new ScreenViewport());
-        else
-            stage = new Stage(new ScreenViewport());
+        skin = game.assets.get("skin/fright/fright.json");
+        stage = new ControllerMenuStage(new ScreenViewport());          // we can use this even without controllers, although it doesn't seem to work with teavm + Chrome browser
         rebuild();
-        Gdx.input.setInputProcessor(stage);
+        input.setInputProcessor(stage);
+        input.setCatchKey(Input.Keys.UP, true);
+        input.setCatchKey(Input.Keys.DOWN, true);
         if(Settings.supportControllers)
             game.controllerToInputAdapter.setInputProcessor(stage); // forward controller input to stage
 
         background = new MenuBackground();
-
     }
 
     protected void playSelectNoise() {

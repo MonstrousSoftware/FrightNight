@@ -12,6 +12,8 @@ public class HintQueue {
     private float time;
     private float endTime;			// time when on-screen message ends, < time when there is nothing on screen
     private Array<Notification> queue;
+    private int nextHintIndex;
+    private HintMessage hints[] = { HintMessage.HINT_1,  HintMessage.HINT_2,  HintMessage.HINT_3,  HintMessage.HINT_4,  HintMessage.HINT_5,  HintMessage.HINT_6, HintMessage.HINT_7 };
 
 
     static class Notification {
@@ -24,6 +26,7 @@ public class HintQueue {
     public HintQueue() {
 
         queue = new Array<>();
+        nextHintIndex = 0;
     }
 
 
@@ -57,13 +60,26 @@ public class HintQueue {
     public void flush() {
         queue.clear();
     }
-    public void addHint(float delay, HintMessage msg ){
+
+
+    public boolean isShowingMessage() {
+        return time < endTime;
+    }
+
+    public void showMessage(float delay, HintMessage msg ){
         Notification note = new Notification();
         note.startTime = time+delay;
         note.priority = (delay < 0);
         note.message = msg;
         queue.add(note);
         // sort if we think notes will arrive out of sequence
+    }
+
+    public void giveNextHint() {
+        HintMessage hint = hints[nextHintIndex++];
+        if(nextHintIndex >= hints.length)                   // loop through the hints
+            nextHintIndex = 0;
+        showMessage(0, hint);
     }
 
 }

@@ -1,7 +1,7 @@
 {
 "BitmapFont": {
-	"FluxischElse-Regular32": {
-		"file": "FluxischElse-Regular.fnt",
+	"FluxischElse-Regular-32": {
+		"file": "FluxischElse-Regular(3).fnt",
 		"scaledSize": -1,
 		"markupEnabled": false,
 		"flip": false
@@ -54,14 +54,14 @@
 		"checkboxOff": "checkbox_off",
 		"checkboxOnOver": "checkbox_on_over",
 		"checkboxOver": "checkbox_off_over",
-		"font": "FluxischElse-Regular32",
+		"font": "FluxischElse-Regular-32",
 		"fontColor": "white",
 		"overFontColor": "gold"
 	}
 },
 "LabelStyle": {
 	"default": {
-		"font": "FluxischElse-Regular32",
+		"font": "FluxischElse-Regular-32",
 		"fontColor": "white"
 	},
 	"title": {
@@ -73,9 +73,15 @@
 		"fontColor": "white"
 	}
 },
+"ProgressBarStyle": {
+	"default-horizontal": {
+		"background": "progressbar_square",
+		"knobBefore": "progressbar_square_knob"
+	}
+},
 "TextButtonStyle": {
 	"default": {
-		"font": "FluxischElse-Regular32",
+		"font": "FluxischElse-Regular-32",
 		"fontColor": "white",
 		"overFontColor": "gold",
 		"pressedOffsetX": 2,
@@ -84,7 +90,7 @@
 },
 "TextFieldStyle": {
 	"default": {
-		"font": "FluxischElse-Regular32",
+		"font": "FluxischElse-Regular-32",
 		"fontColor": "white"
 	}
 },

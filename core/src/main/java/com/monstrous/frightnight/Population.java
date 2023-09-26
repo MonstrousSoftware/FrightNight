@@ -3,9 +3,7 @@ package com.monstrous.frightnight;
 // manages all moving creatures
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -23,7 +21,9 @@ public class Population {
     private boolean gameOver;
     private PopulationScenes populationScenes;
     private Sounds sounds;
-    private boolean zombiesDead;
+    private boolean allZombiesDead;
+    public int zombieKills;
+    public int wolfKills;
 
     public Population(Sounds sounds) {
         this.sounds = sounds;
@@ -40,14 +40,6 @@ public class Population {
 
     public Car getCar() {
         return car;
-    }
-
-    public Wolf getWolf() {
-        return wolves.first();
-    }
-
-    public Zombie getZombie() {
-        return zombies.first();
     }
 
     // wolf or zombie
@@ -85,7 +77,9 @@ public class Population {
         creatures.add(car);
 
         gameOver = false;
-        zombiesDead = false;
+        allZombiesDead = false;
+        zombieKills = 0;
+        wolfKills = 0;
     }
 
 
@@ -102,10 +96,6 @@ public class Population {
 
 
     public void update(Vector3 playerPosition, HintQueue hintQueue, float deltaTime ) {
-        //Gdx.app.log("population.update", "gameOver"+gameOver);
-
-        if(Gdx.input.isKeyPressed(Input.Keys.R))
-            reset();
 
         player.position.set( playerPosition ); // let player entity follow FPS camera
         player.position.y = 0;  // set entity position at ground level, not eye level
@@ -126,11 +116,13 @@ public class Population {
             for(Wolf wolf : wolves)
                 if(!wolf.isDead())
                     wolfCount++;
+            zombieKills = zombies.size - zombieCount;
+            wolfKills = wolves.size - wolfCount;
 
-            if(!zombiesDead && zombieCount == 0){
-                zombiesDead = true;
+            if(!allZombiesDead && zombieCount == 0){
+                allZombiesDead = true;
                 if(wolfCount > 0)
-                    hintQueue.addHint(2f, HintMessage.NO_CREATURE); // all zombies are dead, now kill the wolves
+                    hintQueue.showMessage(2f, HintMessage.NO_CREATURE); // all zombies are dead, now kill the wolves
             }
 
             if(zombieCount == 0 && wolfCount == 0)

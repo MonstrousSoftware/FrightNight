@@ -35,6 +35,7 @@ public class MainMenuScreen extends MenuScreen {
        Image title = new Image( (Texture)game.assets.get("images/title.png")); //new Texture( Gdx.files.internal("images/title.png")));
 
        TextButton play = new TextButton("Play Game", skin);
+       TextButton keys = new TextButton("Keys", skin);
        TextButton options = new TextButton("Options", skin);
        TextButton credits = new TextButton("Credits", skin);
        TextButton quit = new TextButton("Quit", skin);
@@ -42,6 +43,7 @@ public class MainMenuScreen extends MenuScreen {
        float pad = 10f;
        screenTable.add(title).pad(50).row();
        screenTable.add(play).pad(pad).row();
+       screenTable.add(keys).pad(pad).row();
        screenTable.add(options).pad(pad).row();
        screenTable.add(credits).pad(pad).row();
        // hide quit on web unless we have an outro screen
@@ -72,6 +74,15 @@ public class MainMenuScreen extends MenuScreen {
                 super.clicked(event, x, y);
                 playSelectNoise();
                 game.setScreen(new OptionsScreen( game, null ));
+            }
+        });
+
+        keys.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                playSelectNoise();
+                game.setScreen(new KeysScreen( game, null ));
             }
         });
 

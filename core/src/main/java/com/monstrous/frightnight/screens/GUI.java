@@ -3,7 +3,6 @@ package com.monstrous.frightnight.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-//import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -58,17 +57,20 @@ public class GUI implements Disposable {
 
     public void rollCredits( String text  ){
         Table screenTable = new Table();
-        screenTable.setFillParent(true);
 
         Label message = new Label(text, skin);
-        message.setBounds( 100, 100, Gdx.graphics.getWidth() - 100, 1000 );
+        message.setWidth(Gdx.graphics.getWidth()- 100);
         message.setAlignment( Align.center );
+        message.setColor(1f, 0.8f, 0.8f, 1f);
 
         screenTable.align(Align.bottom).align(Align.center);
         screenTable.add(message).pad(50);
         screenTable.pack();
 
-        screenTable.addAction(sequence(moveTo(0, -1200), delay(10f),   moveTo(0,800, 12), delay(2f), fadeOut(1f), removeActor()));           // fade in .. fade out, then remove this actor
+        // moveTo x,y coordinate are bottom left of the text box
+        float x = (stage.getWidth() - screenTable.getWidth())/2;    // centre on screen horizontally
+        // start just below screen, move up leaving just the last few lines visible
+        screenTable.addAction(sequence(moveTo(x, -screenTable.getHeight()), delay(10f),   moveTo(x, stage.getHeight()- 180f , 12), delay(2f), fadeOut(1f), removeActor()));           // fade in .. fade out, then remove this actor
         stage.addActor(screenTable);
     }
 

@@ -1,10 +1,9 @@
 Notes 18/9/2023
 
-// needed? gdx-teavm in version 1.0.0-SNAPSHOT
-
-- It seems gdx-teavm doesn't support controllers as they require reflection.
-- since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
-- need a 'press any key to start' screen to allow sound in the title screen on web.
+to do:
+- It seems gdx-teavm doesn't support controllers as they require reflection.  => support only in desktop version
+DONE - since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
+FIXED - need a 'press any key to start' screen to allow sound in the title screen on web.
 FIXED - on web the sound keeps playing after exitscreen completes, despite the sound.stop();
 - F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
 - ESC doesn't work while BACK does in menu's
@@ -25,7 +24,8 @@ DONE- stop car sooner
 DONE - trigger closer to car
 DONE- block save after game completed
 - credits spacing
-- display key bindings
+- display key bindings ?
+- keyboard navigation of menu's doesn't work on web version (does Chrome intercept the key presses?)
 
 
 
@@ -34,11 +34,6 @@ Credits:
 - gdx-gltf
 - gdx-teavm
 - gdx-controllers & gdx-controller-utils
-
-
-
-How to import FBX animations in Blender: https://www.youtube.com/watch?v=RFPzlSdV1bw
-
 
 
 

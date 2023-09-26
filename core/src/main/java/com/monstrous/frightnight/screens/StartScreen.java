@@ -16,7 +16,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
-// on web this screen is to get a user key press so we can start playing sound
+// on web this screen is to get a user key press, so we can start playing sound
+// also shows progress on asset loading
 
 public class StartScreen extends StdScreenAdapter {
 
@@ -40,22 +41,20 @@ public class StartScreen extends StdScreenAdapter {
     public void show() {
         Gdx.app.log("StartScreen show()", "");
 
-        // todo add progress bar to fright skin
-        skin = new Skin(Gdx.files.internal("Particle Park UI Skin/Particle Park UI.json"));
+        skin = new Skin(Gdx.files.internal("skin/fright/fright.json"));
         stage = new Stage(new ScreenViewport());
 
         progressBar = new ProgressBar(0f, 1.0f, 0.01f, false, skin);
         progressBar.setSize(300, 50);
         progressBar.setValue(0);
 
-        Label textLabel = new Label("Monstrous Software",skin, "window");
-        textLabel.setColor(Color.DARK_GRAY);
+        Label textLabel = new Label("Monstrous Software",skin, "title");
         textLabel.setAlignment(Align.center);
 
         texture =  new Texture(Gdx.files.internal("images/monstrous.png"));
         Image logo = new Image( new TextureRegion(texture));
 
-        prompt = new Label("Continue",skin, "window");
+        prompt = new Label("Continue",skin, "default");
         prompt.setColor(Color.DARK_GRAY);
         prompt.setVisible(false);
 
@@ -64,7 +63,7 @@ public class StartScreen extends StdScreenAdapter {
         screenTable.add(logo).pad(10).row();
         screenTable.add(textLabel).pad(10).row();
         screenTable.add(progressBar).row();
-        screenTable.add(prompt).pad(10);
+        screenTable.add(prompt).pad(60);
         screenTable.pack();
 
         stage.addActor(screenTable);
@@ -103,12 +102,10 @@ public class StartScreen extends StdScreenAdapter {
 
     @Override
     public void resize(int w, int h) {
-//        this.width = w;
-//        this.height = h;
+
         Gdx.app.log("StartScreen resize()", "");
         stage.getViewport().update(w, h, true);
-//        cam.setToOrtho(false, width, height);
-//        cam.update();
+
     }
 
     @Override
@@ -120,8 +117,6 @@ public class StartScreen extends StdScreenAdapter {
     @Override
     public void dispose() {
         Gdx.app.log("StartScreen dispose()", "");
-//        batch.dispose();
-//        font.dispose();
         stage.dispose();
         skin.dispose();
     }

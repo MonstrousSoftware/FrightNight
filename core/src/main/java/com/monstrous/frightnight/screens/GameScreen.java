@@ -62,6 +62,9 @@ public class GameScreen extends StdScreenAdapter {
     private boolean firstThunder = true;
     private boolean startedWithWeather;
     private boolean gameCompleted;
+    private float nagTimer;
+    private float nagTimer2;
+    private float nagTimer3;
 
     public GameScreen(Main game) {
         Gdx.app.log("GameScreen", "constructor");
@@ -167,9 +170,12 @@ public class GameScreen extends StdScreenAdapter {
         bgColor = new Color();
         playerDied = false;
         gameCompleted = false;
+        nagTimer = 30;
+        nagTimer2 = 45;
+        nagTimer3 = 90f;
 
         if (startedWithWeather && !Settings.enableWeather && !gameCompleted)   // switched off weather mid game?
-            hintQueue.addHint(2f, HintMessage.WEATHER); // make snarky comment
+            hintQueue.showMessage(2f, HintMessage.WEATHER); // make snarky comment
 
 
     }
@@ -191,6 +197,29 @@ public class GameScreen extends StdScreenAdapter {
         if (!gameCompleted && (Gdx.input.isKeyJustPressed(Input.Keys.F9) || Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)))
             world.quickLoad();
 
+        if(!hintQueue.isShowingMessage() && (Gdx.input.isKeyJustPressed(Input.Keys.F1) || Gdx.input.isKeyJustPressed(Input.Keys.H)) ){     // F1 is intercepted by browsers
+            hintQueue.giveNextHint();
+        }
+
+        nagTimer -= deltaTime;
+        if(nagTimer < 0 && world.population.zombieKills == 0 && world.population.wolfKills == 0) {   // nobody getting killed, give a hint
+            Gdx.app.log("nag", "no creature");
+            hintQueue.showMessage(0, HintMessage.NO_CREATURE);
+            nagTimer = 30f;
+        }
+        nagTimer2 -= deltaTime;
+        if(nagTimer2 < 0 && world.population.zombieKills == 0 ) {   // nobody getting killed, give a hint
+            Gdx.app.log("nag", "best friend");
+            hintQueue.showMessage(0, HintMessage.HELL_HOUND);
+            nagTimer2 = 30f;
+        }
+        nagTimer3 -= deltaTime;
+        if(nagTimer3 < 0 ) {   // give a hint
+            Gdx.app.log("nag", "offer hint");
+            hintQueue.showMessage(0, HintMessage.F1_FOR_HELP);
+            nagTimer3 = 60f;
+        }
+        //Gdx.app.log("nagtimers", ""+nagTimer+"  "+nagTimer2+"  "+nagTimer3);
 
         if (playerDied && viewHeight <= 0) {
             game.setScreen(new GameOverScreen(game, this, world.getNameOfKiller()));
@@ -231,7 +260,7 @@ public class GameScreen extends StdScreenAdapter {
                 flashTimer = 0.1f;  // lightning effect
                 thunderTimer = MathUtils.random(Settings.lightningPeriod) + 1;      // time to next flash
                 if (firstThunder) {
-                    hintQueue.addHint(1.5f, HintMessage.FRIGHT);
+                    hintQueue.showMessage(1.5f, HintMessage.FRIGHT);
                     thunderTimer += 5;
                 }
                 firstThunder = false;
@@ -258,7 +287,7 @@ public class GameScreen extends StdScreenAdapter {
             sceneManager.update(deltaTime);
         } else {
             if (viewHeight > 0)
-                viewHeight -= 10;
+                viewHeight -= Gdx.graphics.getHeight()*deltaTime;       // close eyes animation
         }
 
         if (!gameCompleted && world.gameCompleted()) {

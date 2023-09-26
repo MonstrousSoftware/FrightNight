@@ -1,7 +1,6 @@
 package com.monstrous.frightnight;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
@@ -9,17 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.monstrous.frightnight.cornfield.DecalCornField;
-import com.monstrous.frightnight.creatures.Car;
-import com.monstrous.frightnight.creatures.Creature;
-import com.monstrous.frightnight.creatures.Zombie;
 import net.mgsx.gltf.scene3d.scene.Scene;
 import net.mgsx.gltf.scene3d.scene.SceneAsset;
 import net.mgsx.gltf.scene3d.scene.SceneManager;
-
-import java.io.StringWriter;
 
 public class World implements Disposable {
     public static String GLTF_FILE = "models/frightnight.gltf";
@@ -137,13 +129,13 @@ public class World implements Disposable {
 
     public void quickSave() {
         Gdx.app.log("quick save", "");
-        hintQueue.addHint(-1, HintMessage.QUICKSAVE);
+        hintQueue.showMessage(-1, HintMessage.QUICKSAVE);
         population.save(SAVE_FILE_NAME);
     }
 
     public void quickLoad() {
         Gdx.app.log("quick load", "");
-        hintQueue.addHint(-1, HintMessage.QUICKLOAD);
+        hintQueue.showMessage(-1, HintMessage.QUICKLOAD);
 
         loadStaticScenes();
         population.reset();

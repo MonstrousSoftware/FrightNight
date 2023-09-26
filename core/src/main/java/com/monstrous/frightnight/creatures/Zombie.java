@@ -1,7 +1,6 @@
 package com.monstrous.frightnight.creatures;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -60,7 +59,7 @@ public class Zombie extends Creature {
             float dot = view.dot(player.getForward());  // angle with player's forward direction
             if(dot > 0.3f) {  // player is able to see zombie
                 firstZombie = false;
-                hintQueue.addHint(0f, HintMessage.UNDEAD);
+                hintQueue.showMessage(0f, HintMessage.UNDEAD);
             }
         }
 
