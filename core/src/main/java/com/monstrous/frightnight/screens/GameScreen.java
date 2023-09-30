@@ -192,7 +192,7 @@ public class GameScreen extends StdScreenAdapter {
                 game.setScreen(new PauseMenuScreen(game, this));
             return;
         }
-        if (!gameCompleted && (Gdx.input.isKeyJustPressed(Input.Keys.F5) || Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)))  // F5 is already used by browsers to refresh
+        if (!gameCompleted && !playerDied && (Gdx.input.isKeyJustPressed(Input.Keys.F5) || Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)))  // F5 is already used by browsers to refresh
             world.quickSave();
         if (!gameCompleted && (Gdx.input.isKeyJustPressed(Input.Keys.F9) || Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)))
             world.quickLoad();
