@@ -18,9 +18,9 @@ public class CreditsScreen extends MenuScreen {
                     "- using tutorials from Imphenzia\n- spooky tree tutorial by Grant Abbitt\n"+
                     "- zombie model adapted from Kenney's assets\n\n"+
                     "Sky box from cleanpng.com\n\n"+
-                    "Fonts from fontmeme.com:\n- Fluxisch Else by OSP Foundry\n- Halloween Fright by Brithos Type\n- OpenSans by Steve Matteson\n"+
+                    "Fonts from fontmeme.com:\n- Fluxisch Else by OSP Foundry\n- Halloween Fright by Brithos Type\n- OpenSans by Steve Matteson\n\n"+
                     "Voice synthesis:\n-ttsmaker.com\n\n"+
-                    "Music from Pixabay.com:\n- Dark Ambient, Spooky Music Theme, Happy Quirky Theme by TheoJT\n\n\n\n"+
+                    "Music from Pixabay.com:\n- Dark Ambient, Spooky Music Theme, Happy Quirky Theme by TheoJT\n\n\n"+
                     "Thank you for playing";
 
     public CreditsScreen(Main game ) {
