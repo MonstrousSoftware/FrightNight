@@ -52,6 +52,10 @@ public class Assets implements Disposable {
         assets.load("voicelines/void.mp3", Sound.class);
         assets.load("voicelines/weather.mp3", Sound.class);
 
+        assets.load("sound/squelch.ogg", Sound.class);
+        assets.load("sound/dog-yelp.ogg", Sound.class);
+        assets.load("sound/grunt.ogg", Sound.class);
+
 
         assets.load("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3", Music.class);      // not music, but a very long sound effect
         assets.load("music/dark-ambient-121126.mp3", Music.class);

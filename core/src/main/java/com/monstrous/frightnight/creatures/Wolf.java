@@ -165,4 +165,10 @@ public class Wolf extends Creature {
         }
     }
 
+    @Override
+    public void die() {
+        super.die();
+        Sounds.playSound(Sounds.YELP);
+    }
+
 }

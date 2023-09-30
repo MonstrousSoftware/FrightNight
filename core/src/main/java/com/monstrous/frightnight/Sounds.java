@@ -27,6 +27,10 @@ public class Sounds implements Disposable {
     public static int VOICE_VOID = 14;
     public static int VOICE_WEATHER = 15;
 
+    public static int SQUISH = 16;
+    public static int YELP = 17;
+    public static int GRUNT = 18;
+
 
     private static Array<Sound> sounds;
     private final Preferences preferences;
@@ -56,6 +60,10 @@ public class Sounds implements Disposable {
         sounds.add( assets.get("voicelines/undead.mp3"));
         sounds.add( assets.get("voicelines/void.mp3"));
         sounds.add( assets.get("voicelines/weather.mp3"));
+
+        sounds.add( assets.get("sound/squelch.ogg"));
+        sounds.add( assets.get("sound/dog-yelp.ogg"));
+        sounds.add( assets.get("sound/grunt.ogg"));
 
 
         preferences = Gdx.app.getPreferences(Settings.preferencesName);

@@ -105,4 +105,10 @@ public class Zombie extends Creature {
         }
     }
 
+    @Override
+    public void die() {
+        super.die();
+        Sounds.playSound(Sounds.GRUNT);
+    }
+
 }
