@@ -55,8 +55,10 @@ public class Wolf extends Creature {
     }
 
     public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Array<Creature> creatures) { //Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
-        if(isDead())
+        if(isDead()) {
+            update(deltaTime);
             return;
+        }
 
         // change mode based on distance of player or zombie
 

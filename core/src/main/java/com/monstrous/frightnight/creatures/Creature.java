@@ -95,6 +95,10 @@ public class Creature implements Json.Serializable {
     protected void die() { // override for death animation etc.
         dead = true;
         Gdx.app.log("creature died", name+ " at "+position+position);
+
+        forward.set(0,1,0); // float up
+        speed = 1;
+        turnFraction = 1.1f;
     }
 
     public void killedBy( Creature killer) {
@@ -148,7 +152,10 @@ public class Creature implements Json.Serializable {
         tmpVec.add(repelVelocity);
         tmpVec.scl(deltaTime);
         position.add(tmpVec);
+        if(isDead())
+            transform.rotate(Vector3.X, -90);    // turn to face up
         transform.setTranslation(position);
+
     }
 
 

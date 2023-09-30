@@ -46,9 +46,10 @@ public class Zombie extends Creature {
     }
 
     public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Creature> creatures ) {
-        if(isDead())
+        if(isDead()) {
+            update(delta);
             return;
-
+        }
 
         // change mode based on distance of player
 
