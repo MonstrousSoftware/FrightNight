@@ -23,10 +23,10 @@ public class CamController extends InputAdapter {
 
     protected final Camera camera;
     protected final IntIntMap keys = new IntIntMap();
-    public int strafeLeftKey = Input.Keys.Q;
-    public int strafeRightKey = Input.Keys.E;
-    public int turnLeftKey = Input.Keys.A;
-    public int turnRightKey = Input.Keys.D;
+    public int strafeLeftKey = Input.Keys.A;
+    public int strafeRightKey = Input.Keys.D;
+    public int turnLeftKey = Input.Keys.Q;
+    public int turnRightKey = Input.Keys.E;
     public int forwardKey = Input.Keys.W;
     public int backwardKey = Input.Keys.S;
     public int jumpKey = Input.Keys.SPACE;

@@ -12,8 +12,10 @@ import de.golfgl.gdx.controllers.ControllerMenuStage;
 
 public class KeysScreen extends MenuScreen {
 
-    private String[][] keyBindings = {{ "W", "forward" }, {"A", "turn left"}, {"S", "back"}, {"D", "turn right"},
-        { "Q", "strafe left" }, {"E", "strafe right"},
+    private String[][] keyBindings = {
+        { "W", "forward" }, {"A", "strafe left"},
+        { "S", "back"}, {"D", "strafe right"},
+        { "Q", "turn left" }, {"E", "turn right"},
         { "Esc", "in-game menu" },
         { "F5", "quick-save" }, {"F9", "quick-load"},
         { "F1", "hint" }

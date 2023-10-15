@@ -100,8 +100,8 @@ public class GameScreen extends StdScreenAdapter {
 
         // on teavm setCursorCatched() doesn't work so hide the cursor and let the user turn with the keyboard
         // (you can turn a bit with the mouse, until it reaches the side of the canvas).
-        if (Gdx.app.getType() == Application.ApplicationType.WebGL)
-            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);     // hide cursor
+//        if (Gdx.app.getType() == Application.ApplicationType.WebGL)
+//            Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);     // hide cursor
 
         Gdx.input.setCatchKey(Input.Keys.F1, true);
         Gdx.input.setCatchKey(Input.Keys.F5, true);
