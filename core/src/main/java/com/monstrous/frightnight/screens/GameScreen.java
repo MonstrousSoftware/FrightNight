@@ -103,6 +103,9 @@ public class GameScreen extends StdScreenAdapter {
         if (Gdx.app.getType() == Application.ApplicationType.WebGL)
             Gdx.graphics.setSystemCursor(Cursor.SystemCursor.None);     // hide cursor
 
+        Gdx.input.setCatchKey(Input.Keys.F1, true);
+        Gdx.input.setCatchKey(Input.Keys.F5, true);
+        Gdx.input.setCatchKey(Input.Keys.F9, true);
 
         camController = new CamController(camera);
 
@@ -358,6 +361,11 @@ public class GameScreen extends StdScreenAdapter {
         public void hide() {
             Gdx.app.log("GameScreen", "hide()");
             Gdx.input.setCursorCatched(false);
+
+            Gdx.input.setCatchKey(Input.Keys.F1, false);
+            Gdx.input.setCatchKey(Input.Keys.F5, false);
+            Gdx.input.setCatchKey(Input.Keys.F9, false);
+
 
             if(currentController != null) {
                 Controllers.removeListener(controllerAdapter);
