@@ -44,3 +44,11 @@ sky box: https://www.cleanpng.com/png-cube-mapping-night-sky-star-counter-strike
 sky box: https://www.cleanpng.com/png-skybox-texture-mapping-cube-mapping-sky-cloud-920475/download-png.html
 
 https://fontmeme.com/fonts/halloween-fright-font/
+
+15/10: teavm now supports catching F1, F5 and F9. Changed keys.
+
+teavm error:
+| ERROR[0]
+| Class: -
+| Method: com.github.xpenatan.gdx.backends.teavm.TeaGL20.compareObject(Lorg/teavm/jso/JSObject;Lorg/teavm/jso/JSObject;)Z
+| Text: Native method com.github.xpenatan.gdx.backends.teavm.TeaGL20.compareObject(Lorg/teavm/jso/JSObject;Lorg/teavm/jso/JSObject;)Z has no implementation

@@ -22,8 +22,8 @@ public class Wolf extends Creature {
     public static final int KILL_DISTANCE = 1;
 
     public static final float MINIMUM_SEPARATION = 1f;
-    public static final float SPEED = 4f;
-    public static final float ATTACK_SPEED = 16f;
+    public static final float SPEED = 8f;
+    public static final float ATTACK_SPEED = 18f;
     public static boolean firstBark = true;
 
     public Creature target;
@@ -55,8 +55,10 @@ public class Wolf extends Creature {
     }
 
     public void move(float deltaTime, Sounds sounds, HintQueue hintQueue, Array<Creature> creatures) { //Player player, Array<Wolf> wolves, Array<Zombie> zombies ) {
-        if(isDead())
+        if(isDead()) {
+            update(deltaTime);
             return;
+        }
 
         // change mode based on distance of player or zombie
 
@@ -163,6 +165,12 @@ public class Wolf extends Creature {
                 faceTowards(target.position);
             update(deltaTime);  // rotate to follow target, but don't move
         }
+    }
+
+    @Override
+    public void die() {
+        super.die();
+        Sounds.playSound(Sounds.YELP);
     }
 
 }

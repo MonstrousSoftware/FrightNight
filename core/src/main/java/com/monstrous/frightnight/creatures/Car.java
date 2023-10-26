@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.monstrous.frightnight.HintMessage;
 import com.monstrous.frightnight.HintQueue;
+import com.monstrous.frightnight.Sounds;
 import net.mgsx.gltf.scene3d.scene.Scene;
 
 public class Car extends Creature {
@@ -90,6 +91,7 @@ public class Car extends Creature {
             if(creature.position.x+creature.radius >= position.x-WIDTH/2f && creature.position.x-creature.radius <= position.x+WIDTH/2f &&
                 creature.position.z+creature.radius >= position.z-LENGTH/2f && creature.position.z-creature.radius <= position.z+LENGTH/2f ) {
                 creature.killedBy(this);
+                Sounds.playSound(Sounds.SQUISH);
                 Gdx.app.log("car kills:", creature.name+ " at "+position+" creature at "+creature.position);
             }
         }

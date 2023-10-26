@@ -28,12 +28,14 @@ public class TitleScreen extends ScreenAdapter {
     private float titleWidth, titleHeight;
     private Texture logoTexture;
     private Texture readyTexture;
+    private Texture pressTexture;
     private Viewport viewport;
     private TitlePostFilter filter;
     private FrameBuffer fbo;
     private Music staticNoise;      // as it is so long, load as music instead of sound so that it can be buffered
     private float readyAlpha;
     private float logoAlpha;
+    private float pressAlpha;
     private float bgColor;
     private boolean fadeOut;
     private boolean zoomOut;
@@ -47,9 +49,10 @@ public class TitleScreen extends ScreenAdapter {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        titleTexture = game.assets.get("images/title.png"); //new Texture( Gdx.files.internal("images/title.png"));
-        logoTexture = game.assets.get("images/libgdx-faded.png"); //new Texture( Gdx.files.internal("images/libgdx-faded.png"));  // desaturated version to stay on theme
-        readyTexture = game.assets.get("images/areyouready.png"); //new Texture( Gdx.files.internal("images/areyouready.png"));
+        titleTexture = game.assets.get("images/title.png");
+        logoTexture = game.assets.get("images/libgdx-faded.png");  // desaturated version to stay on theme
+        readyTexture = game.assets.get("images/areyouready.png");
+        pressTexture = game.assets.get("images/press-a-key.png");
         titleWidth = titleTexture.getWidth();
         titleHeight = titleTexture.getHeight();
         viewport = new ScreenViewport();
@@ -57,6 +60,7 @@ public class TitleScreen extends ScreenAdapter {
         staticNoise = game.assets.get("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"); //Gdx.audio.newSound(Gdx.files.internal("sound/interference-radio-tv-data-computer-hard-drive-7122.mp3"));
         staticNoise.play();
         readyAlpha = 0;
+        pressAlpha = 0;
         logoAlpha = 1f;
         bgColor = 0.5f;
         fadeOut = false;
@@ -75,6 +79,13 @@ public class TitleScreen extends ScreenAdapter {
         readyAlpha += delta / 10f;
         if(readyAlpha > 1.0f)
             readyAlpha = 1.0f;
+
+        if(readyAlpha >= 1.0f){
+            pressAlpha += delta/3f;
+            if(pressAlpha > 1.0f)
+                pressAlpha = 1.0f;
+        }
+
 
         if(fadeOut){
             // fade out the title and logo
@@ -120,6 +131,11 @@ public class TitleScreen extends ScreenAdapter {
 
             batch.setColor(1,1,1, readyAlpha);
             batch.draw(readyTexture,(width-readyTexture.getWidth())/2f,250);
+
+            if(!fadeOut && !zoomOut) {
+                batch.setColor(1, 1, 1, pressAlpha);
+                batch.draw(pressTexture, (width - pressTexture.getWidth()) / 2f, 200);
+            }
 
             batch.end();
         fbo.end();

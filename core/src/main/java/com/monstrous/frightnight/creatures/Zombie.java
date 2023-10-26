@@ -46,9 +46,10 @@ public class Zombie extends Creature {
     }
 
     public void move(float delta, Sounds sounds, HintQueue hintQueue, Player player, Array<Creature> creatures ) {
-        if(isDead())
+        if(isDead()) {
+            update(delta);
             return;
-
+        }
 
         // change mode based on distance of player
 
@@ -103,6 +104,12 @@ public class Zombie extends Creature {
                 }
             }
         }
+    }
+
+    @Override
+    public void die() {
+        super.die();
+        Sounds.playSound(Sounds.GRUNT);
     }
 
 }

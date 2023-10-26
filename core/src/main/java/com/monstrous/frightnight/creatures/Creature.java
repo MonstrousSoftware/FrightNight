@@ -1,6 +1,9 @@
 package com.monstrous.frightnight.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.Material;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
@@ -92,9 +95,13 @@ public class Creature implements Json.Serializable {
         return dead;
     }
 
-    private void die() { // override for death animation etc.
+    protected void die() { // override for death animation etc.
         dead = true;
         Gdx.app.log("creature died", name+ " at "+position+position);
+
+        forward.set(0,1,0); // float up
+        speed = 1;
+        turnFraction = 1.0f;    // stop any rotation to make sure 'forward' is not modified
     }
 
     public void killedBy( Creature killer) {
@@ -148,7 +155,10 @@ public class Creature implements Json.Serializable {
         tmpVec.add(repelVelocity);
         tmpVec.scl(deltaTime);
         position.add(tmpVec);
+        if(isDead())
+            transform.rotate(Vector3.X, -90);    // turn to face up
         transform.setTranslation(position);
+
     }
 
 

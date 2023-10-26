@@ -140,8 +140,8 @@ public class PopulationScenes {
         for(Creature creature: population.creatures) {
             if(creature.name.contentEquals("hellhound") || creature.name.contentEquals("zombie")) {
                 creature.scene.modelInstance.transform.set(creature.transform);
-                if(creature.isDead())
-                    sceneManager.removeScene(creature.scene);
+//                if(creature.isDead())
+//                    sceneManager.removeScene(creature.scene);
             }
         }
 
