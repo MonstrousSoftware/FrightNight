@@ -1,5 +1,22 @@
-# FrightNight
+# Fright Night
 
+Entry for LibGDX Gam Jam #26 (September 2023).
+
+![](thumbnail.png)
+
+This is a 3D first person game where you wander around a road, corn fields, a church and a graveyard and are accosted by hell-hounds, zombies and a motor vehicle.
+Despite having no weapons, your task is to be the sole survivor and ride off into the sunset. How to beat the game is for the player to figure out as a puzzle, although the game offers some hints.
+
+The game features models created in Blender, including some animated ones, rendered using gdx-gtlf.  The web version makes use of the gdx-teavm extension.
+The desktop version has support for controllers. Features 3d lightning effect. Rain particles. Decals for the cornfield. Some fancy shader effects on the intro and exit screen.  Voice narration with subtitles. 
+Quick-save (F5) and reload (F9).
+
+
+You can play it here: [itch.io](https://monstrous-software.itch.io/fright-night)
+
+Watch review here: [youtube](https://www.youtube.com/watch?v=GzjYod9lmw4&t=5852s)
+
+-----
 A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff).
 
 This project was generated with a template including simple application launchers and a main class extending `Game` that sets the first screen.
@@ -10,33 +27,23 @@ This project was generated with a template including simple application launcher
 ## Platforms
 
 - `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3.
-- `html`: Web platform using GWT and WebGL. Supports only Java projects.
-- `teavm`: Experimental web platform using TeaVM and WebGL.
+- `lwjgl3`: Primary desktop platform using LWJGL3. Use this for controller support.
+- `html`: Not tested. Probably broken.
+- `teavm`: Experimental web platform using TeaVM and WebGL. This was used for the web version.
 
-## Gradle
 
-This project uses [Gradle](http://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `html:dist`: compiles GWT sources. The compiled application can be found at `html/build/dist`: you can use any HTTP server to deploy it.
-- `html:superDev`: compiles GWT sources and runs the application in SuperDev mode. It will be available at [localhost:8080/html](http://localhost:8080/html). Use only during development.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `teavm:build`: builds the JavaScript application into the build/dist/webapp folder.
-- `teavm:run`: serves the JavaScript application at http://localhost:8080 via a local Jetty server.
-- `test`: runs unit tests (if any).
+## Software
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+- libgdx 1.12.0
+- gdx-gltf by MGSX
+- gdx-teavm by Xpenatan
+- gdx-controllers & gdx-controller-utils by Mr. Stahlfelge
+
+
+
+## Assets
+
+For credits see in-game credits screen.
+
+

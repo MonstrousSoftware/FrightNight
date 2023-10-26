@@ -1,11 +1,11 @@
 Notes 18/9/2023
 
 to do:
-- It seems gdx-teavm doesn't support controllers as they require reflection.  => support only in desktop version
+WORKAROUND - It seems gdx-teavm doesn't support controllers as they require reflection.  => support only in desktop version
 DONE - since on web Gdx.app.exit doesn't close the window we need to handle game exit differently. Return to 'press any key'?
 FIXED - need a 'press any key to start' screen to allow sound in the title screen on web.
 FIXED - on web the sound keeps playing after exitscreen completes, despite the sound.stop();
-- F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
+FIXED- F11 in any menu screen toggles fullscreen/window (doesn't play nicely with the options screen on web)
 - ESC doesn't work while BACK does in menu's
 FIXED - web version doesn't catch the cursor, you cannot look all around.  Use A and D keys to turn instead of strafe. Strafing was moved to Q and E.
 - (minor) crouching (even though it is useless) is too jerky.
@@ -23,8 +23,8 @@ DONE- 2 wolves going in a spin
 DONE- stop car sooner
 DONE - trigger closer to car
 DONE- block save after game completed
-- credits spacing
-- display key bindings ?
+DONE - credits spacing
+DONE - display key bindings ?
 - keyboard navigation of menu's doesn't work on web version (does Chrome intercept the key presses?)
 
 
